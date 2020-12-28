@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ymx.driver">
+
+    <!-- 网络相关 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <!-- 读写文件 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 定位相关 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- 多媒体 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 8.0 系统需要-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- 手机状态 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_TASKS" /><!--mipush-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!--系统悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
+    <permission
+        android:name="com.ymx.driver.map.LocationService"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="com.ymx.driver.mqtt.MQTTService"
+        android:protectionLevel="signature" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <application
+        android:name=".base.YmxApp"
+        android:allowBackup="false"
+        android:largeHeap="true"
+        android:maxAspectRatio="2.4"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:resizeableActivity="false"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+
+        <!-- 全面屏配置 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2ce69c7a6b5d5947fef928c53861fa3a" />
+
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
+
+        <activity
+            android:name="com.ymx.driver.ui.launch.activity.SplashActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".ui.launch.activity.AdvertisingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.login.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.main.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.ContactUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.NavSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.WebviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PasswordResetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.travel.activity.TravelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.travel.activity.TravelOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.trip.activity.TripOrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.travel.activity.TravelOrderDetailsFinshActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.travel.activity.PhoneOrderPayActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.MyWalletActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.travel.activity.GrabOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.MyWalletBalanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.WithdrawalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.WithdrawalListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.WithdrawalProgressActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.launch.activity.IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.launch.activity.QcodeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.message.activity.MsgDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.MonthIncomeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.my.wallet.DayIncomeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.mine.head.TodayOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.mine.head.TodayIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.LongRangeDrivingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.ExtensionTheTimeDailogActivity"
+            android:theme="@style/ProjectDialogTheme" />
+
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.LongRangeDrivingDetails"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.LongRangDrivingFinishDetails"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.main.activity.UpdateActivity"
+            android:theme="@style/ProjectDialogTheme" />
+
+
+        <activity
+            android:name="com.ymx.driver.ui.navi.NaviActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.LongRangeFerryDrvingDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.OrderCirculationDialogActivity"
+            android:theme="@style/ProjectDialogTheme" />
+        <activity
+            android:name="com.ymx.driver.ui.longrange.driving.LongRangeFerryFinishDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.zxinglibrary.android.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name="com.ymx.driver.ui.chartercar.CharterDrivingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.chartercar.CharterOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.chartercar.CharterOrderWaitingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.chartercar.CharterOrderDayFinishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.chartercar.CharterOrderFinishOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.integral.InterralActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.transportsite.TransportSiteUpdateCarStateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.transportsite.TransferStationTripOrderListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.transportsite.TransferFindSiteOrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.ymx.driver.ui.transportsite.TransferStationTripOrderFinishDetailsActivity"
+            android:screenOrientation="portrait" />
+
+
+
+
+        <activity
+            android:name="com.ymx.driver.ui.test.TestActivity"
+            android:screenOrientation="portrait" />
+
+
+        <service
+            android:name="com.ymx.driver.keepalive.KeepAliveService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.ymx.driver.keepalive.KeepAliveService$InnerService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.ymx.driver.keepalive.KeepAliveJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+
+        <activity
+            android:name="com.ymx.driver.keepalive.KeepAliveActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/KeepAliveActivityStyle" />
+
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <!--定位Service-->
+        <service
+            android:name=".map.LocationService"
+            android:permission="com.ymx.driver.map.LocationService" />
+
+        <!-- Mqtt配置 -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service
+            android:name=".mqtt.MQTTService"
+            android:permission="com.ymx.driver.mqtt.MQTTService" />
+
+        <!--高德地图配置-->
+        <service android:name="com.amap.api.location.APSService" />
+
+        <!--友盟分享配置 start-->
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--友盟分享配置 end-->
+
+        <!--友盟推送配置 start-->
+        <service
+            android:name="com.taobao.accs.ChannelService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.SERVICE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.ELECTION" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.taobao.accs.data.MsgDistributeService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.accs.EventReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.taobao.accs.ServiceReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.taobao.accs.internal.AccsJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":channel" />
+
+        <service
+            android:name="com.taobao.accs.ChannelService$KernelService"
+            android:process=":channel" />
+
+        <service
+            android:name="org.android.agoo.accs.AgooService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.UmengIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.XiaomiIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.agoo.AgooCommondReceiver"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.ymx.driver.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" />
+
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.enablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.disablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.sendmessage.action" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.UmengDownloadResourceService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <provider
+            android:name="com.umeng.message.provider.MessageProvider"
+            android:authorities="com.ymx.driver.umeng.message"
+            android:exported="false">
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
+        <!--友盟推送配置 end-->
+        <!--小米Push通道-->
+        <activity
+            android:name=".push.MipushActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
+
+        <!--华为push通道-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="102374813" />
+
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="103917720" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="e6dfb33c5957b72dbb3631ff607fd38b" />
+
+    </application>
+</manifest>

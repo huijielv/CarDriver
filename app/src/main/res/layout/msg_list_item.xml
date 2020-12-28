@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.MsgItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:orientation="vertical"
+        app:bl_pressed_solid_color="@color/rx_f2f2f2"
+        app:bl_unPressed_solid_color="@color/rx_ffffff"
+        app:onClickCommand="@{viewModel.itemClick}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="60dp"
+               >
+
+                <ImageView
+                    android:layout_width="@dimen/d22"
+                    android:layout_height="@dimen/d22"
+                    android:layout_gravity="center"
+                    app:url="@{viewModel.placeholderRes}">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="19.23dp"
+                    android:layout_height="19.23dp"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:text="@{viewModel.entity.num &gt;= 100 ? @string/add_en + 99 : String.valueOf(viewModel.entity.num)}"
+                    android:textColor="@color/rx_555555"
+                    android:textSize="14sp"
+                    android:visibility="@{viewModel.entity.num > 0 ? View.VISIBLE : View.GONE}"
+                    app:bl_corners_radius="10dp"
+                    app:bl_solid_color="@color/rx_ff4800" />
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/d2"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{viewModel.entity.describe}"
+                        android:textColor="#333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@{viewModel.entity.timeDescribe}"
+                        android:textColor="@color/rx_808080"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxEms="30"
+                    android:maxLines="1"
+                    android:text="@{viewModel.entity.title}"
+                    android:textColor="@color/rx_606060"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/rx_e1e1e1" />
+    </LinearLayout>
+</layout>

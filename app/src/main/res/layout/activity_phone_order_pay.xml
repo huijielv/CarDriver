@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.orderdetails.PhoneOrderPayViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/phone_order_pay_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_order_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_long_range_driving_head_view">
+
+            <LinearLayout
+                android:id="@+id/ll_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d10"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/d20"
+                android:paddingBottom="@dimen/d20">
+
+                <ImageView
+                    android:id="@+id/iv_header"
+                    android:layout_width="@dimen/d40"
+                    android:layout_height="@dimen/d40"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_passenger_head"
+                    app:url="@{viewModel.headPicUrl}" />
+
+                <TextView
+                    android:id="@+id/tv_phoneNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/d5"
+                    android:text="@{viewModel.passengerInfo}"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_phone"
+                android:layout_toRightOf="@+id/ll_header"
+                android:orientation="vertical"
+
+                >
+
+                <LinearLayout
+                    android:id="@+id/startAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{viewModel.startAddress}"
+                        android:textColor="#ff333333"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/endAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{viewModel.endAddress}"
+                        android:textColor="#ff333333"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="@dimen/d22"
+                android:layout_height="@dimen/d22"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginRight="@dimen/d10"
+                android:src="@drawable/connect_passenger"
+                app:onClickCommand="@{viewModel.ucPassengerCall}" />
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/d15"
+                android:paddingTop="@dimen/d10"
+                android:paddingRight="@dimen/d15">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_long_range_driving_head_view"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/d20"
+                    android:paddingBottom="@dimen/d20">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{  viewModel.totalFee + @string/order_details_price}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_22"></TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="应支付金额"
+                        android:textSize="@dimen/text_size_15"
+                        android:visibility="@{viewModel.orderStatus  == 6?  View.VISIBLE : View.GONE}">
+
+                    </TextView>
+
+
+                    <ImageView
+                        android:id="@+id/payOrderIv"
+                        android:layout_width="194dp"
+                        android:layout_height="194dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d20"
+                        android:src="@drawable/icon_phone_order_pay_qr_code"
+                        android:visibility="@{viewModel.paySuccess ==0? View.VISIBLE : View.GONE }" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.paySuccess ==0?  View.GONE :View.VISIBLE}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已收款"
+                            android:textSize="@dimen/text_size_30"></TextView>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_16"
+                        android:text="请向乘客出示此二维码收款"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/payButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d10"
+                        android:background="@drawable/bg_grey"
+                        android:paddingLeft="@dimen/d12"
+                        android:paddingTop="@dimen/d4"
+                        android:paddingRight="@dimen/d12"
+                        android:paddingBottom="@dimen/d4"
+                        android:text="司机代付"
+                        android:textColor="#ffffffff"
+                        android:textSize="@dimen/text_size_14"
+                        app:onClickCommand="@{viewModel.ucPay}" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_ymx_weixin"></ImageView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="微信"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_22"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/customerPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/otherFee"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d20"
+                        android:orientation="vertical"
+                        app:onClickCommand="@{viewModel.callPhone}">
+
+                        <ImageView
+                            android:id="@+id/customerPhoneIv"
+                            android:layout_width="@dimen/d25"
+                            android:layout_height="@dimen/d25"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon_customer_service_telephone_numbers" />
+
+                        <TextView
+                            android:id="@+id/customerPhoneT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/d4"
+                            android:text="联系客服"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/text_size_16" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.ymx.driver.view.ScrollSwithViewButton
+            android:id="@+id/scrollSwithViewButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginRight="-10dp"
+            android:visibility="gone"
+            app:center_background="@drawable/bt_orange_no_radius_selector"
+            app:center_text="完成"
+            app:center_textColor="@android:color/white"
+            app:center_textSize="@dimen/d8"
+            app:scroll_button_background="@drawable/bt_orange_no_radius_selector"
+            app:scroll_button_with="48dp" />
+
+    </LinearLayout>
+</layout>
+
+
+
+
+
+
+
+
+

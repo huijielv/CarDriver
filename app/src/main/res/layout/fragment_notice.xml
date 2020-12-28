@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.MsgViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.ymx.driver.view.StatusView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:empty_img="@drawable/icon_no_msg"
+                app:empty_tip="@string/msg_list_empty_tip"
+                app:status="@{viewModel.status}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:splitMotionEvents="false"
+                app:adapter="@{adapter}"
+                app:itemBinding="@{viewModel.itembinding}"
+                app:items="@{viewModel.msgList}"
+                app:layoutManager="@{LayoutManagers.linear()}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

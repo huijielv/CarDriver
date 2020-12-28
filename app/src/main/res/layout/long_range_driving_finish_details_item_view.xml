@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.TextUtils" />
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.LongRangDrivingFinishListItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/iv_header"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_passenger_head"
+            app:url="@{viewModel.entity.headimg}" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d4"
+            android:text="@{viewModel.entity.phone}"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d4"
+            android:text="@{viewModel.entity.payDes}"
+            android:textColor="@{viewModel.entity.payState ==0? @color/rx_f11818 :@color/color_333333}"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d4"
+            android:text="@{viewModel.entity.otherPayDes}"
+            android:visibility="@{  !TextUtils.isEmpty(viewModel.entity.otherPayDes)  ?  View.VISIBLE :View.GONE }"
+            android:textColor="@{viewModel.entity.payState ==0? @color/rx_f11818 :@color/color_333333}"
+            android:textSize="@dimen/text_size_12" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d4"
+            android:background="@drawable/bg_range_driving_finish_qcode"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            app:onClickCommand="@{viewModel.qCode}"
+            android:paddingTop="3dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="3dp"
+            android:text="@string/range_driving_finish_qcode_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="@{viewModel.entity.payState ==1 ?View.GONE : View.VISIBLE }" />
+
+
+    </LinearLayout>
+
+</layout>

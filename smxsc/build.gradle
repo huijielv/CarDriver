@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.xysc.driver"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.appTargetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        multiDexEnabled true
+
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+    }
+
+    signingConfigs {
+        //加载资源
+        Properties properties = new Properties()
+        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+        properties.load(inputStream)
+
+        release {
+            storeFile file(properties.getProperty("YMX_RELEASE_STORE_FILE"))
+            storePassword properties.getProperty("YMX_RELEASE_STORE_PASSWORD")
+            keyAlias properties.getProperty("YMX_RELEASE_KEY_ALIAS")
+            keyPassword properties.getProperty("YMX_RELEASE_KEY_PASSWORD")
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.appSourceCompatibility
+        targetCompatibility rootProject.ext.appTargetCompatibility
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            multiDexEnabled true
+            minifyEnabled true
+            zipAlignEnabled true
+            jniDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            debuggable true
+            multiDexEnabled true
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+        }
+    }
+
+    //lint代码检查
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'GoogleAppIndexingWarning'
+    }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                //这里修改apk文件名
+                outputFileName = "xysc-driver-${variant.name}-v${variant.versionName}.apk"
+            }
+    }
+
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+        dirs 'aars'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation project(path: ':app')
+}

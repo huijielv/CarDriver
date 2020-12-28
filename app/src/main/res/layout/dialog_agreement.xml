@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/d20">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="服务协议和隐私政策提示"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/text_size_21"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d24"
+            android:text="欢迎使用域驾出行！"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d12"
+            android:text="为更好的为您提供服务，域驾出行需要获取您的定位、手机号、存储等权限。"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/agreement_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d12"
+            android:text="请您在使用域驾出行前，认真阅读并了解，《服务协议》和《隐私政策》。"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d12"
+            android:text="点击“同意”，即代表您已阅读并同意全部条款"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffececec" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0.0dip"
+            android:layout_height="50.0dip"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="我再想想"
+            android:textColor="#ff666666"
+            android:textSize="@dimen/d16" />
+
+        <View
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:background="#ffececec" />
+
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="0.0dip"
+            android:layout_height="50.0dip"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="同意"
+            android:textColor="#ff007aff"
+            android:textSize="@dimen/d16" />
+    </LinearLayout>
+</LinearLayout>

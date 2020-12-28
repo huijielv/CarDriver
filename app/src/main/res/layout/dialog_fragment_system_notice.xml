@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.SystemNoticeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.ymx.driver.view.rclayout.RCRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="@color/rx_ffffff"
+                app:clip_background="true"
+                app:round_corner="2dp">
+
+                <com.ymx.driver.view.AutoBannerView
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:adapter="@{adapter}"
+                    app:itemBinding="@{viewModel.itemBinding}"
+                    app:items="@{viewModel.items}" />
+
+                <com.ymx.driver.view.ViewPagerIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="@{viewModel.items.size() > 1 ? View.VISIBLE : View.GONE}"
+                    app:can_smooth="false"
+                    app:dot_gap="16dp"
+                    app:dot_radius="5dp"
+                    app:normal_color="@color/rx_dddddd"
+                    app:select_color="@color/rx_eb834a" />
+            </com.ymx.driver.view.rclayout.RCRelativeLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_close"
+                app:onClickCommand="@{viewModel.dismiss}" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

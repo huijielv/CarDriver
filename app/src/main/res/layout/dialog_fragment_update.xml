@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mine.UpdateViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:orientation="vertical"
+            app:bl_corners_radius="2dp"
+            app:bl_solid_color="@color/rx_ffffff">
+
+            <com.ymx.driver.view.PercentCircleView
+                android:id="@+id/progress"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.entity.versionName}"
+                android:textColor="@color/rx_333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{viewModel.entity.versionDesc}"
+                android:textColor="@color/rx_555555"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/rx_e1e1e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/negativeText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/update_later"
+                    android:textColor="@color/rx_555555"
+                    android:textSize="14sp"
+                    android:visibility="@{viewModel.entity.upgradeMode == 1 ? View.VISIBLE : View.GONE}"
+                    app:onClickCommand="@{viewModel.next}" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/rx_e1e1e1"
+                    android:visibility="@{viewModel.entity.upgradeMode == 1 ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:id="@+id/positiveText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/update_now"
+                    android:textColor="@color/rx_eb834a"
+                    android:textSize="14sp"
+                    app:onClickCommand="@{viewModel.update}" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

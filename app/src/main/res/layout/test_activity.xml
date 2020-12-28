@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.base.BaseViewModel" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_20"
+            android:layout_centerInParent="true"
+            android:text="测试">
+
+        </TextView>
+
+
+    </RelativeLayout>
+
+
+</layout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.orderdetails.OrderDetailsViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/ll_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d10">
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/d20"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginBottom="@dimen/d12"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_header"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_passenger_head"
+                app:url="@{viewModel.headPicUrl}" />
+
+            <TextView
+                android:id="@+id/tv_phoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/d4"
+                android:text="11111111111111"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ll_header"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStartName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginTop="@dimen/d12"
+                android:text="@{viewModel.startAddress}"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/tvEndName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvStartName"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginTop="@dimen/d18"
+                android:text="@{viewModel.endAddress}"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_15" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</layout>

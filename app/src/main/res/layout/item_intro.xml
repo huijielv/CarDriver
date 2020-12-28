@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.launch.IntroItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/icon_income_bg"
+            android:visibility="@{viewModel.last ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="126dp"
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40.5dp"
+                android:gravity="center"
+                android:text="@string/enter_main"
+                android:textColor="@color/rx_ffffff"
+                android:textSize="15sp"
+                app:bl_corners_radius="2dp"
+                app:bl_solid_color="@color/rx_eb834a"
+                app:onClickCommand="@{viewModel.itemClick}" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.last ? View.GONE :View.VISIBLE }">
+
+            <RelativeLayout
+                android:id="@+id/headRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="390dp"
+                    android:scaleType="fitXY"
+                    app:url="@{viewModel.resId}" />
+
+                <ImageView
+                    android:layout_width="205dp"
+                    android:layout_height="194.5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="90.5dp"
+                    app:url="@{viewModel.resContentViewId}" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/headRl"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="59dp"
+                android:text="@{viewModel.title}"
+                android:textColor="@{viewModel.titleColor ? @color/rx_FF5C5A:@color/rx_5BBBFF}"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="@{viewModel.tip}"
+                android:textColor="@color/rx_555555"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25.5dp"
+                app:url="@{viewModel.selectId}" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

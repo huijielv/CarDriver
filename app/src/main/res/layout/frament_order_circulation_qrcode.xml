@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.OrderCirculationQrcodeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d18"
+            android:paddingBottom="@dimen/d18">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="扫描二维码流转行程"
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/qRcode"
+                android:layout_width="298dp"
+                android:layout_height="298dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_yuancheng_liuzhuanerweima">
+
+            </ImageView>
+
+
+            <ImageView
+                android:layout_width="@dimen/d22"
+                android:layout_height="@dimen/d22"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_order_circulation_close"
+                app:onClickCommand="@{viewModel.back}">
+
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

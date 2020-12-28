@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.WithdrawalViewModel" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/headViewFl"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/my_withdrawal_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp"
+                />
+        </FrameLayout>
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headViewFl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginRight="@dimen/d15"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.tips}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_18">
+
+                    </TextView>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d15"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d15"
+                        android:text="持卡人"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="@{viewModel.cardholder}"></TextView>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:layout_marginTop="30dp"
+                    android:text="储蓄卡卡号"></TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="@dimen/d15"
+                        android:text="@{viewModel.bankCardNumber}">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/d15"
+                        android:text="@{viewModel.belongBank}">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginRight="@dimen/d15">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="¥ "
+                        android:textSize="@dimen/text_size_18" />
+
+                    <EditText
+                        android:id="@+id/cash_withdrawal_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="输入您要提现的金额"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_8e"
+                        app:addTextChangedListener="@{viewModel.withdrawalWatcher}" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginRight="@dimen/d15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@{viewModel.moneyLimit}">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="全部提现"
+                        android:textColor="@color/color_208cef"
+                        android:textSize="@dimen/text_size_30"
+                        app:onClickCommand="@{viewModel.allMoney}"></TextView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d50"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:layout_marginTop="@dimen/d30"
+                    android:layout_marginRight="@dimen/d15"
+                    android:background="@{viewModel.withdrawalState.booleanValue()?@color/color_208cef:@color/gray}"
+                    android:gravity="center"
+                    android:text="确认提现"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_22"
+                    app:onClickCommand="@{viewModel.confirmWithdrawal}"></TextView>
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/d50"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="提现进度"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_18"
+                app:onClickCommand="@{viewModel.goTo}"></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/d50"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

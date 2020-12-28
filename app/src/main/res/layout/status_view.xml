@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.ymx.driver.view.StatusView" />
+
+        <variable
+            name="statusView"
+            type="com.ymx.driver.view.StatusView" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="@{statusView.status == StatusView.STATUS_NORMAL ? View.GONE : View.VISIBLE}">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="@{statusView.status == StatusView.STATUS_EMPTY ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:id="@+id/empty_img"
+                android:layout_width="162dp"
+                android:layout_height="157dp" />
+
+            <TextView
+                android:id="@+id/empty_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/rx_808080"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>

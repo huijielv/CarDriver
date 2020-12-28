@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/layout_travel_detail"
+    android:background="@color/transparent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_gravity="right"
+        android:id="@+id/traveldetail_close_two"
+        android:visibility="gone"
+        android:layout_width="@dimen/d25"
+        android:layout_height="@dimen/d25"
+        android:layout_marginBottom="@dimen/d22"
+        android:src="@drawable/ic_close" />
+
+    <RelativeLayout
+        android:id="@+id/rrl_layout"
+        android:background="@color/white"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_map"
+            android:layout_width="@dimen/d329"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/traveldetail_distance"
+                android:background="@drawable/bg_travel_circle_distance"
+                android:padding="2dp"
+                android:layout_width="@dimen/d60"
+                android:layout_height="@dimen/d60"
+                android:layout_marginTop="@dimen/d15"
+                android:layout_marginRight="@dimen/d12"
+                android:layout_marginBottom="@dimen/d15"
+                android:text="0.0公里"
+                android:layout_alignParentRight="true"
+                android:lineSpacingExtra="@dimen/d1" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d28"
+                android:layout_marginLeft="@dimen/d12"
+                android:layout_toLeftOf="@id/traveldetail_distance"
+                android:layout_alignTop="@id/traveldetail_distance"
+                android:layout_alignParentLeft="true">
+
+                <View
+                    android:id="@+id/traveldetail_start_circle"
+                    android:background="@drawable/bg_point_green"
+                    android:layout_width="@dimen/d8"
+                    android:layout_height="@dimen/d8" />
+
+                <TextView
+                    android:textSize="@dimen/text_size_14"
+                    android:textColor="@color/color_666666"
+                    android:ellipsize="end"
+                    android:id="@+id/traveldetail_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d11"
+                    android:maxLines="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d28"
+                android:layout_marginLeft="@dimen/d12"
+                android:layout_marginTop="@dimen/d15"
+                android:layout_toLeftOf="@id/traveldetail_distance"
+                android:layout_alignBottom="@id/traveldetail_distance"
+                android:layout_alignParentLeft="true">
+
+                <View
+                    android:id="@+id/traveldetail_end_circle"
+                    android:background="@drawable/bg_point_red"
+                    android:layout_width="@dimen/d8"
+                    android:layout_height="@dimen/d8" />
+
+                <TextView
+                    android:textSize="@dimen/text_size_14"
+                    android:textColor="@color/color_666666"
+                    android:ellipsize="end"
+                    android:id="@+id/traveldetail_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d11"
+                    android:maxLines="1" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/traveldetail_map"
+            android:layout_width="@dimen/d329"
+            android:layout_height="@dimen/d250"
+            android:layout_marginLeft="@dimen/d2"
+            android:layout_marginRight="@dimen/d2"
+            android:layout_marginBottom="@dimen/d2"
+            android:layout_below="@id/rl_map"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/confirm_order_btn"
+        android:visibility="gone"
+        android:layout_width="@dimen/d100"
+        android:layout_height="@dimen/d100"
+        android:layout_marginTop="@dimen/d30" />
+
+    <ImageView
+        android:id="@+id/traveldetail_close"
+        android:padding="4dp"
+        android:layout_width="@dimen/d40"
+        android:layout_height="@dimen/d40"
+        android:layout_marginTop="@dimen/d30"
+        android:src="@drawable/ic_close" />
+</LinearLayout>

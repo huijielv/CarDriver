@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.triporderlist.TripOrderListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/trip_order_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp"
+               />
+        </FrameLayout>
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/trip_order_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/trip_order_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>

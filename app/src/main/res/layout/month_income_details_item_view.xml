@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.MonthIncomeDetailsItemView" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginTop="@dimen/d10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{viewModel.entity.week}"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16"></TextView>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{@string/month_incomedetails_total+ viewModel.entity.totalIncome+@string/order_details_price}"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16"
+                android:visibility="@{!TextUtils.isEmpty(viewModel.entity.totalIncome)?View.VISIBLE:View.GONE}"></TextView>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/d8"
+            android:background="@color/white_f2"
+            android:layout_height="1dp"></View>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无收入"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d15"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="@{viewModel.status ==0 ?View.VISIBLE:View.GONE}">
+
+        </TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/d15"
+            android:visibility="@{viewModel.status ==0 ?View.VISIBLE:View.GONE}"
+            android:background="@color/white_f2"
+            android:layout_height="1dp"></View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:splitMotionEvents="false"
+            app:adapter="@{adapter}"
+            app:itemBinding="@{viewModel.itembinding}"
+            app:items="@{viewModel.monthIncomeList}"
+            app:layoutManager="@{LayoutManagers.linear()}" />
+
+    </LinearLayout>
+
+
+</layout>

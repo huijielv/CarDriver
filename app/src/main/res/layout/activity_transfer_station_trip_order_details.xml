@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.transportsite.TransferStationTripOrderDetailsViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.titleText}"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btnSubmitLl"
+            android:layout_below="@+id/titleFL"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginBottom="@dimen/d10"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}"
+            app:srlEnableLoadMore="false"
+            app:srlEnableNestedScrolling="false"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnableRefresh="true"
+            app:srlHeaderHeight="40dp"
+            app:srlHeaderTriggerRate="0.5">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        android:splitMotionEvents="false"
+                        app:adapter="@{adapter}"
+                        app:itemBinding="@{viewModel.itembinding}"
+                        app:items="@{viewModel.itemList}"
+                        app:layoutManager="@{LayoutManagers.linear()}" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:onClickCommand="@{viewModel.grab}"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/bg_view"
+                        android:paddingLeft="17dp"
+                        android:visibility="@{viewModel.grabOrderShow==1?View.VISIBLE:View.GONE}"
+                        android:paddingTop="@dimen/d10"
+                        android:paddingRight="17dp"
+                        android:paddingBottom="@dimen/d10"
+                        android:text="继续接单"
+                        android:textColor="@color/rx_ff333333"
+                        android:textSize="@dimen/text_size_14"></TextView>
+                </LinearLayout>
+            </ScrollView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <LinearLayout
+            android:id="@+id/btnSubmitLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/d10"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+
+            <com.ymx.driver.view.SwipeButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/bg_rangge_driving_btn_submit"
+                android:gravity="center"
+                android:text="滑动出车"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/text_size_18"
+                android:visibility="gone"
+                app:after_confirmation_background="#FF8008"
+                app:button_confirm_text="释放"
+                app:button_swipe_text="滑动"
+                app:gradient_color_1="#FF8008"
+                app:gradient_color_2="#FFC837"
+                app:gradient_color_3="#FF8008"
+                app:swipe_mode="clamp"
+                app:threshold="0.8" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

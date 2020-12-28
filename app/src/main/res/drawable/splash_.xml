@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/rx_ffffff" />
+        </shape>
+    </item>
+    <item android:top="150dp">
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:gravity="top|center_horizontal"
+            android:src="@drawable/logo"
+            android:tileMode="disabled" />
+    </item>
+    <item android:bottom="53dp">
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:gravity="bottom|center_horizontal"
+            android:src="@drawable/splash_bottom_logo"
+            android:tileMode="disabled" />
+    </item>
+</layer-list>

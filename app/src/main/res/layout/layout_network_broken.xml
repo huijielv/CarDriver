@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/ll_network"
+    android:background="@color/color_f4f5f7"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pic_internet"
+        android:scaleType="center" />
+
+    <TextView
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/color_999999"
+        android:gravity="center"
+        android:id="@+id/tv_msg_tip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d32"
+        android:layout_marginTop="@dimen/d24"
+        android:layout_marginRight="@dimen/d32"
+        android:text="网络异常，请重新加载"
+        android:lineSpacingExtra="@dimen/d8" />
+
+    <TextView
+        android:textSize="@dimen/text_size_16"
+        android:textColor="@color/color_666666"
+        android:id="@+id/tv_reconnect"
+        android:background="@drawable/bg_selector_reconnect"
+        android:paddingLeft="@dimen/d40"
+        android:paddingTop="@dimen/d10"
+        android:paddingRight="@dimen/d40"
+        android:paddingBottom="@dimen/d10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d24"
+        android:text="重新加载" />
+</LinearLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.driverinterral.InterralViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="#FFF9C28F">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                android:layout_width="@dimen/d22"
+                android:layout_height="@dimen/d22"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d15"
+                android:src="@drawable/icon_back"
+                app:onClickCommand="@{viewModel.back}"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/my_integral"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="190.5dp"
+                android:background="@drawable/bg_my_interral_head"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="175.5dp"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/bg_interral"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d15"
+                        android:text="@{viewModel.integral}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_20">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="我的积分"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d20"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:onClickCommand="@{viewModel.clickIntegralDetailList}">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/icon_interral_mingxi" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text="积分明细"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/travel_order_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="vertical"
+                            app:onClickCommand="@{viewModel.clickMyOrder}">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/icon_interral_order" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text="我的订单"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/d10">
+
+            <RelativeLayout
+                android:layout_width="6dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d15"
+                android:background="@drawable/bg_interral_dhmx"></RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:text="积分兑换"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_16"></TextView>
+
+        </LinearLayout>
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableLoadMore="true"
+            app:srlEnableNestedScrolling="false"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnableRefresh="true"
+            app:srlHeaderHeight="40dp"
+            app:srlHeaderTriggerRate="0.5">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:splitMotionEvents="false"
+                app:adapter="@{adapter}"
+                app:itemBinding="@{viewModel.itembinding}"
+                app:itemDecoration="@{LayoutManagers.itemDecoration(2,30)}"
+                app:items="@{viewModel.itemList}"
+                app:layoutManager="@{LayoutManagers.grid(2)}" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlAccentColor="@android:color/black"
+                app:srlTextSizeTime="12sp"
+                app:srlTextSizeTitle="14sp" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    </LinearLayout>
+</layout>

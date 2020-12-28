@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.travel.TravelViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/order_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@color/rx_transparent"
+                android:src="@drawable/icon_back"
+                android:visibility="@{viewModel.getBackStatus(viewModel.mode)?View.VISIBLE:View.GONE}"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{viewModel.getModeTitle(viewModel.mode)}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/tv_order_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/d15"
+                android:text="@{viewModel.rightTitle}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_14"
+                android:visibility="@{viewModel.rightTitleShow ? View.VISIBLE :View.GONE}"
+                app:onClickCommand="@{viewModel.cancelOrder}" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/passnerInfoRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_title_bar"
+            android:background="@color/white"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <RelativeLayout
+                android:id="@+id/ll_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10">
+
+                <LinearLayout
+                    android:id="@+id/ll_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d20"
+                    android:layout_marginTop="@dimen/d12"
+                    android:layout_marginBottom="@dimen/d12"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_header"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_passenger_head" />
+
+                    <TextView
+                        android:id="@+id/tv_phoneNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d4"
+                        android:text="@{viewModel.passengerInfo}"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/phone_call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_order_details_call_phone"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="电话叫车订单"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        android:visibility="@{viewModel.phoneOrder ==5 ? View.VISIBLE :View.GONE}" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/ll_header"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/startAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="@dimen/d15"
+                            android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@{viewModel.startName}"
+                            android:textColor="@color/rx_ff333333"
+                            android:textSize="@dimen/text_size_18" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/endAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewModel.getCanStatus(viewModel.orderStatus)? View.VISIBLE :View.GONE}">
+
+
+                        <TextView
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="@dimen/d15"
+                            android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@{viewModel.endName}"
+                            android:textColor="@color/rx_ff333333"
+                            android:textSize="@dimen/text_size_18" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_order_distance_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d15"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="@{viewModel.orderTimeDesc}"
+                        android:textColor="@color/rx_ff333333"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_contact_navi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_order_info"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/d12"
+                android:paddingBottom="@dimen/d12">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal"
+                        app:onClickCommand="@{viewModel.call}">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/icon_lianxichengke">
+
+                        </ImageView>
+
+
+                        <TextView
+                            android:id="@+id/bt_contact_passenger"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="@dimen/d5"
+                            android:text="@string/contact_passengers"
+                            android:textColor="@color/rx_ff333333"
+                            android:textSize="@dimen/text_size_16" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal"
+                        app:onClickCommand="@{viewModel.navigate}">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/icon_daohang"></ImageView>
+
+                        <TextView
+                            android:id="@+id/bt_open_navi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/d5"
+                            android:text="@string/navigation"
+                            android:textSize="@dimen/text_size_16" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="280dp"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <com.amap.api.maps.TextureMapView
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingTop="@dimen/d5"
+                android:paddingBottom="@dimen/d5"
+                android:visibility="@{   viewModel.transferOrderState==1  ? View.VISIBLE :View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.transferOrderTips}"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="@{  !TextUtils.isEmpty(viewModel.transferOrderTips  )? View.VISIBLE :View.GONE}">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/d5"
+                android:background="@drawable/bg_travel_time_describe"
+                android:gravity="center"
+                android:padding="@dimen/d5"
+                android:visibility="@{  !TextUtils.isEmpty(viewModel.timeDescribe)  &amp;&amp;  viewModel.orderStatus==1? View.VISIBLE :View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.timeDescribe}"
+                    android:textColor="#FFFF8F12"
+                    android:textSize="@dimen/text_size_14">
+
+                </TextView>
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/d10">
+
+                <com.ymx.driver.view.ScrollSwithViewButton
+                    android:id="@+id/scrollSwithViewButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="@{viewModel.transferOrderState==0?View.VISIBLE:View.GONE}"
+                    app:center_background="@drawable/bt_orange_no_radius_selector"
+                    app:center_text=""
+                    app:center_textColor="@android:color/white"
+                    app:center_textSize="6dp"
+                    app:scroll_button_background="@drawable/bt_orange_no_radius_selector"
+                    app:scroll_button_with="48dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@color/color_ffcccccc"
+                    android:gravity="center"
+                    android:visibility="@{viewModel.transferOrderState==1?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="到达上车地点"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16"></TextView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

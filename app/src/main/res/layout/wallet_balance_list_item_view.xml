@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.WalletBalanceListItemViewModel" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/weekTimeLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isShow?View.GONE :View.VISIBLE}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FFF2F2F2"></View>
+
+            <TextView
+                android:id="@+id/dayTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/d10"
+                android:paddingBottom="@dimen/d10"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.entity.dayTime}"
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyc_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weekTimeLl"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:splitMotionEvents="false"
+            app:adapter="@{adapter}"
+            app:itemBinding="@{viewModel.itembinding}"
+            app:items="@{viewModel.itemList}"
+            app:layoutManager="@{LayoutManagers.linear()}" />
+
+    </RelativeLayout>
+
+
+</layout>

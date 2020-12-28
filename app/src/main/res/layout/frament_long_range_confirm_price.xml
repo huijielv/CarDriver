@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.LongRangePremiumViewmodel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d48"
+            android:layout_marginRight="@dimen/d48"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/d20"
+                    android:text="@{viewModel.passenger.priceMarkupTitle}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp"></TextView>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/ll_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/d10"
+                android:paddingBottom="@dimen/d10">
+
+                <LinearLayout
+                    android:id="@+id/ll_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d20"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_header"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_passenger_head" />
+
+                    <TextView
+                        android:id="@+id/tv_phoneNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d4"
+                        android:text="@{viewModel.passengerInfo}"
+                        android:textColor="@color/rx_ff333333"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ll_header"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/startAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="@{viewModel.passenger.startAddress}"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/endAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="@{viewModel.passenger.endAddress}"
+                            android:textColor="#FF8008"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d20"
+                android:layout_marginRight="@dimen/d20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.priceInfo}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/d18"
+                android:background="#fff2f2f2">
+
+            </View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/rx_999999"
+                    android:textSize="16sp"
+                    app:onClickCommand="@{viewModel.cancel}" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/rx_e1e1e1" />
+
+                <TextView
+                    android:id="@+id/confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="确定加价"
+                    android:textColor="#FF8008"
+                    android:textSize="16sp"
+                    app:onClickCommand="@{viewModel.confirm}" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

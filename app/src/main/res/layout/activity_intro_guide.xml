@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.launch.IntroViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_ffffff">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{adapter}"
+            app:itemBinding="@{viewModel.itemBinding}"
+            app:items="@{viewModel.items}" />
+
+        <com.ymx.driver.view.ViewPagerIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
+            android:visibility="@{ View.GONE}"
+            app:can_smooth="false"
+            app:dot_gap="16dp"
+            app:dot_radius="5dp"
+            app:normal_color="@color/rx_dddddd"
+            app:select_color="@color/rx_eb834a" />
+
+    </FrameLayout>
+</layout>

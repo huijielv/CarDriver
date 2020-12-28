@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+        <import type="com.ymx.driver.view.StatusView" />
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.triporderlist.NotFinishTripViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_f2f2f2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:visibility="@{viewModel.status == StatusView.STATUS_EMPTY ? View.VISIBLE : View.GONE}"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="这里很干净,没有数据">
+
+        </TextView>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableLoadMore="true"
+            app:srlEnableNestedScrolling="false"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnableRefresh="true"
+            app:srlHeaderHeight="40dp"
+            app:srlHeaderTriggerRate="0.5">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:splitMotionEvents="false"
+                app:adapter="@{adapter}"
+                app:itemBinding="@{viewModel.itembinding}"
+                app:items="@{viewModel.itemList}"
+                app:layoutManager="@{LayoutManagers.linear()}" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlAccentColor="@android:color/black"
+                app:srlTextSizeTime="12sp"
+                app:srlTextSizeTitle="14sp" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </RelativeLayout>
+</layout>
+
+

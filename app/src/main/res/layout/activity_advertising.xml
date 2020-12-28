@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.launch.AdvertisingViewModel" />
+
+        <import type="com.ymx.driver.util.UIUtils" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_adv" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="102dp"
+                android:background="@color/rx_ffffff">
+
+                <ImageView
+                    android:layout_width="133dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_adv" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cut_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:textColor="@color/rx_ffffff"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:bl_corners_radius="12dp"
+            app:bl_padding_bottom="4dp"
+            app:bl_padding_left="8dp"
+            app:bl_padding_right="8dp"
+            app:bl_padding_top="4dp"
+            app:bl_solid_color="@color/rx_transparent"
+            app:bl_stroke_color="@color/rx_eb834a"
+            app:bl_stroke_width="1px"
+            app:margin_top="@{UIUtils.getStatusBarHeight()}"
+            app:onClickCommand="@{viewModel.skip}" />
+    </FrameLayout>
+</layout>

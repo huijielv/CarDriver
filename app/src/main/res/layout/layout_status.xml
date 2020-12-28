@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal"
+    android:id="@+id/layout_status"
+    android:background="@color/color_network"
+    android:paddingLeft="@dimen/d10"
+    android:paddingTop="2dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="2dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:id="@+id/tv_network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="网络不给力，请检查网络设置！"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pro_statebar_skip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

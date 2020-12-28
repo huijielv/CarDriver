@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.ymx.driver.util.SystemUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.LongRangeDrivingViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/long_rang_driving_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleFL"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d20"
+            android:paddingBottom="@dimen/d20">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/startName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.startName}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold"></TextView>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/turnImage"
+                    android:layout_width="33.83dp"
+                    android:layout_height="31.85dp"
+                    android:src="@drawable/icon_common_car"
+                    app:onClickCommand="@{viewModel.turn}">
+
+                </ImageView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+
+                    <TextView
+                        android:id="@+id/endName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.endName}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginTop="36dp"
+                android:layout_marginRight="@dimen/d10"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:splitMotionEvents="false"
+                android:visibility="@{viewModel.remoteState  == 0? View.VISIBLE :View.GONE }"
+                app:adapter="@{adapter}"
+                app:itemBinding="@{viewModel.itembinding}"
+                app:itemDecoration="@{LayoutManagers.itemDecoration(1 ,43)}"
+                app:items="@{viewModel.dayChooseItemViewModels}"
+                app:layoutManager="@{LayoutManagers.grid(3)}" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d20"
+                android:text="@{  !TextUtils.isEmpty(viewModel.departureTime) ?    viewModel.departureTime :@string/select_rang_driving_time_title}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
+                app:onClickCommand="@{viewModel.rangeDrivingSelectTimeDialog}">
+
+            </TextView>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="65dp"
+            android:text="@{viewModel.lockTips}"
+            android:textColor="#999999"
+            android:textSize="@dimen/text_size_14">
+
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/d10">
+
+            <RelativeLayout
+                android:id="@+id/btRl"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:layout_marginBottom="@dimen/d10"
+                android:background="@color/grey_cc"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.lockDrvier}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="25dp"
+                        android:src="@{viewModel.lockDrvierState==1 ?  @drawable/icon_btn_lock:  @drawable/icon_btn_uclocking }"></ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@{viewModel.lockDrvierState==1 ? @string/driver_unlock : @string/driver_lock}"
+                        android:textColor="#ffffffff"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="接单中..."
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18"></TextView>
+
+            </RelativeLayout>
+
+
+            <com.ymx.driver.view.SwipeButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/bg_rangge_driving_btn_submit"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                app:after_confirmation_background="#FF8008"
+                app:button_confirm_text="释放"
+                app:button_swipe_text="滑动"
+                app:gradient_color_1="#FF8008"
+                app:gradient_color_2="#FFC837"
+                app:gradient_color_3="#FF8008"
+                app:swipe_mode="clamp"
+                app:threshold="0.8" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

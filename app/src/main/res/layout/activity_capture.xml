@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mine.ScanViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- 整体透明画布 -->
+        <SurfaceView
+            android:id="@+id/preview_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="left"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="85dp"
+            android:src="@drawable/icon_scan_close"
+            android:tint="@color/rx_ffffff"
+            app:onClickCommand="@{viewModel.back}" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:layout_gravity="top"
+                android:background="#50000000"
+
+                >
+
+            </RelativeLayout>
+
+
+            <!-- 扫描取景框 -->
+            <com.ymx.driver.zxinglibrary.view.ViewfinderView
+                android:id="@+id/viewfinder_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/bottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_gravity="bottom"
+                android:background="#99000000"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/flashLightLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/flashLightIv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_close" />
+
+                    <TextView
+                        android:id="@+id/flashLightTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@string/open_flash"
+                        android:textColor="#ffffff" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/albumLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/albumIv"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_bank_card"
+                        android:tint="#ffffffff" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@string/gallery"
+
+                        android:textColor="#ffffff" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="110dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫一扫接收行程"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ff999999"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="@dimen/d22"
+                android:layout_marginTop="@dimen/d20"
+                app:onClickCommand="@{viewModel.openAlbum}"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_capture_sao_yi_sao"
+                android:layout_height="@dimen/d22">
+
+            </ImageView>
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
+

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.text.InputType" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.HomeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_start_end_working"
+            android:layout_marginBottom="5dp"
+            app:srlEnableLoadMore="false"
+            app:srlEnableNestedScrolling="false"
+            app:srlEnableOverScrollBounce="false"
+            app:srlEnableOverScrollDrag="false"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnableRefresh="true"
+            app:srlHeaderHeight="40dp"
+            app:srlHeaderTriggerRate="0.5">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/home_summary_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginRight="@dimen/d15"
+                    android:background="@drawable/bg_home_head_view"
+                    android:orientation="vertical"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="20dp"
+
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/home_today_income_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:onClickCommand="@{viewModel.goTodayIncome}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.todayIncome}"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/income_today"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_online_time_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/d30"
+                                android:layout_toLeftOf="@+id/homeHeadViewLine"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:onClickCommand="@{viewModel.todayOrder}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.todayOrderNumber}"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/d5"
+                                    android:text="@string/order_today"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="  "
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/homeHeadViewLine"
+                                android:layout_width="1dp"
+                                android:layout_height="@dimen/d40"
+                                android:layout_centerInParent="true"
+                                android:background="@color/white">
+
+                            </View>
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/d30"
+                                android:layout_toRightOf="@+id/homeHeadViewLine"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.onlineTime}"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/online_time"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="(小时)"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/home_wallet_order_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/home_summary_layout"
+                    android:layout_marginTop="@dimen/d20"
+                    android:background="#ffffffff"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/my_wallet_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:onClickCommand="@{viewModel.myWallet}">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="46dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/home_wallet_mine" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="@string/my_wallet"
+                                android:textColor="#ff333333"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/travel_order_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:onClickCommand="@{viewModel.tripOrder}">
+
+                        <LinearLayout
+                            android:id="@+id/travel_order_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="48.5dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/home_order_form_mine" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="@string/travel_order"
+                                android:textColor="#ff333333"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                            />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_toRightOf="@+id/travel_order_ll"
+                            android:background="@drawable/icon_new_order"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:text="新订单"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            android:visibility="@{viewModel.pendingOrder ?   View.VISIBLE :View.GONE  }"></TextView>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:adapter="@{adapter}"
+                        app:itemBinding="@{viewModel.itembinding}"
+                        app:items="@{viewModel.orderList}"
+                        app:layoutManager="@{LayoutManagers.linear()}" />
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_start_end_working"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginBottom="@dimen/d10"
+            android:background="@{viewModel.driverStatus == 2 ? @drawable/bg_slideview  :@drawable/bg_slideview_disable}">
+
+
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@{viewModel.driverStatus == 2 ?  @string/begin_working : @string/on_working }"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="@{viewModel.driverStatus != 2 ?   View.GONE :View.VISIBLE }"
+                app:onClickCommand="@{viewModel.startWorking}" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.driverStatus == 2 ?   View.GONE :View.VISIBLE }">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.lockDrvier}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@{viewModel.lockDrvierState==1 ?  @drawable/icon_btn_lock:  @drawable/icon_btn_uclocking }"></ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@{viewModel.lockDrvierState==1 ? @string/driver_unlock : @string/driver_lock}"
+                        android:textColor="#ffffffff"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/on_working"
+                    android:textColor="@color/white"
+                    android:textSize="18sp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.endWorking}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/end_working">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/end_working"
+                        android:textColor="@color/white"
+                        android:textSize="11sp">
+
+                    </TextView>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+
+

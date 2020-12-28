@@ -1,0 +1,241 @@
+<resources>
+    <string name="app_name">峡市约车车主</string>
+    <string name="top_title">峡市约车</string>
+    <string name="page_error">网络开小差了</string>
+    <string name="page_error_retry">点击重试</string>
+    <string name="page_empty">暂无新数据</string>
+    <string name="skip">跳过</string>
+    <string name="mine">我的</string>
+    <string name="home">首页</string>
+    <string name="message">消息</string>
+    <string name="begin_working">点击出车</string>
+    <string name="on_working">接单中...</string>
+    <string name="end_working">收车</string>
+    <string name="http_timeout">请求超时，请检查您的网络</string>
+    <string name="json_exception">数据解析异常</string>
+    <string name="http_exception">服务器异常</string>
+    <string name="press_the_exit_procedure_again">再按一次退出程序</string>
+    <string name="immediate_start">立即开启</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="the_day_after_tomorrow">后天</string>
+    <string name="monday">周一</string>
+    <string name="tuesday">周二</string>
+    <string name="wednesday">周三</string>
+    <string name="thursday">周四</string>
+    <string name="friday">周五</string>
+    <string name="saturday">周六</string>
+    <string name="sunday">周日</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="track_day">天</string>
+    <string name="track_hour">点</string>
+    <string name="track_minute">分</string>
+
+    <string name="permission_denied_title">温馨提示</string>
+    <string name="permission_denied_body">当前应用缺少必要权限,请于\"设置\"-\"应用\"-\"权限\"中配置权限。</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="customer_service_call">拨号联系</string>
+    <string name="contact_us">联系我们</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="travel_order">行程订单</string>
+    <string name="online_time">在线时长</string>
+    <string name="order_today">今日接单</string>
+    <string name="income_today">今日收入（元）</string>
+    <string name="settings">设置</string>
+    <string name="qrcode">二维码名片</string>
+    <string name="yuan_cheng_chu_che">远程出车</string>
+    <string name="shao_yi_shao">扫一扫</string>
+    <string name="change_mobile">更换手机号</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="navigation_select">导航设置</string>
+    <string name="have_not_install_gaode_map">您尚未安装高德地图</string>
+    <string name="have_not_install_baidu_map">您尚未安装百度地图</string>
+    <string name="have_not_install_tecent_map">您尚未安装腾讯地图</string>
+    <string name="about">关于</string>
+    <string name="rights_management">权限管理</string>
+    <string name="logout">退出</string>
+    <string name="cur_version">当前版本</string>
+    <string name="version_prefix">v</string>
+    <string name="user_terms">服务协议</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_pass">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="login_title">登录中心</string>
+    <string name="forget_pass">忘记密码</string>
+    <string name="input_message_code">请输入短信验证码</string>
+    <string name="send_message_code">发送验证码</string>
+    <string name="immediate_experience">立即体验</string>
+    <string name="next">下一步</string>
+    <string name="reset_pwd">登录密码重设</string>
+    <string name="gaode_map">高德地图</string>
+    <string name="baidu_map">百度地图</string>
+    <string name="tencent_map">腾讯地图</string>
+    <string name="nav_set_tip">只能选择您手机上已安装的地图</string>
+    <string name="input_phone_num">请输入手机号</string>
+    <string name="input_verification_code">请验证码</string>
+    <string name="input_pwd">请输入新密码</string>
+    <string name="input_pwd_again">请再次输入新密码</string>
+    <string name="get">获取</string>
+    <string name="pwd_reset">密码重置</string>
+    <string name="pick_up_passengers">去接乘客</string>
+    <string name="contact_passengers">联系乘客</string>
+    <string name="navigation">导航</string>
+    <string name="arrive_at_the_boarding_place">到达上车地点</string>
+    <string name="start_picking_up_passengers">开始去接乘客</string>
+    <string name="start_stroke">开始行程</string>
+    <string name="arrive_at_destination">到达目的地</string>
+    <string name="passenger_cancel_order_tip">乘客已取消订单，请重新接单。</string>
+    <string name="sys_auto_receive_order">系统已自动为您接单，正在进入行程......</string>
+    <string name="driver_cancel_order_tip">确定要取消订单吗？</string>
+    <string name="driver_cancel_order_cancel">放弃取消</string>
+    <string name="driver_cancel_order_confirm">确定取消</string>
+
+    <string name="driver_start_go">去接乘客</string>
+    <string name="driver_arrive_place">到达上车点</string>
+    <!--    <string name="driver_arrive_destination">行程开始</string>-->
+    <string name="driver_arrive_destination">到达上车点</string>
+    <string name="driver_start_roading">行程中</string>
+    <string name="driver_start_confirm_cost">确认费用</string>
+    <string name="order_free_dec">其它费用，非必填</string>
+
+    <string name="order_details_dialog_desc">请核对账单，确认费用无误并提醒乘客付款！</string>
+    <string name="order_details_dialog_cancal">返回修改</string>
+    <string name="order_details_dialog_confirm">确认</string>
+    <string name="order_details_price">元</string>
+
+
+    <string name="finish_trip_order">已完成订单</string>
+    <string name="not_finish_trip_order">未完成订单</string>
+    <string name="trip_order_title">行程订单</string>
+
+    <string name="pay_order_details_button_text">生成付款二维码</string>
+    <string name="order_details_button_text">发起付款</string>
+    <string name="grad_order_dialog_cancal">拒绝</string>
+    <string name="grad_order_dialog_confirm">接单</string>
+    <string name="grad_order_dialog_hiht">接单成功，请等待行程开始...</string>
+
+    <string name="phone_order_pay_title">确认费用</string>
+    <string name="update_later">稍后再说</string>
+    <string name="update_now">立即更新</string>
+    <string name="download">下载</string>
+    <string name="update_url_error">下载地址错误</string>
+    <string name="external_storage_permission_denied_title">存储权限已关闭</string>
+    <string name="external_storage_permission_denied_body">存储权限已关闭，开启后才能更新体验最新版APP</string>
+    <string name="external_storage_permission_denied_nega">拒绝</string>
+    <string name="external_storage_permission_denied_posi">允许</string>
+
+    <string name="my_wallet_title">钱包</string>
+    <string name="order_details_title">订单详情</string>
+    <string name="good_firend_intime">好友司机实时单</string>
+    <string name="good_firend_appointment_form">好友司机预约单</string>
+
+    <string name="my_wallet_balance_title">余额</string>
+
+    <string name="my_wallet_balance_all">全部</string>
+    <string name="my_wallet_balance_income">仅收入</string>
+    <string name="my_wallet_balance_expenditure">仅支出</string>
+
+    <string name="my_withdrawal_title">提现</string>
+
+    <string name="my_withdrawal_hiht">请输入提取金额</string>
+    <string name="my_withdrawal_limit">输入金额大于提现金额</string>
+
+
+    <string name="intro_title_1">欢迎来到峡市约车车主</string>
+    <string name="intro_title_2">实时、预约订单/扫码单</string>
+    <string name="intro_title_3"></string>
+
+    <string name="intro_tip_1">适用于网约车出行的车主软件</string>
+    <string name="intro_tip_2">随时随地接单  扫码支付  快捷方便</string>
+    <string name="intro_tip_3">""</string>
+
+    <string name="enter_main">进入首页</string>
+    <string name="newer">新</string>
+    <string name="msg_list_empty_tip">这里很干净，没有消息~</string>
+    <string name="add_en">+</string>
+    <string name="qrcode_hiht">扫一扫上面的二维码加我为好友司机</string>
+
+    <string name="login_phone_error_tip">请输入正确的手机号码</string>
+    <string name="verify_code">验证码</string>
+    <string name="new_pass_work_hiht">两次输入的密码不匹配，请重新输入</string>
+    <string name="new_pass_work_lenght_hiht">请设置6位以上的新密码</string>
+    <string name="verify_code_hiht">验证码输入有误，请重新输入</string>
+    <string name="month_incomedetails_title"></string>
+    <string name="month_incomedetails_total">合计  </string>
+
+    <string name="month_withdrawTips">本月收入（元）</string>
+    <string name="week_withdrawTips">本周收入（元）</string>
+
+    <string name="today_order_title">今日接单</string>
+    <string name="today_income_title">今日收入</string>
+    <string name="notification_title">峡市约车车主正在运行</string>
+
+    <string name="long_rang_driving_title">远程出车</string>
+    <string name="open_gps_tile">打开GPS</string>
+    <string name="open_gps_body">Gps关闭，请打开GPS</string>
+
+    <string name="net_errer">网络信号差，请检查您的网络</string>
+
+    <string name="select_time">请选择时间</string>
+
+    <string name="select_rang_driving_time_title">请选择出车时间段</string>
+    <string name="range_driving_finish_qcode_title">收款二维码</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_fail">支付失败</string>
+
+    <string name="pay_confirm">确认支付</string>
+    <string name="pay">支付</string>
+    <string name="pay_wechat">微信支付</string>
+    <string name="pay_ali">支付宝支付</string>
+    <string name="money_zh">元</string>
+
+
+    <string name="left_bracket">(</string>
+    <string name="right_bracket">)</string>
+
+    <string name="camera_permission_denied_title">摄像头权限已关闭</string>
+    <string name="camera_permission_denied_body">请打开摄像头权限，以便获取摄像头数据</string>
+    <string name="camera_permission_denied_nega">取消</string>
+    <string name="camera_permission_denied_posi">设置</string>
+    <string name="qrcode_link_not_exit_or_expired">二维码不存在或已失效</string>
+
+    <string name="msg_camera_framework_bug">The camera is occupied or has no camera permission, please check</string>
+    <string name="button_ok">Exit</string>
+    <string name="scan_code">Scan QR Code</string>
+    <string name="open_flash">Turn on the flash</string>
+    <string name="close_flash">Turn off the flash</string>
+    <string name="gallery">Gallery</string>
+    <string name="scan_failed_tip">Scan image failed, please retry.</string>
+    <string name="driver_lock">未锁定</string>
+    <string name="driver_unlock">已锁定</string>
+    <string name="driver_name">姓名:</string>
+    <string name="driver_id">ID:</string>
+    <string name="driver_charter_car">包车出车</string>
+    <string name="driver_charter_flap_down">查看详情</string>
+    <string name="driver_charter_flap_up">收起</string>
+    <string name="driver_charter_wait_voice">进入行程等待状态，请在规定地点等候乘客上车，如更换等候地点请尽快与乘客联系</string>
+    <string name="driver_charter_end_service_voice">包车行程已结束，请提醒乘客携带好随身物品下车，开门请当心</string>
+    <string name="driver_charter_end_service_last_day_voice">本日包车行程已结束，请核对下一次行程开始时间和上车地点，提醒乘客携带好随身物品下车，开门请当心</string>
+    <string name="driver_integral_detail">积分明细</string>
+    <string name="my_integral">我的积分</string>
+    <string name="my_car_pooling_site">接送站出车</string>
+    <string name="integral_exchange">积分兑换</string>
+    <string name="transfer_order_hiht">"是否确定转单？"</string>
+    <string name="transfer_order_hiht_number">"您可以在2分钟内转单，转单将会扣除积分，今日转单次数还剩余"</string>
+    <string name="driver_exchange_code">兑换码:</string>
+    <string name="driver_intergral">积分:</string>
+
+    <string name="driver_tran_sport_site_car">接送站出车</string>
+    <string name="driver_transfer_type_1">到达上车点</string>
+    <string name="driver_transfer_type_2">乘客已上车</string>
+    <string name="driver_transfer_type_3">到达目的地</string>
+    <string name="driver_transfer_type_4">已完成</string>
+
+    <string name="driver_transfer_pessener_ready_car"> 是否确定所有乘客已上车？</string>
+    <string name="transfer_pessener_destination">是否已确认所有乘客已到达上车点？ </string>
+    <string name="transfer_order_no">订单号：</string>
+
+</resources>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.orderdetails.OrderDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/order_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="订单详情"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d12"
+            android:layout_marginTop="@dimen/d12"
+            android:layout_marginRight="@dimen/d12"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <!--            <include-->
+
+            <!--                layout="@layout/order_details_passenger_view">-->
+
+            <!--            </include>-->
+
+            <RelativeLayout
+                android:id="@+id/ll_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10">
+
+                <LinearLayout
+                    android:id="@+id/ll_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d20"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginBottom="@dimen/d12"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_header"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_passenger_head"
+                        app:url="@{viewModel.headPicUrl}" />
+
+                    <TextView
+                        android:id="@+id/tv_phoneNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d4"
+                        android:text="@{viewModel.passengerInfo}"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/serverTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d4"
+                        android:text="@{viewModel.orderTime}"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ll_header"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvStartName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d25"
+                        android:layout_marginTop="@dimen/d12"
+                        android:text="@{viewModel.startAddress}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_15" />
+
+                    <TextView
+                        android:id="@+id/tvEndName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvStartName"
+                        android:layout_marginLeft="@dimen/d25"
+                        android:layout_marginTop="@dimen/d18"
+                        android:text="@{viewModel.endAddress}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_15" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="@dimen/d12"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginRight="@dimen/d12"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/negativeText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="拒绝接单"
+                android:textColor="@color/rx_000000"
+                android:textSize="16sp"
+                app:onClickCommand="@{viewModel.ucCanCalOrder}" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rx_e1e1e1" />
+
+            <TextView
+                android:id="@+id/positiveText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="确认接单"
+                android:textColor="@color/rx_2196f3"
+                android:textSize="16sp"
+                app:onClickCommand="@{viewModel.ucGrabOrder}" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

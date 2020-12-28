@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.ymx.driver.viewmodel.mine.NavSettingViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mine.NavSettingViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white"
+           >
+
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/navigation_select"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <FrameLayout
+                    android:id="@+id/gaode"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:bl_pressed_solid_color="@color/rx_f2f2f2"
+                    app:bl_unPressed_solid_color="@color/rx_ffffff"
+                    app:onClickCommand="@{viewModel.navSetGaode}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:text="@string/gaode_map"
+                        android:textColor="@color/rx_555555"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@{viewModel.select == NavSettingViewModel.NAV_MODE_GAODE ? @drawable/icon_map_pre : @drawable/icon_map_nm}" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/baidu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="4dp"
+                    app:bl_pressed_solid_color="@color/rx_f2f2f2"
+                    app:bl_unPressed_solid_color="@color/rx_ffffff"
+                    app:onClickCommand="@{viewModel.navSetBaidu}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:text="@string/baidu_map"
+                        android:textColor="@color/rx_555555"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@{viewModel.select == NavSettingViewModel.NAV_MODE_BAIDU ? @drawable/icon_map_pre : @drawable/icon_map_nm}" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/tencent"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="4dp"
+                    app:bl_pressed_solid_color="@color/rx_f2f2f2"
+                    app:bl_unPressed_solid_color="@color/rx_ffffff"
+                    app:onClickCommand="@{viewModel.navSetTencent}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:text="@string/tencent_map"
+                        android:textColor="@color/rx_555555"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@{viewModel.select == NavSettingViewModel.NAV_MODE_TENCENT ? @drawable/icon_map_pre : @drawable/icon_map_nm}" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/nav_set_tip"
+                    android:textColor="@color/rx_888888"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

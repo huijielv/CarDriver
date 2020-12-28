@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.GrapOrderItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_home_trip_order_item"
+        android:paddingBottom="10dp"
+        app:onClickCommand="@{viewModel.grabOrder}">
+
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp">
+
+            <ImageView
+                android:id="@+id/timeIV"
+                android:layout_width="@dimen/d12"
+                android:layout_height="@dimen/d12"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d10"
+                android:src="@drawable/icon_trip_order_time">
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/timeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/timeIV"
+                android:text="@{viewModel.entity.appointmentTime}"
+                android:textColor="#333333"
+                android:textSize="14sp"></TextView>
+
+            <TextView
+                android:id="@+id/orderTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:layout_toRightOf="@+id/timeTv"
+                android:background="@{viewModel.statusBg }"
+                android:text="@{viewModel.entity.orderTypeName}"
+                android:textColor="@color/white"
+                android:textSize="14sp"></TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="@{viewModel.entity.buttonText}"
+                android:textColor="#FFFF8008"
+                android:textSize="14sp">
+
+            </TextView>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/startAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="@{viewModel.entity.srcName}"
+                android:textColor="#ff333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/endAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startAddress"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{viewModel.entity.desName}"
+                android:textColor="#ff333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

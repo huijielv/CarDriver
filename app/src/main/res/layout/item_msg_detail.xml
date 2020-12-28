@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.message.MsgDetailItemViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:bl_corners_radius="4dp"
+            app:bl_solid_color="@color/rx_ffffff">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:text="@{viewModel.entity.title}"
+                android:textColor="@color/rx_333333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.entity.messageInfo}"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{viewModel.entity.timeDescribe}"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:text="@string/newer"
+            android:textColor="@color/rx_ffffff"
+            android:textSize="14sp"
+            android:visibility="@{viewModel.entity.readState == 0 ? View.VISIBLE : View.GONE}"
+            app:bl_corners_topRightRadius="4dp"
+            app:bl_solid_color="@color/rx_ff4800" />
+    </FrameLayout>
+</layout>

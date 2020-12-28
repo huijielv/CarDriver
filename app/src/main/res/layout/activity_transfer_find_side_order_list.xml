@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.ymx.driver.util.SystemUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.transportsite.TransferFindSiteOrderListViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.siteTitleText}"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/d15"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.siteName}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:onClickCommand="@{viewModel.startTrip }">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@{viewModel.orderStateName}"
+                        android:textColor="#ffff8008"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/icon_side_order_list_right">
+
+                    </ImageView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/selectType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@color/rx_ff5093E1"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/d3"
+                android:paddingBottom="@dimen/d3"
+                app:onClickCommand="@{viewModel.selectTripOrder}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/d3"
+                    android:background="@color/white"
+                    android:paddingLeft="7dp"
+                    android:paddingTop="@dimen/d2"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="@dimen/d2"
+                    android:text="@{viewModel.selectTypeHiht}"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_14"></TextView>
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/icon_trip_list_down"></ImageView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableLoadMore="true"
+            app:srlEnableNestedScrolling="false"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnableRefresh="true"
+            app:srlHeaderHeight="40dp"
+            app:srlHeaderTriggerRate="0.5">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:splitMotionEvents="false"
+                app:adapter="@{adapter}"
+                app:itemBinding="@{viewModel.itembinding}"
+                app:items="@{viewModel.itemList}"
+                app:layoutManager="@{LayoutManagers.linear()}" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlAccentColor="@android:color/black"
+                app:srlTextSizeTime="12sp"
+                app:srlTextSizeTitle="14sp" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</layout>

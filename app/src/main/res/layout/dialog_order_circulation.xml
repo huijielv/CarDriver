@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="dialog"
+            type="com.ymx.driver.dialog.OrderCirculationDialog" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="vertical"
+            app:bl_corners_radius="8dp"
+            app:bl_solid_color="@color/rx_ffffff">
+
+            <LinearLayout
+                android:id="@+id/titleLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/rx_000000"
+                    android:textSize="16sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/rx_000000"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <com.ymx.driver.view.VerificationCodeView
+                android:id="@+id/verificationcodeview"
+                android:layout_width="match_parent"
+                app:vcv_et_cursor_visible="false"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:vcv_et_spacing="30dp"
+                app:vcv_et_bg="@drawable/et_login_code"
+                app:vcv_et_cursor="@drawable/et_cursor"
+                app:vcv_et_inputType="number"
+                app:vcv_et_number="4"
+                app:vcv_et_text_color="@android:color/black"
+                app:vcv_et_text_size="6sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:paddingLeft="6dp"
+                android:paddingTop="3dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/grey_cc"
+                android:paddingRight="6dp"
+                app:onClickCommand="@{dialog.qcode}"
+                android:paddingBottom="3dp"
+                android:text="显示流转二维码"
+                android:textColor="#ffffffff"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/contentLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:orientation="vertical"
+                android:visibility="gone"></LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/d10"
+                android:background="@color/rx_e1e1e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/negativeText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/cancel"
+                    android:textColor="@color/rx_999999"
+                    android:textSize="16sp"
+                    app:onClickCommand="@{dialog.negative}" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/rx_e1e1e1" />
+
+                <TextView
+                    android:id="@+id/positiveText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/confirm"
+                    android:textColor="#FF8008"
+                    android:textSize="16sp"
+                    app:onClickCommand="@{dialog.positive}" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

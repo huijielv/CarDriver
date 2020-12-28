@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.ymx.driver.util.SystemUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.LongRangeFerryFinishViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_details_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleFL"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:paddingTop="20dp"
+            android:paddingBottom="@dimen/d20"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/startName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d5"
+                            android:layout_marginRight="@dimen/d5"
+                            android:text="@{viewModel.startName}"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/text_size_18">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/turn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="到"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/text_size_20">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/endName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d5"
+                            android:layout_marginRight="@dimen/d5"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="@{viewModel.endName}"
+                            android:textColor="@color/color_333333"
+                            android:textSize="@dimen/text_size_18">
+
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d20"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:splitMotionEvents="false"
+                    app:adapter="@{adapter}"
+                    app:itemBinding="@{viewModel.itembinding}"
+                    app:itemDecoration="@{LayoutManagers.itemDecoration(1 ,104)}"
+                    app:items="@{viewModel.list}"
+                    app:layoutManager="@{LayoutManagers.grid(4)}" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d20"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:text="@{viewModel.travelMileage}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:text="@{viewModel.rideNumber}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp">
+
+                </TextView>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.callPhone}">
+
+                    <ImageView
+                        android:layout_width="@dimen/d25"
+                        android:layout_height="@dimen/d25"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d20"
+                        android:src="@drawable/icon_customer_service_telephone_numbers">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="联系客服"
+                        android:textColor="@color/rx_333333"
+                        android:textSize="@dimen/text_size_16"></TextView>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/BillingRulesLl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d10"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}"
+            app:onClickCommand="@{viewModel.goBillingRules}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="计费规则"
+                android:textSize="@dimen/text_size_14"></TextView>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="@dimen/d10"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d5"
+                android:src="@drawable/icon_pay_right">
+
+            </ImageView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,48 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.triporderlist.NotFinishTripViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_dddddd">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text=""
+            android:layout_height="wrap_content"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:splitMotionEvents="false"
+            app:adapter="@{adapter}"
+            app:itemBinding="@{viewModel.itembinding}"
+            app:items="@{viewModel.itemList}"
+            app:layoutManager="@{LayoutManagers.linear()}" />
+    </RelativeLayout>
+</layout>

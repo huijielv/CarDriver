@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.SystemNoticeItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:onClickCommand="@{viewModel.itemClick}">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="14dp"
+            android:text="@{viewModel.entity.title}"
+            android:textColor="@color/rx_333333"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:visibility="@{viewModel.entity.contentType == 2 ? View.VISIBLE : View.GONE}"
+            app:url="@{viewModel.entity.picUrl}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:minHeight="200dp"
+            android:scrollbars="vertical"
+            android:text="@{viewModel.entity.content}"
+            android:textColor="@color/rx_555555"
+            android:textSize="14sp"
+            android:visibility="@{viewModel.entity.contentType == 1 ? View.VISIBLE : View.GONE}"
+          />
+    </LinearLayout>
+</layout>

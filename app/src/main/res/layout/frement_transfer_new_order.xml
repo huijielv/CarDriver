@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<data>
+
+    <import type="android.view.View" />
+
+    <variable
+        name="viewModel"
+        type="com.ymx.driver.viewmodel.mine.TransferNewOrderViewModel" />
+</data>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rx_transparent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d15"
+        android:layout_marginTop="@dimen/d50"
+        android:layout_marginRight="@dimen/d15"
+        app:bl_corners_bottomLeftRadius="5dp"
+        app:bl_corners_bottomRightRadius="5dp"
+        app:bl_corners_topLeftRadius="5dp"
+        app:bl_corners_topRightRadius="5dp"
+        app:bl_solid_color="@color/white">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/d10"
+            android:text="三门峡南站到xxxxxx"
+            android:textColor="#ff333333"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:layout_width="@dimen/d80"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_soli_item"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginBottom="@dimen/d15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/d10"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/d5"
+            android:text="抢单"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
+</layout>

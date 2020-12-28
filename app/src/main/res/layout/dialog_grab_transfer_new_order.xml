@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/d15"
+            android:paddingBottom="@dimen/d15"
+            android:layout_marginTop="45dp"
+            android:shadowColor="#1a333333"
+            android:shadowDx="0"
+            android:shadowDy="3"
+            android:background="@drawable/bg_dailog_grab_transfer_new_order"
+            >
+
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginRight="@dimen/d10"
+                android:layout_toLeftOf="@+id/grabTv"
+                android:text=""
+                android:textColor="#ff333333"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/grabTv"
+                android:layout_width="@dimen/d80"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d10"
+                android:background="@drawable/bg_grey"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="@dimen/d5"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.transportsite.TransferStationTripOrderDetailsListItem" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/passnerInfoLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_view"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d10"
+            android:paddingBottom="@dimen/d10">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/timeLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d10"
+                        android:src="@drawable/icon_time">
+
+                    </ImageView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d10"
+                        android:text="@{viewModel.entity.appointmentTime}"
+                        android:textColor="@color/color_333333"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/infoLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/timeLl"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_header"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon_headiv" />
+
+                        <TextView
+                            android:id="@+id/tv_phoneNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/d2"
+                            android:text="@{viewModel.phoneNumber}"
+                            android:textColor="@color/rx_ff333333"
+                            android:textSize="@dimen/text_size_14" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:id="@+id/startAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="6dp"
+                                android:layout_height="6dp"
+                                android:layout_marginLeft="@dimen/d15"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="@{viewModel.entity.srcName}"
+                                android:textColor="@color/rx_ff333333"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/lineIv"
+                            android:layout_width="4dp"
+                            android:layout_height="22dp"
+                            android:layout_marginLeft="@dimen/d16"
+                            android:layout_marginTop="@dimen/d18"
+                            android:src="@drawable/icon_transfer_find_order_list_item_dotted_line">
+
+                        </ImageView>
+
+
+                        <LinearLayout
+                            android:id="@+id/endAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lineIv"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="6dp"
+                                android:layout_height="6dp"
+                                android:layout_marginLeft="@dimen/d15"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="@{viewModel.entity.desName}"
+                                android:textColor="@color/rx_ff333333"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="55dp"
+                        android:layout_height="match_parent"></View>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/afterDrivingTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/infoLl"
+
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@{viewModel.entity.afterDrivingTime }"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="@{viewModel.driverState==1  &amp;&amp;!TextUtils.isEmpty(viewModel.entity.afterDrivingTime) ?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel.selectTime}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/afterDrivingTimeTv"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@{viewModel.entity.rideNumber}"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="@{viewModel.driverState==1  &amp;&amp;!TextUtils.isEmpty(viewModel.entity.rideNumber) ?View.VISIBLE:View.GONE}" />
+
+
+                <TextView
+                    android:id="@+id/passengerUpTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/infoLl"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@{viewModel.entity.passengerUpTime}"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="@{viewModel.driverState==2  &amp;&amp;!TextUtils.isEmpty(viewModel.entity.passengerUpTime) ?View.VISIBLE:View.GONE}" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginTop="@dimen/d10"
+                android:layout_marginRight="@dimen/d10"
+                android:background="#fff2f2f2"></View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/callPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.driverState==1?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel.callPassengerPhone}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/icon_range_driving_lianxichengke">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="联系乘客"
+                        android:textSize="@dimen/text_size_15">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navigationLl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.driverState!=1?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel.navi}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/icon_daohang">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="导航"
+                        android:textSize="@dimen/text_size_15">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/updatePassengerStateRl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="@{((viewModel.driverState==2  &amp;&amp; (viewModel.entity.passengerState==2||viewModel.entity.passengerState==3))|(viewModel.driverState==4&amp;&amp;viewModel.entity.passengerState==4 ))?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel. updatePassengerType }">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@{viewModel.getPassengerIv}">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="@{viewModel.getPassengerType}"
+                        android:textSize="@dimen/text_size_15">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/canceOrder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="@{(viewModel.driverState==1||(viewModel.driverState==2  &amp;&amp; (viewModel.entity.passengerState==2||viewModel.entity.passengerState==3)))?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel.cancalOrder}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/icon_transfer_cancal_order">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="取消订单"
+                        android:textSize="@dimen/text_size_15">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/qRcodeLl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="@{(viewModel.driverState==4  &amp;&amp; viewModel.entity.payState==0)?View.VISIBLE:View.GONE}"
+                    app:onClickCommand="@{viewModel.qrCode}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/icon_longdrivingshoukuanerweima">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d5"
+                        android:text="收款二维码"
+                        android:textSize="@dimen/text_size_15"></TextView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d25"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.driverState!=1?View.VISIBLE:View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="@{viewModel.entity.payStateName}"
+                android:textColor="@{viewModel.entity.payState==1?@color/color_ffff8888:@color/rx_ff333333}"
+                android:textSize="14sp"
+                android:visibility="@{viewModel.driverState==4?View.VISIBLE:View.GONE}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="@{viewModel.entity.passengerStateName}"
+                android:textColor="@{viewModel.driverState==4?@color/color_ffff8888:@color/rx_ff333333}"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d10"
+            android:layout_below="@+id/passnerInfoLl"></View>
+
+    </RelativeLayout>
+
+
+</layout>

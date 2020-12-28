@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.RemoteIncomeListItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/d8"
+            android:paddingBottom="@dimen/d8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@{viewModel.entity.phone}"
+                android:textColor="#ff333333"
+                android:textSize="@dimen/text_size_14" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{viewModel.entity.income +@string/order_details_price}"
+                    android:textColor="@color/rx_333333"
+                    android:textSize="@dimen/text_size_14">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d5"
+                    android:text="@{ @string/left_bracket+ viewModel.entity.stateName   +@string/right_bracket }"
+                    android:textColor="@{viewModel.entity.payState ==1 ?@color/rx_333333:@color/rx_f11818 }"
+                    android:textSize="@dimen/text_size_14">
+
+                </TextView>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</layout>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="com.ymx.driver.util.OrderStatusUtils" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.finishorderdetails.TripOrderDetailsFinshViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/order_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="订单详情"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/d15"
+                android:paddingTop="12dp"
+                android:paddingRight="@dimen/d15">
+
+
+                <LinearLayout
+                    android:id="@+id/payStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_long_range_driving_head_view"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/d25"
+                    android:paddingBottom="@dimen/d25"
+                    android:visibility="@{viewModel.orderStatus == OrderStatusUtils.DRIVER_ORDER_FINISH  ?   View.GONE : View.VISIBLE }">
+
+                    <ImageView
+                        android:id="@+id/payIv"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@{viewModel.orderStatus == OrderStatusUtils.DRIVER_ORDER_CLOSED ? @drawable/icon_driver_order_finsh_trips : @drawable/icon_driver_startpay_trips}"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/payTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d12"
+                        android:text="@{viewModel.stateName}"
+                        android:textColor="@{viewModel.orderStatus == OrderStatusUtils.DRIVER_ORDER_CLOSED ? @color/grey: @color/rx_ff8008}"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/finishOrderQrCodeRl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:background="@drawable/bg_long_range_driving_head_view"
+                    android:padding="@dimen/d10"
+                    android:visibility="@{viewModel.orderStatus == OrderStatusUtils.DRIVER_STATE_TO_PAY ?    View.VISIBLE :View.GONE }"
+                    app:onClickCommand="@{viewModel.goQrCode}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="收款方式"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_14"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="二维码  >"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_14"></TextView>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_long_range_driving_head_view"
+                    android:padding="12dp">
+
+
+                    <RelativeLayout
+                        android:id="@+id/ll_order_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10">
+
+                        <LinearLayout
+                            android:id="@+id/ll_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_header"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_passenger_head"
+                                app:url="@{viewModel.headPicUrl}" />
+
+                            <TextView
+                                android:id="@+id/tv_phoneNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/d4"
+                                android:text="@{viewModel.passengerInfo}"
+                                android:textColor="@color/rx_ff333333"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/ll_header"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/startAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@{viewModel.startAddress}"
+                                    android:textColor="#ff333333"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/endAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@{viewModel.endAddress}"
+                                    android:textColor="#ff333333"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_order_info"
+                        android:layout_marginTop="@dimen/d15"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/taxiLl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="打表计价"
+                                android:textColor="@color/color_ffff8888"
+                                android:textSize="@dimen/text_size_16">
+
+                            </TextView>
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/d10"
+                                android:layout_marginBottom="@dimen/d10"
+                                android:text="实际用车车费金额根据计价器计价为准"
+                                android:textColor="#ff999999"
+                                android:textSize="@dimen/text_size_12"></TextView>
+
+                        </LinearLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            android:splitMotionEvents="false"
+                            app:adapter="@{adapter}"
+                            app:itemBinding="@{viewModel.itembinding}"
+                            app:items="@{viewModel.orderList}"
+                            app:layoutManager="@{LayoutManagers.linear()}" />
+
+                        <LinearLayout
+                            android:id="@+id/customerPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/d20"
+                            android:orientation="vertical"
+                            app:onClickCommand="@{viewModel.callPhone }">
+
+                            <ImageView
+                                android:layout_width="@dimen/d25"
+                                android:layout_height="@dimen/d25"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/icon_customer_service_telephone_numbers"></ImageView>
+
+                            <TextView
+                                android:id="@+id/customerPhoneT"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="联系客服"
+                                android:textColor="@color/rx_333333"
+                                android:textSize="@dimen/text_size_16" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/BillingRulesLl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d15"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.orderStatus == 8 ?    View.GONE : View.VISIBLE}"
+            app:onClickCommand="@{viewModel.goBillingRules}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="计费规则"
+                android:textSize="@dimen/text_size_15"></TextView>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="@dimen/d10"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d5"
+                android:src="@drawable/icon_pay_right">
+
+            </ImageView>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

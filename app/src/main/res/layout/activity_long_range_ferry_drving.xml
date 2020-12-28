@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.ymx.driver.util.SystemUtils" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.LongRangeFerryDrvingViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/titleFL"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/long_rang_driving_title"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/lockTipsTv"
+            android:layout_below="@+id/titleFL"
+            android:layout_marginTop="@dimen/d10"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/bg_long_range_driving_head_view"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/d15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:text="可运营线路："
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d20"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:splitMotionEvents="false"
+                    app:adapter="@{adapter}"
+                    app:itemBinding="@{viewModel.itembinding}"
+                    app:items="@{viewModel.list}"
+                    app:layoutManager="@{LayoutManagers.linear()}" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lockTipsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="65dp"
+            android:text="@{viewModel.lockTips}"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_14">
+
+
+        </TextView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/d10"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@color/grey_cc"
+                android:visibility="@{viewModel.remoteState!=0 ?  View.VISIBLE :View.GONE }">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.lockDrvier}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@{viewModel.lockDrvierState==1 ?  @drawable/icon_btn_lock:  @drawable/icon_btn_uclocking }"></ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@{viewModel.lockDrvierState==1 ? @string/driver_unlock : @string/driver_lock}"
+                        android:textColor="#ffffffff"
+                        android:textSize="11sp" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="接单中..."
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18"></TextView>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.stopWork}">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/icon_btn_collect_car"></ImageView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="收车"
+                        android:textColor="#ffffffff"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <com.ymx.driver.view.SwipeButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d15"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/bg_rangge_driving_btn_submit"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:visibility="@{viewModel.remoteState==0 ?    View.VISIBLE :View.GONE }"
+                app:after_confirmation_background="#FF8008"
+                app:button_confirm_text="释放"
+                app:button_swipe_text="滑动"
+                app:gradient_color_1="#FF8008"
+                app:gradient_color_2="#FFC837"
+                app:gradient_color_3="#FF8008"
+                app:swipe_mode="clamp"
+                app:threshold="0.8" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</layout>

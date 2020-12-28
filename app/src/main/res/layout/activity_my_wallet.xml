@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.MyWalletViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="钱包"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_view"
+            android:paddingTop="@dimen/d25"
+            android:paddingBottom="@dimen/d20"
+            app:onClickCommand="@{viewModel.goMonthIncome}">
+
+            <RelativeLayout
+                android:id="@+id/incomeRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:text="@{viewModel.withdrawTips}"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_16">
+
+                </TextView>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="@dimen/d30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/income"
+                        android:layout_toLeftOf="@+id/income"
+                        android:text="￥"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.income}"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"></TextView>
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:src="@drawable/icon_driver_right_arrow">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/incomeRl"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/d22"
+                android:layout_marginRight="@dimen/d30"
+                android:layout_marginBottom="@dimen/d5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@{viewModel.isClickWeek ?@color/color_208cef:@color/gray}"
+                    android:gravity="center"
+                    android:text="周"
+                    android:textColor="@{viewModel.isClickWeek ?@color/white:@color/black}"
+                    android:textSize="@dimen/text_size_14"
+                    app:onClickCommand="@{viewModel.clickWeek}">
+
+                </TextView>
+
+                <View
+                    android:layout_width="@dimen/d20"
+                    android:layout_height="match_parent"></View>
+
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@{viewModel.isClickMoth ?@color/color_208cef:@color/gray}"
+                    android:gravity="center"
+                    android:text="月"
+                    android:textColor="@{viewModel.isClickMoth ?@color/white:@color/black}"
+                    android:textSize="@dimen/text_size_14"
+                    app:onClickCommand="@{viewModel.clickMonth}"></TextView>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_view"
+            android:paddingTop="@dimen/d25"
+            android:paddingBottom="@dimen/d25"
+            app:onClickCommand="@{viewModel.ucGoMyWalletBanlance}">
+
+            <RelativeLayout
+                android:id="@+id/myBalacneLl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10">
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/balacneMoney"
+                    android:text="余额"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/balacneMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/balance"
+                    android:text="@{viewModel.balacne}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/balacneMoney"
+                    android:layout_marginRight="@dimen/d5"
+                    android:layout_toRightOf="@+id/balacneMoney"
+                    android:text="元"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myBalacneLl"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginTop="@dimen/d15"
+                android:text="@{viewModel.withdrawDesc}"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d10"
+                android:src="@drawable/icon_driver_right_arrow">
+
+            </ImageView>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:visibility="@{viewModel.monthPayOrderNumber>0?View.VISIBLE:View.GONE}"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_view"
+            android:paddingTop="@dimen/d25"
+            android:paddingBottom="@dimen/d25"
+            app:onClickCommand="@{viewModel.goHotleOrderMonthIncome}"
+            >
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月付订单查询"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@{viewModel.monthPayOrderNumberDesc}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d10"
+                android:src="@drawable/icon_driver_right_arrow">
+
+            </ImageView>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

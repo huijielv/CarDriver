@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.chartercar.CharterDetailsViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/titleFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_app_bg">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/order_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.titleText}"
+                android:textColor="@color/rx_333333"
+                android:textSize="@dimen/text_size_18" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/charterLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/order_title_bar"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d20"
+            android:paddingBottom="@dimen/d20"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d5"
+                    android:layout_marginRight="@dimen/d25"
+                    android:layout_toLeftOf="@+id/midImc"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="@{viewModel.startSite}"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+
+                <ImageView
+                    android:id="@+id/midImc"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_ferry_changgui">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d25"
+                    android:layout_marginRight="@dimen/d5"
+                    android:layout_toRightOf="@+id/midImc"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:text="@{viewModel.endStie}"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:text="上车点："
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:text="@{viewModel.startName}"
+                    android:textColor="#ffff8008"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d12">
+
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_charter_time">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="31dp"
+                    android:text="@{viewModel.appointmentTime}"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/fancheng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:background="@drawable/bg_chartercar_orderdetails_fancheng"
+                    android:paddingLeft="@dimen/d12"
+                    android:paddingTop="@dimen/d4"
+                    android:paddingRight="@dimen/d12"
+                    android:paddingBottom="@dimen/d4"
+                    android:text="需返程"
+                    android:textColor="#ffffffff"
+                    android:textSize="12sp"
+                    android:visibility="@{viewModel.isNeedBack==1?View.VISIBLE:View.GONE}" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnSubmit"
+            android:layout_below="@+id/charterLl"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginBottom="@dimen/d5"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_long_range_driving_head_view">
+
+                    <RelativeLayout
+                        android:id="@+id/ll_order_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/d10"
+                        android:paddingTop="@dimen/d20"
+                        android:paddingRight="@dimen/d10"
+                        android:paddingBottom="@dimen/d20">
+
+                        <LinearLayout
+                            android:id="@+id/ll_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_header"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_passenger_head" />
+
+                            <TextView
+                                android:id="@+id/tv_phoneNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="@{viewModel.passengerInfo}"
+                                android:textColor="@color/rx_ff333333"
+                                android:textSize="@dimen/text_size_14" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d5"
+                            android:layout_toEndOf="@+id/ll_header"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:id="@+id/startAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="6dp"
+                                        android:layout_marginLeft="@dimen/d15"
+                                        android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                                    <TextView
+                                        android:id="@+id/tv_place_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:gravity="center_vertical"
+                                        android:text="@{viewModel.startName}"
+                                        android:textColor="@color/rx_ff333333"
+                                        android:textSize="@dimen/text_size_18" />
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:id="@+id/endAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="6dp"
+                                        android:layout_marginLeft="@dimen/d15"
+                                        android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:gravity="center_vertical"
+                                        android:text="@{viewModel.endName}"
+                                        android:textColor="@color/rx_ff333333"
+                                        android:textSize="@dimen/text_size_18" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_order_info"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/d10"
+                        android:paddingBottom="@dimen/d10">
+
+
+                        <LinearLayout
+                            android:id="@+id/callPhone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:onClickCommand="@{viewModel.call}">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/icon_range_driving_lianxichengke">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/d5"
+                                    android:text="联系乘客"
+                                    android:textSize="@dimen/text_size_15">
+
+                                </TextView>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/navigationLl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:onClickCommand="@{viewModel.navigate}">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:src="@drawable/icon_charter_daohang">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/d5"
+                                    android:text="导航"
+                                    android:textSize="@dimen/text_size_15">
+
+                                </TextView>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d20"
+                    android:text="@{viewModel.timeText}"
+                    android:textColor="@{viewModel.isTimeout==1 ?@color/rx_fff11818:@color/rx_ff333333}"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/charterTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d20"
+                    android:textColor="@{viewModel.isTimeout==1 ?@color/rx_fff11818:@color/rx_ff333333}"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d20"
+                    android:text="@{viewModel.feeText}"
+                    android:textColor="@{viewModel.isTimeout==1 ?@color/rx_fff11818:@color/rx_ff333333}"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <com.ymx.driver.view.SwipeButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginBottom="@dimen/d10"
+            android:background="@drawable/bg_rangge_driving_btn_submit"
+            android:gravity="center"
+            android:text="继续行程"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}"
+            app:after_confirmation_background="#FF8008"
+            app:button_confirm_text="释放"
+            app:button_swipe_text="滑动"
+            app:gradient_color_1="#FF8008"
+            app:gradient_color_2="#FFC837"
+            app:gradient_color_3="#FF8008"
+            app:swipe_mode="clamp"
+            app:threshold="0.8" />
+    </RelativeLayout>
+</layout>

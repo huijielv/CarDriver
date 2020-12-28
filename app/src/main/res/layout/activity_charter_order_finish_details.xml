@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LayoutManagers" />
+
+        <import type="com.ymx.driver.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.chartercar.CharterDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/order_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.titleText}"
+                android:textColor="@color/rx_333333"
+                android:textSize="@dimen/text_size_18" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}">
+
+            </ImageView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/d12"
+            android:background="@drawable/bg_long_range_driving_head_view"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d25"
+            android:paddingBottom="@dimen/d25"
+            android:visibility="@{viewModel.orderStatus == 8 ?    View.VISIBLE :View.GONE }">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_driver_order_finsh_trips"
+
+                />
+
+            <TextView
+                android:id="@+id/payTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/d10"
+                android:text="已关闭"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginRight="@dimen/d15"
+            android:visibility="@{viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_long_range_driving_head_view"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/d10"
+                android:paddingRight="@dimen/d10">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/ll_order_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/ll_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_header"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="19dp"
+                                android:src="@drawable/ic_passenger_head" />
+
+                            <TextView
+                                android:id="@+id/tv_phoneNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d5"
+                                android:text="@{viewModel.passengerInfo}"
+                                android:textColor="@color/rx_ff333333"
+                                android:textSize="@dimen/text_size_14" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/ll_header"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="@{viewModel.orderType==1? View.VISIBLE : View.GONE}">
+
+
+                                <LinearLayout
+                                    android:id="@+id/startAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="6dp"
+                                        android:layout_height="6dp"
+                                        android:layout_marginLeft="@dimen/d15"
+                                        android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                                    <TextView
+                                        android:id="@+id/tv_place_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="@{viewModel.startName}"
+                                        android:textColor="@color/rx_ff333333"
+                                        android:textSize="@dimen/text_size_18" />
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:id="@+id/endAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+
+                                    <TextView
+                                        android:layout_width="6dp"
+                                        android:layout_height="6dp"
+                                        android:layout_marginLeft="@dimen/d15"
+                                        android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:ellipsize="end"
+                                        android:singleLine="true"
+                                        android:text="@{viewModel.endName}"
+                                        android:textColor="@color/rx_ff333333"
+                                        android:textSize="@dimen/text_size_18" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d20"
+                                android:orientation="vertical"
+                                android:visibility="@{viewModel.orderType==2? View.VISIBLE : View.GONE}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d15"
+                                    android:text="@{viewModel.charteredCity}"
+                                    android:textColor="#ff333333"
+                                    android:textSize="18sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d15"
+                                    android:layout_marginTop="@dimen/d5"
+                                    android:text="@{viewModel.numberDay}"
+                                    android:textColor="#ff333333"
+                                    android:textSize="18sp" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d15"
+                                    android:layout_marginTop="@dimen/d5"
+                                    android:text="@{viewModel.charteredDurationMileage}"
+                                    android:textColor="#ff333333"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        android:splitMotionEvents="false"
+                        app:adapter="@{adapter}"
+                        app:itemBinding="@{viewModel.itemCostbinding}"
+                        app:items="@{viewModel.itemCostList}"
+                        app:layoutManager="@{LayoutManagers.linear()}" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/payButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d20"
+                    android:background="@drawable/bg_grey"
+                    android:paddingLeft="@dimen/d12"
+                    android:paddingTop="@dimen/d4"
+                    android:paddingRight="@dimen/d12"
+                    android:paddingBottom="@dimen/d4"
+                    android:text="收款二维码"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/text_size_14"
+                    android:visibility="@{viewModel.payState==0? View.VISIBLE : View.GONE}"
+                    app:onClickCommand="@{viewModel.qRcode}" />
+
+                <LinearLayout
+                    android:id="@+id/customerPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/d20"
+                    android:orientation="vertical"
+                    app:onClickCommand="@{viewModel.call }">
+
+                    <ImageView
+                        android:layout_width="@dimen/d25"
+                        android:layout_height="@dimen/d25"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_customer_service_telephone_numbers"></ImageView>
+
+                    <TextView
+                        android:id="@+id/customerPhoneT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="联系客服"
+                        android:textColor="@color/rx_333333"
+                        android:textSize="@dimen/text_size_16" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"></View>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/BillingRulesLl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d10"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.orderStatus ==7? View.VISIBLE :View.GONE}"
+            app:onClickCommand="@{viewModel.goBillingRules}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="计费规则"
+                android:textSize="@dimen/text_size_15"></TextView>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="@dimen/d10"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/d5"
+                android:src="@drawable/icon_pay_right">
+
+            </ImageView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

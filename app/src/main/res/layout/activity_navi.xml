@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.navi.NaviViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.amap.api.navi.AMapNaviView
+            android:id="@+id/navi_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <RelativeLayout
+            android:id="@+id/scrollSwithViewButtonRL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
+
+            <com.ymx.driver.view.ScrollSwithViewButton
+                android:id="@+id/scrollSwithViewButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:visibility="@{viewModel.transferOrderState==0?View.VISIBLE:View.GONE}"
+                app:center_background="@drawable/bt_orange_no_radius_selector"
+                app:center_text=""
+                app:center_textColor="@android:color/white"
+                app:center_textSize="6dp"
+                app:scroll_button_background="@drawable/bt_orange_no_radius_selector"
+                app:scroll_button_with="48dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:background="@color/color_ffcccccc"
+                android:gravity="center"
+                android:visibility="@{viewModel.transferOrderState==1?View.VISIBLE:View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到达上车地点"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16"></TextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

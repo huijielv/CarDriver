@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mine.ContactUsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/color_title_bar">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@color/rx_transparent"
+                android:src="@drawable/icon_back"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/navigation_select"
+                android:textColor="@color/rx_ffffff"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/pop_navi_gaode"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/d48"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d20"
+                android:text="高德地图"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16" />
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_marginEnd="@dimen/d20"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_map_pre" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="@color/color_ebebeb" />
+
+        <RelativeLayout
+            android:id="@+id/pop_navi_baidu"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/d48"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d20"
+                android:text="百度地图"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16" />
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_marginEnd="@dimen/d20"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_map_nm" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="@color/color_ebebeb" />
+
+        <RelativeLayout
+            android:id="@+id/pop_navi_qq"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/d48"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d20"
+                android:text="腾讯地图"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16" />
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_marginEnd="@dimen/d20"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_map_nm" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="@color/color_ebebeb" />
+
+
+
+        <LinearLayout
+            android:id="@+id/pop_navi_recommend"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/d48"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:src="@drawable/ic_map_loaction"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="内置地图"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d30"
+            android:layout_gravity="center"
+            android:text="只能选择您手机上已安装的地图"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+</layout>

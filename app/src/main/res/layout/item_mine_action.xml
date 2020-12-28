@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.MineActionItemViewModel" />
+    </data>
+
+    <com.ymx.driver.view.SquareFramLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bl_pressed_solid_color="@color/rx_f2f2f2"
+        app:bl_unPressed_solid_color="@color/rx_ffffff"
+        app:onClickCommand="@{viewModel.itemClick}">
+
+        <LinearLayout
+            android:id="@+id/travel_order_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/d15"
+            android:paddingBottom="@dimen/d15">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:url="@{viewModel.entity.iconId}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d5"
+                android:text="@{viewModel.entity.titleId}"
+                android:textColor="@color/rx_333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.ymx.driver.view.SquareFramLayout>
+</layout>

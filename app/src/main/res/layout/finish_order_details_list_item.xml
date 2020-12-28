@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.finishorderdetails.FinishOrderDetailsListItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d15">
+
+            <TextView
+                android:id="@+id/itemOrderFeeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@{viewModel.entity.feeName}"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16"></TextView>
+
+            <TextView
+                android:id="@+id/itemOrderFeeDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/itemOrderFeeName"
+                android:text="@{viewModel.entity.feeDesc}"
+                android:textColor="@color/rx_dddddd"
+                android:textSize="@dimen/text_size_16"></TextView>
+
+
+            <TextView
+                android:id="@+id/itemOrderFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/color_333333"
+                android:text="@{viewModel.entity.fee + @string/order_details_price}"
+                android:textSize="@dimen/text_size_16"></TextView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/d15"
+            android:background="#F2F2F2"></View>
+    </LinearLayout>
+
+
+</layout>

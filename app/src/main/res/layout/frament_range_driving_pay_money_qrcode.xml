@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.longrangdriving.RangeDrivingPayMoneyQrcodeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="扫描二维码向我付款"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/text_size_20" />
+
+        <ImageView
+            android:id="@+id/qRcode"
+            android:layout_width="194dp"
+            android:layout_height="194dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d10"
+            android:src="@drawable/icon_driving_range_shoukuanma">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/payButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d22"
+            android:paddingLeft="@dimen/d12"
+            app:onClickCommand="@{viewModel.ucPay}"
+            android:paddingTop="@dimen/d4"
+            android:background="@drawable/bg_grey"
+            android:paddingRight="@dimen/d12"
+            android:paddingBottom="@dimen/d4"
+            android:text="司机代付"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:layout_width="@dimen/d22"
+            android:layout_height="@dimen/d22"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d20"
+            app:onClickCommand="@{viewModel.back}"
+            android:src="@drawable/icon_btn_close_white">
+
+        </ImageView>
+
+
+    </LinearLayout>
+</layout>

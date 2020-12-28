@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.driverinterral.ConfirmExchangInterralViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rx_transparent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d15"
+                android:scaleType="fitXY"
+                app:url="@{viewModel.commodityUrl}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d5"
+                android:text="@{viewModel.commodityName}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_14">
+
+            </TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d24"
+                android:layout_marginRight="@dimen/d24"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d5"
+                android:text="@{viewModel.commodityDesc}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_12">
+
+            </TextView>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="本次兑换需花费"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_16">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{viewModel.exchangeIntegral}"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_16">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分"
+                    android:textColor="@color/rx_ff333333"
+                    android:textSize="@dimen/text_size_16">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d5"
+                android:text="@{viewModel.integralDesc}"
+                android:textColor="@color/rx_ff333333"
+                android:textSize="@dimen/text_size_16">
+
+            </TextView>
+
+
+            <LinearLayout
+                android:id="@+id/negeAndposLl"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/d20"
+                android:layout_marginBottom="@dimen/d15"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/negativeText"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_ffcccccc"
+                        android:gravity="center"
+                        android:text="@string/cancel"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:onClickCommand="@{viewModel.cancel}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="@{viewModel.isConfirmShow ?View.GONE:View.VISIBLE}">
+
+                    <TextView
+                        android:id="@+id/positiveText"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="#FF8008"
+                        android:gravity="center"
+                        android:text="@string/confirm"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:onClickCommand="@{viewModel.confirm}" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

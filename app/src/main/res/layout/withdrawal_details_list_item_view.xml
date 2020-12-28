@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mywallet.WithdrawalDetailsListItemViewModel" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/d10"
+        android:paddingBottom="@dimen/d10">
+
+        <TextView
+            android:id="@+id/stateName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/d15"
+            android:text="@{viewModel.entity.stateName}"></TextView>
+
+        <TextView
+            android:id="@+id/applyTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stateName"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:text="@{viewModel.entity.applyTime}"></TextView>
+
+        <TextView
+
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/applyTime"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d10"
+            android:text="@{viewModel.entity.content}"></TextView>
+
+
+    </RelativeLayout>
+
+
+</layout>

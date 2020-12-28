@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/interral_fragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/interral_fragment"
+        android:name="com.ymx.driver.ui.integral.InterralFragment"
+        android:label="InterralFragment"
+        tools:layout="@layout/frament_interral">
+
+        <action
+            android:id="@+id/action_integraldetails_fragment"
+            app:destination="@+id/IntegralDetailListFrament" />
+
+        <action
+            android:id="@+id/action_integral_order_fragment"
+            app:destination="@+id/MyIntegralOrderListFrament" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/IntegralDetailListFrament"
+        android:name="com.ymx.driver.ui.integral.IntegralDetailListFrament"
+        android:label="fragment_intergral_details"
+        tools:layout="@layout/frament_integral_detai_list">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyIntegralOrderListFrament"
+        android:name="com.ymx.driver.ui.integral.MyIntegralOrderListFrament"
+        android:label="my_intergral_order_list"
+        tools:layout="@layout/frament_my_intergral_order_list">
+
+
+    </fragment>
+
+</navigation>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/allTypeLl"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@color/rx_ff5093E1"
+            android:paddingTop="@dimen/d5"
+            android:paddingBottom="@dimen/d5">
+
+            <TextView
+                android:id="@+id/allType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10"
+                android:text="全部"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/meetTypeLl"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/d5"
+            android:paddingBottom="@dimen/d5">
+
+            <TextView
+                android:id="@+id/meetType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10"
+                android:text="接站"
+                android:textColor="#ff333333"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/galconTypeLl"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/d5"
+            android:paddingBottom="@dimen/d5">
+
+            <TextView
+                android:id="@+id/galconType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10"
+                android:text="送站"
+                android:textColor="#ff333333"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.main.TimePickViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:orientation="vertical">
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/rx_000000"
+                    android:textSize="14sp"
+                    app:onClickCommand="@{viewModel.close}" />
+
+                <TextView
+                    android:id="@+id/conform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="14dp"
+                    android:text="@string/confirm"
+                    android:textColor="@color/rx_eb834a"
+                    android:textSize="14sp"
+                    app:onClickCommand="@{viewModel.confirm}" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/rx_e1e1e1" />
+
+            <LinearLayout
+                android:id="@+id/wheel_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <com.ymx.driver.view.wheelview.widget.WheelView
+                    android:id="@+id/ytd"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.ymx.driver.view.wheelview.widget.WheelView
+                    android:id="@+id/month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.ymx.driver.view.wheelview.widget.WheelView
+                    android:id="@+id/day"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

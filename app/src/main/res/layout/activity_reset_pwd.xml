@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.InputType" />
+
+        <variable
+            name="viewModel"
+            type="com.ymx.driver.viewmodel.mine.PwdResetViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white">
+
+
+            <ImageView
+                style="@style/Back_Btn_Style_1"
+                app:onClickCommand="@{viewModel.back}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/pwd_reset"
+                android:textColor="@color/rx_333333"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d20"
+            android:layout_marginTop="@dimen/d20"
+            android:layout_marginRight="@dimen/d20"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout style="@style/InputFrameStyle">
+
+                    <EditText
+                        android:id="@+id/et_phone_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/re_set_clear_phone"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/input_phone_num"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_8e"
+                        android:textSize="@dimen/main_body_size" />
+
+                    <RelativeLayout
+                        android:id="@+id/re_set_clear_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/d10"
+                        android:clickable="true"
+                        android:onClick="clearPwd"
+                        android:padding="@dimen/d5"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_login_close" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/grey_cc" />
+
+                <RelativeLayout style="@style/InputFrameStyle">
+
+                    <EditText
+                        android:id="@+id/et_verification_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/input_verification_code"
+                        android:inputType="textPassword"
+                        android:maxLength="28"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_8e"
+                        android:textSize="@dimen/main_body_size"
+                        app:addTextChangedListener="@{viewModel.verifyMsgWatcher}" />
+
+                    <RelativeLayout
+                        android:id="@+id/re_set_clear_verification_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/d20"
+                        android:clickable="true"
+                        android:onClick="clearPwdConfirm"
+                        android:padding="@dimen/d5">
+
+                        <Button
+                            android:id="@+id/verify_code"
+                            android:layout_width="@dimen/d80"
+                            android:layout_height="@dimen/d30"
+                            android:background="@drawable/blue_bg_selector"
+                            android:enabled="@{viewModel.formatPhone}"
+                            android:text="@string/get"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/main_body_size"
+                            app:onClickCommand="@{viewModel.getCode}" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/grey_cc" />
+
+                <RelativeLayout style="@style/InputFrameStyle">
+
+                    <EditText
+                        android:id="@+id/et_set_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/re_set_clear_pwd"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/input_pwd"
+                        android:inputType="@{viewModel.pwdShow == 0 ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD}"
+                        android:maxLength="28"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_8e"
+                        android:textSize="@dimen/main_body_size" />
+
+                    <RelativeLayout
+                        android:id="@+id/re_set_clear_pwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/d10"
+                        android:clickable="true"
+                        android:onClick="clearPwd"
+                        android:padding="@dimen/d5"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_login_close" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/grey_cc" />
+
+                <RelativeLayout
+                    android:id="@+id/re_confim_pwd"
+                    style="@style/InputFrameStyle">
+
+                    <EditText
+                        android:id="@+id/et_confirm_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/input_pwd_again"
+                        android:inputType="@{viewModel.pwdShow == 0 ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD}"
+                        android:maxLength="28"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_8e"
+                        android:textSize="@dimen/main_body_size" />
+
+                    <RelativeLayout
+                        android:id="@+id/re_set_clear_confim_pwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/d10"
+                        android:clickable="true"
+                        android:onClick="clearPwdConfirm"
+                        android:padding="@dimen/d5"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_login_close" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/grey_cc" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_pass_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:clickable="true"
+                app:onClickCommand="@{viewModel.showPwd}">
+
+                <ImageView
+                    android:id="@+id/iv_pass_show"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:background="@{viewModel.pwdShow == 0 ? @drawable/ic_pwd_hide : @drawable/ic_pwd_show}" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_next_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d40"
+                android:layout_marginTop="@dimen/d20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_comfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/grey_bg_selector"
+                    android:gravity="center"
+                    android:text="@string/confirm"
+                    android:textColor="@color/grey_cc"
+                    android:textSize="@dimen/btn_text_size"
+                    app:bl_enabled_solid_color="@color/rx_4c4d5b"
+                    app:bl_enabled_textColor="@color/rx_ffffff"
+                    app:bl_unEnabled_solid_color="@color/grey_ee"
+                    app:bl_unEnabled_textColor="@color/grey_cc"
+                    app:enable="@{!TextUtils.isEmpty(viewModel.phone) &amp;&amp; viewModel.phone.length() == 11 &amp;&amp; !TextUtils.isEmpty(viewModel.newWd)&amp;&amp; !TextUtils.isEmpty(viewModel.confirmWd)&amp;&amp; !TextUtils.isEmpty(viewModel.verifyMsg)}"
+                    app:onClickCommand="@{viewModel.pwdReset}" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
