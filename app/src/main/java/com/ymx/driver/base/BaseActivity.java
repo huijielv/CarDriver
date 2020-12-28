@@ -341,7 +341,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 //                if (!NewOrderFilterUtiles.hasOrder(transferNewOrderEntity.getOrderNo())) {
 //                    return;
 //                }
-                LogUtil.d("TEST----------------", transferNewOrderEntity.getOrderNo());
+
 
                 GrapNewTransferManager.getInstance().setCurrentActivity(AppManager.getAppManager().currentActivity());
                 GrapNewTransferManager.getInstance().setTransferNewOrderEntity(transferNewOrderEntity);
