@@ -18,6 +18,7 @@ import com.ymx.driver.viewmodel.driverinterral.InterralViewModel;
 public class InterralFragment extends BaseFragment<FramentInterralBinding, InterralViewModel> {
 
 
+
     @Override
     public int initLayoutId(Bundle savedInstanceState) {
         return R.layout.frament_interral;
