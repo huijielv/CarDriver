@@ -250,10 +250,10 @@ public class TravelViewModel extends BaseViewModel {
             startName.set(updateOrderStatusEntity.getDesName());
             lat.set(updateOrderStatusEntity.getDesLat());
             lng.set(updateOrderStatusEntity.getDesLng());
-            if (businessType.get() == 10 || (businessType.get() == 5 && driverType.get() == 6)) {
-                orderTimeDesc.set("");
-            }
-
+//            if (businessType.get() == 10 || (businessType.get() == 5 && driverType.get() == 6)) {
+//                orderTimeDesc.set("");
+//            }
+            orderTimeDesc.set("");
             if (updateOrderStatusEntity.getChannel() == 6) {
                 uc.ucChangeMap.call();
             }

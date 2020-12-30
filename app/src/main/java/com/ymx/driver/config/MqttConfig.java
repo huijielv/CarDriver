@@ -24,54 +24,35 @@ public class MqttConfig {
     public static final String MQTT_CODE_PASSENGER_ORDER = "2000";    //乘客下单后，通知到司机
     public static final String MQTT_CODE_PASSENGER_CANCEL_ORDER = "2001";
     public static final String MQTT_CODE_PASSENGER_GOOD_FRIEND_ORDER = "2002";
-
     public static final String MQTT_CODE_PHONE_ORDER_PAY_SUCCESS = "2003";
-
     public static final String MQTT_CODE_ORDER_PRICE = "2004";
     //司机改派成功
     public static final String MQTT_CODE_TRANSFER_ORDER_SUCCESS = "2006";
-
     //司机远程订单
     public static final String MQTT_CODE_LONG_DRIVIER_NEW_ORDER = "2010";
-
     //司机取消远程订单
     public static final String MQTT_CODE_LONG_DRIVIER_SYSTEM_CANCAL_ORDER = "2011";
-
-
     //远程订单，乘客支付成功，通知到司机
-
     public static final String MQTT_CODE_LONG_DRIVIER_PAY_SUCCESS = "2012";
-
     //司机出车司机过期前5分钟，通知司机是否延长
     public static final String MQTT_CODE_EXTENSION_TIME = "2013";
 
     //远程司机出车时间过期提示
     public static final String MQTT_CODE_TIME_EXPIRED = "2014";
-
     // 更改司机是否时远程身份
     public static final String MQTT_CODE_UPDATE_DRIVER_TYPE = "2015";
-
     // 后台更改某些信息
     public static final String MQTT_CODE_UPDATE_ORDER_INFO_TYPE = "2016";
-
-
     //  乘客已确认/拒绝加价金额
     public static final String MQTT_CODE_ORDER_CUSTOMER_TRIPS_TYPE = "2017";
-
     // 订单流转
     public static final String MQTT_CODE_ORDER_CIRCULATION_TYPE = "2018";
-
     // 订单流转成功
     public static final String MQTT_CODE_ORDER_CIRCULATION_FAILE_TYPE = "2019";
-
     // 二维码扫描发过来的通知
-
     public static final String MQTT_CODE_ORDER_CIRCULATION_QCODE_TYPE = "2020";
-
-
     // 订单流转成功
     public static final String MQTT_CODE_ORDER_CIRCULATION_SUCCESS_TYPE = "2021";
-
     // 包车订单后台匹配成功，通知司机
     public static final String MQTT_CODE_CHARTTER_NEW_ORDER_TYPE = "2031";
     // 包车订单后台匹配成功，通知司机
