@@ -18,7 +18,9 @@ import com.ymx.driver.entity.app.DetailsCostListEntity;
 import com.ymx.driver.entity.app.OrderDetailsEntity;
 import com.ymx.driver.entity.app.UpdateOrderStatusEntity;
 import com.ymx.driver.entity.app.mqtt.PhoneOrderSuccessEntity;
+import com.ymx.driver.http.ResultException;
 import com.ymx.driver.http.RetrofitFactory;
+import com.ymx.driver.http.TAddObserver;
 import com.ymx.driver.http.TFunc;
 import com.ymx.driver.http.TObserver;
 import com.ymx.driver.util.UIUtils;
@@ -227,7 +229,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TObserver<UpdateOrderStatusEntity>() {
+                .subscribe(new TAddObserver<UpdateOrderStatusEntity>() {
                     @Override
                     protected void onRequestStart() {
                         getUC().getShowDialogEvent().call();
@@ -251,6 +253,14 @@ public class OrderDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onFailure(String message) {
                         UIUtils.showToast(message);
+                    }
+
+                    @Override
+                    protected void onFailure(ResultException e) {
+                        if (e.getErrCode().equals("-100")) {
+                            uc.back.call();
+                        }
+                        UIUtils.showToast(e.getErrMsg());
                     }
                 });
     }
