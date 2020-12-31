@@ -178,9 +178,41 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
 
         if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
+            clearMap();
+            if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.businessType.get() == 10) {
 
-            moveIngCar(aMapLocation );
+                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
+            } else if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
 
+                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
+            } else {
+                locateSuccess++;
+                if (xviewModel.lat != null && xviewModel.lat.get() != null) {
+                    mStartPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                    mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
+                }
+                if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
+                    if (locateSuccess / ocateSuccessNumber == 1) {
+                        clearMap();
+                        removeMapRouteView();
+
+                        if (distanceStatus == 1) {
+                            searchRouteResult();
+
+                        }
+                        locateSuccess = 0;
+
+
+                    }
+                    // 小于300KM 地图规划策略
+                    if (distanceStatus == 0) {
+
+                        searchRouteResult();
+                    }
+
+
+                }
+            }
 
         }
 
@@ -388,11 +420,14 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
                     actionType = xviewModel.orderStatus.get();
                     orderNo = xviewModel.orderId.get();
-
-                    if (actionType == 4 ) {
-                        moveIngCar(LocationManager.getInstance(activity).getAMapLocation());
-
+                    //出租车逻辑
+                    if (actionType == 4 && xviewModel.businessType.get() == 10) {
+                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
+                        //出租车好友逻辑
+                    } else if (actionType == 4 && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
                     } else {
+                        //网约车逻辑
                         getaMap().clear();
                         searchRouteResult();
                     }
@@ -509,7 +544,6 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                             @Override
                             public void positive(Dialog dialog) {
                                 dialog.dismiss();
-                                EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_MAIN_CANCAL_DIALOG_DISS_CODE));
                                 MainActivity.start(activity);
 
                             }
@@ -655,6 +689,7 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                             if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING
                             ) {
 
+                                moveIngCar(list.get(0), result);
 
 
                             } else {
@@ -711,23 +746,29 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
     }
 
 
-    public void moveIngCar(AMapLocation aMapLocation) {
-
+    public void moveIngCar(LatLng latLng, DriveRouteResult result) {
         if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
 
             try {
                 if (smoothMarker != null) {
-                    xviewModel.smoothRunningLatLng.add(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
+                    xviewModel.smoothRunningLatLng.add(latLng);
                     smoothMarker.setPoints(xviewModel.smoothRunningLatLng);
                     smoothMarker.setTotalDuration(2);
                     smoothMarker.startSmoothMove();
                     xviewModel.smoothRunningLatLng.remove(0);
-                    getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 16));
+
+                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
+                        if (xviewModel.businessType.get() == 10) {
+                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                        }
+                    }
 
                 } else {
                     getaMap().clear();
                     Marker marker = getaMap().addMarker(new MarkerOptions()
-                            .position(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()))
+                            .position(latLng)
                             .zIndex(1)
                             .anchor(0.5f, 0.5f)
                             .rotateAngle(360 - bear)
@@ -736,8 +777,20 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     marker.showInfoWindow();
                     smoothMarker = new MovingPointOverlay(getaMap(), marker);
                     xviewModel.smoothRunningLatLng.clear();
-                    xviewModel.smoothRunningLatLng.add(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
-                    getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 16));
+                    xviewModel.smoothRunningLatLng.add(latLng);
+                    if (result != null) {
+                        getaMap().addMarker(new MarkerOptions()
+                                .position(AMapUtil.convertToLatLng(result.getTargetPos()))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_end)));
+                    }
+                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
+                        if (xviewModel.businessType.get() == 10) {
+                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                        }
+                    }
+
 
                 }
             } catch (Exception e) {

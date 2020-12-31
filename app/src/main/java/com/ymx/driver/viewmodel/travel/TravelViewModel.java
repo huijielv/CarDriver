@@ -137,6 +137,56 @@ public class TravelViewModel extends BaseViewModel {
 
     public ObservableArrayList<LatLng> smoothRunningLatLng = new ObservableArrayList<>();
 
+    public BindingCommand back = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            uc.ucBack.call();
+        }
+    });
+
+    public BindingCommand call = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            uc.ucCall.call();
+        }
+    });
+
+    public BindingCommand navigate = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            uc.ucNavigate.call();
+        }
+    });
+
+    public BindingCommand cancelOrder = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+
+
+            if (orderStatus != null && orderStatus.get() != null && businessType != null && businessType.get() != null) {
+                if (orderStatus.get() == 2 && businessType.get() == 1) {
+                    switch (transferOrderState.get()) {
+                        case 1:
+                            cancelTransferOrder(orderId.get());
+                            break;
+                        case 0:
+                            uc.ucTransferOrder.call();
+
+                            break;
+                    }
+
+
+                } else {
+                    uc.ucCancelOrder.call();
+                }
+
+            } else {
+                UIUtils.showToast("网络不好，请稍后再试");
+            }
+
+        }
+    });
+
 
     public String getModeTitle(int mode) {
         if (mode == TravelViewModel.DRIVER_STATE_TO_START) {
@@ -250,10 +300,10 @@ public class TravelViewModel extends BaseViewModel {
             startName.set(updateOrderStatusEntity.getDesName());
             lat.set(updateOrderStatusEntity.getDesLat());
             lng.set(updateOrderStatusEntity.getDesLng());
-//            if (businessType.get() == 10 || (businessType.get() == 5 && driverType.get() == 6)) {
-//                orderTimeDesc.set("");
-//            }
-            orderTimeDesc.set("");
+            if (businessType.get() == 10 || (businessType.get() == 5 && driverType.get() == 6)) {
+                orderTimeDesc.set("");
+            }
+
             if (updateOrderStatusEntity.getChannel() == 6) {
                 uc.ucChangeMap.call();
             }
@@ -310,55 +360,7 @@ public class TravelViewModel extends BaseViewModel {
     }
 
 
-    public BindingCommand back = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            uc.ucBack.call();
-        }
-    });
 
-    public BindingCommand call = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            uc.ucCall.call();
-        }
-    });
-
-    public BindingCommand navigate = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            uc.ucNavigate.call();
-        }
-    });
-
-    public BindingCommand cancelOrder = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-
-
-            if (orderStatus != null && orderStatus.get() != null && businessType != null && businessType.get() != null) {
-                if (orderStatus.get() == 2 && businessType.get() == 1) {
-                    switch (transferOrderState.get()) {
-                        case 1:
-                            cancelTransferOrder(orderId.get());
-                            break;
-                        case 0:
-                            uc.ucTransferOrder.call();
-
-                            break;
-                    }
-
-
-                } else {
-                    uc.ucCancelOrder.call();
-                }
-
-            } else {
-                UIUtils.showToast("网络不好，请稍后再试");
-            }
-
-        }
-    });
 
 
     public void updateOrderDetailsStatus(String orderNo, String currentCoord, String actionType, String otherCharge) {
