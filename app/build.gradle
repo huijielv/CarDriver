@@ -142,7 +142,7 @@ dependencies {
 
     // 下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
     // 适配
     implementation 'me.jessyan:autosize:1.1.2'
 
