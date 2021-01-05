@@ -1,17 +1,18 @@
 package com.ymx.driver.ui.integral;
+
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -21,12 +22,11 @@ import com.ymx.driver.R;
 import com.ymx.driver.base.BaseFragment;
 import com.ymx.driver.databinding.FramentInterralBinding;
 import com.ymx.driver.entity.app.InterralCommodityListItem;
-import com.ymx.driver.util.LogUtil;
-import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.view.recyclerview.GridItemDecoration;
 import com.ymx.driver.viewmodel.driverinterral.InterralViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.List;
 public class InterralFragment extends BaseFragment<FramentInterralBinding, InterralViewModel> {
     private List<InterralCommodityListItem> list;
     private InterralCommodityListAdapter adapter;
-    private  StaggeredGridLayoutManager layoutManager ;
+    private StaggeredGridLayoutManager layoutManager;
 
     @Override
     public int initLayoutId(Bundle savedInstanceState) {
@@ -62,12 +62,20 @@ public class InterralFragment extends BaseFragment<FramentInterralBinding, Inter
     public void initView(Bundle savedInstanceState) {
         list = new ArrayList<>();
         adapter = new InterralCommodityListAdapter(list);
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        layoutManager  = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         binding.recyc.setLayoutManager(layoutManager);
+        binding.recyc.setItemAnimator(null);
         binding.recyc.addItemDecoration(new GridItemDecoration(getActivity(), 10));//单位px
-        binding.recyc.setAdapter(adapter);
+        binding.recyc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                layoutManager.invalidateSpanAssignments(); //防止第一行到顶部有空白区域
+            }
+        });
 
+        binding.recyc.setAdapter(adapter);
         binding.recyc.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -81,9 +89,11 @@ public class InterralFragment extends BaseFragment<FramentInterralBinding, Inter
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 adapter.setList(null);
+                viewModel.loadlist.clear();
                 viewModel.pagerIndex.set(1);
                 viewModel.refresh.set(true);
                 viewModel.getInterralCommodityList();
+
             }
         });
 
@@ -152,11 +162,15 @@ public class InterralFragment extends BaseFragment<FramentInterralBinding, Inter
         viewModel.uc.ucList.observe(this, new Observer<List<InterralCommodityListItem>>() {
             @Override
             public void onChanged(List<InterralCommodityListItem> commodityListItemList) {
+
                 if (!commodityListItemList.isEmpty()) {
                     adapter.setNewData(commodityListItemList);
                 }
 
+
             }
+
+
         });
     }
 
@@ -170,49 +184,38 @@ public class InterralFragment extends BaseFragment<FramentInterralBinding, Inter
         @Override
         protected void convert(@NotNull BaseViewHolder help, InterralCommodityListItem item) {
             ImageView iv = help.getView(R.id.iv);
+            LinearLayout exchangeLl = help.getView(R.id.exchangeLl);
+            exchangeLl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item != null && item.getStocksNumber()>0){
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConfirmExchangeCommodityDialog.EXCHANGE_INFO, item);
+                        bundle.putString(ConfirmExchangeCommodityDialog.EXCHANGE_NUM, viewModel.integral.get());
+                        ConfirmExchangeCommodityDialog.newInstance(bundle).show(getChildFragmentManager(), ConfirmExchangeCommodityDialog.class.getSimpleName());
+                    }
+                }
+            });
+            TextView exchangeIntegralTv = help.getView(R.id.exchangeIntegral);
+            TextView shopTv = help.getView(R.id.shop);
             Glide.with(iv.getContext()).load(item.getCommodityUrl()).into(iv);
             if (!TextUtils.isEmpty(item.getCommodityName())) {
                 help.setText(R.id.commodityName, item.getCommodityName());
             }
             if (!TextUtils.isEmpty(item.getExchangeIntegral())) {
-                help.setText(R.id.exchangeIntegral, item.getExchangeIntegral()+getString(R.string.integral_exchange));
-                help.setVisible(R.id.exchangeIntegral, true);
-            }else {
-                help.setGone(R.id.exchangeIntegral,true);
+                exchangeIntegralTv.setVisibility(View.VISIBLE);
+                exchangeIntegralTv.setText(item.getExchangeIntegral() + getString(R.string.integral_exchange));
+
+            } else {
+                exchangeIntegralTv.setVisibility(View.GONE);
             }
 
             if (item != null && item.getStocksNumber() == 0) {
-                help.setVisible(R.id.shop, true);
+                shopTv.setVisibility(View.VISIBLE);
             } else {
-                help.setGone(R.id.shop, true);
+                shopTv.setVisibility(View.GONE);
             }
-//            Glide.with(iv.getContext())
-//                    .asBitmap()
-//                    .load(item.getCommodityUrl())
-//                    .into(new CustomTarget<Bitmap>() {
-//                        @Override
-//                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-//                            int height = resource.getHeight();
-//                            int width = resource.getWidth();
-//
-//                            LogUtil.d("test","t"+width+"---"+height +"test2"+UIUtils.getScreenWidth() );
-//                            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) iv.getLayoutParams();
-//                            float itemWidth = (UIUtils.getScreenWidth() - 30) / 2;
-//                            layoutParams.width = (int) itemWidth;
-////                            float scale =(itemWidth+0f)/width;
-//                            layoutParams.height = (int) itemWidth;
-//                            iv.setLayoutParams(layoutParams);
-//                            LogUtil.d("test","t"+layoutParams.width+"---"+layoutParams.height );
-//                            Glide.with(iv.getContext()).load(item.getCommodityUrl()).override(layoutParams.width, layoutParams.width).into(iv);
-//                        }
-//
-//                        @Override
-//                        public void onLoadCleared(@Nullable Drawable placeholder) {
-//                        }
-//                    });
-
         }
     }
-
 
 }

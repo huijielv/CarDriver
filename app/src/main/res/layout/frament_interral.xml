@@ -28,7 +28,6 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-
         <FrameLayout
             android:id="@+id/titleFL"
             android:layout_width="match_parent"
@@ -55,6 +54,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>
+
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -204,39 +204,79 @@
         </LinearLayout>
 
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srlEnableLoadMore="true"
-            app:srlEnableNestedScrolling="false"
-            app:srlEnablePreviewInEditMode="false"
-            app:srlEnableRefresh="true"
-            app:srlHeaderHeight="40dp"
-            app:srlHeaderTriggerRate="0.5">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyc"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/emptyView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:splitMotionEvents="false"
-              />
+                android:visibility="@{viewModel.more?View.VISIBLE:View.GONE}"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                >
 
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/icon_integral_details_iv">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="暂无积分明细"
+                    android:textColor="#ffff8008"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srlAccentColor="@android:color/black"
-                app:srlTextSizeTime="12sp"
-                app:srlTextSizeTitle="14sp" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="match_parent"
+                app:srlEnableLoadMore="true"
+                android:visibility="@{!viewModel.more?View.VISIBLE:View.GONE}"
+                app:srlEnableNestedScrolling="false"
+                app:srlEnablePreviewInEditMode="false"
+                app:srlEnableRefresh="true"
+                app:srlHeaderHeight="40dp"
+                app:srlHeaderTriggerRate="0.5">
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:splitMotionEvents="false"
+                    />
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlAccentColor="@android:color/black"
+                    app:srlTextSizeTime="12sp"
+                    app:srlTextSizeTitle="14sp" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+
 
 
     </LinearLayout>

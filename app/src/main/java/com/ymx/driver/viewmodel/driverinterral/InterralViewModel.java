@@ -23,6 +23,7 @@ import com.ymx.driver.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,9 +33,9 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 public class InterralViewModel extends BaseViewModel {
     public ObservableField<String> integral = new ObservableField<>();
     public ObservableField<Boolean> refresh = new ObservableField<>(false);
-//    public ObservableList<InterralCommodityListItemViewModel> itemList = new ObservableArrayList<>();
-//    public ItemBinding<InterralCommodityListItemViewModel> itembinding = ItemBinding.of(com.ymx.driver.BR.viewModel, R.layout.interral_commodity_list_item);
+    public ObservableField<Boolean> more = new ObservableField<>(false);
     public UIChangeObservable uc = new UIChangeObservable();
+    public List<InterralCommodityListItem> loadlist = new ObservableArrayList<>();
 
     public class UIChangeObservable {
         public SingleLiveEvent<Void> ucBack = new SingleLiveEvent<>();
@@ -43,7 +44,7 @@ public class InterralViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucGoMyOrder = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucRefresh = new SingleLiveEvent<>();
         public SingleLiveEvent<InterralCommodityListItem> ucShowDialog = new SingleLiveEvent<>();
-        public SingleLiveEvent< List< InterralCommodityListItem>> ucList = new SingleLiveEvent<>();
+        public SingleLiveEvent<List<InterralCommodityListItem>> ucList = new SingleLiveEvent<>();
     }
 
 
@@ -75,12 +76,15 @@ public class InterralViewModel extends BaseViewModel {
 
     public InterralViewModel(@NonNull Application application) {
         super(application);
-//        itemList.clear();
+        loadlist.clear();
     }
 
     private void onListSuccess(List<InterralCommodityListItem> list) {
         if (list == null || list.size() <= 0) {
             uc.ucCanLoadmore.setValue(false);
+            if (loadlist.size() <= 0) {
+                more.set(true);
+            }
             return;
         }
         if (list.size() < 50) {
@@ -88,10 +92,8 @@ public class InterralViewModel extends BaseViewModel {
         } else {
             uc.ucCanLoadmore.setValue(true);
         }
+        uc.ucList.setValue(list);
 
-//        for (InterralCommodityListItem entity : list) {
-//            itemList.add(new InterralCommodityListItemViewModel(this, entity));
-//        }
     }
 
 
@@ -114,16 +116,19 @@ public class InterralViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(InterralCommodityEntity interralCommodityEntity) {
                         integral.set(String.valueOf(interralCommodityEntity.getIntegral()));
+
                         if (refresh.get()) {
                             uc.ucRefresh.call();
                         }
-//                        onListSuccess(interralCommodityEntity.getExchangeList());
-                        uc.ucList.setValue(interralCommodityEntity.getExchangeList());
+                        onListSuccess(interralCommodityEntity.getExchangeList());
+
+
                     }
 
                     @Override
                     protected void onFailure(String message) {
                         UIUtils.showToast(message);
+                        more.set(true);
                         uc.ucRefresh.call();
                     }
                 });
