@@ -32,8 +32,8 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 public class InterralViewModel extends BaseViewModel {
     public ObservableField<String> integral = new ObservableField<>();
     public ObservableField<Boolean> refresh = new ObservableField<>(false);
-    public ObservableList<InterralCommodityListItemViewModel> itemList = new ObservableArrayList<>();
-    public ItemBinding<InterralCommodityListItemViewModel> itembinding = ItemBinding.of(com.ymx.driver.BR.viewModel, R.layout.interral_commodity_list_item);
+//    public ObservableList<InterralCommodityListItemViewModel> itemList = new ObservableArrayList<>();
+//    public ItemBinding<InterralCommodityListItemViewModel> itembinding = ItemBinding.of(com.ymx.driver.BR.viewModel, R.layout.interral_commodity_list_item);
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
@@ -43,6 +43,7 @@ public class InterralViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucGoMyOrder = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucRefresh = new SingleLiveEvent<>();
         public SingleLiveEvent<InterralCommodityListItem> ucShowDialog = new SingleLiveEvent<>();
+        public SingleLiveEvent< List< InterralCommodityListItem>> ucList = new SingleLiveEvent<>();
     }
 
 
@@ -74,7 +75,7 @@ public class InterralViewModel extends BaseViewModel {
 
     public InterralViewModel(@NonNull Application application) {
         super(application);
-        itemList.clear();
+//        itemList.clear();
     }
 
     private void onListSuccess(List<InterralCommodityListItem> list) {
@@ -88,9 +89,9 @@ public class InterralViewModel extends BaseViewModel {
             uc.ucCanLoadmore.setValue(true);
         }
 
-        for (InterralCommodityListItem entity : list) {
-            itemList.add(new InterralCommodityListItemViewModel(this, entity));
-        }
+//        for (InterralCommodityListItem entity : list) {
+//            itemList.add(new InterralCommodityListItemViewModel(this, entity));
+//        }
     }
 
 
@@ -116,7 +117,8 @@ public class InterralViewModel extends BaseViewModel {
                         if (refresh.get()) {
                             uc.ucRefresh.call();
                         }
-                        onListSuccess(interralCommodityEntity.getExchangeList());
+//                        onListSuccess(interralCommodityEntity.getExchangeList());
+                        uc.ucList.setValue(interralCommodityEntity.getExchangeList());
                     }
 
                     @Override
@@ -138,7 +140,7 @@ public class InterralViewModel extends BaseViewModel {
                 break;
             case MessageEvent.MSG_SHOW_CONFIRM_EXCHANGE_SUCCESS_CODE:
                 integral.set((String) event.src);
-                itemList.clear();
+//                itemList.clear();
                 pagerIndex.set(1);
                 getInterralCommodityList();
                 break;

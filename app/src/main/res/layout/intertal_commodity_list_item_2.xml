@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ymx.driver.view.cardview.LCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:bindLifeCircle="true"
+    app:cardBackgroundColor="#ffffff"
+    app:leftTopCornerRadius="@dimen/dp_5"
+    app:rightTopCornerRadius="@dimen/dp_5"
+    app:shadowColor="#E9EBF6"
+    app:shadowSize="4dp"
+    app:shadowStartAlpha="100"
+    app:useShadowPool="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <com.ymx.driver.view.SquareImaView
+            android:id="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/commodityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d10"
+            android:textColor="@color/rx_ff333333"
+            android:textSize="@dimen/text_size_16">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/exchangeIntegral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d5"
+            android:textColor="#FFF11818"
+            android:textSize="12sp"></TextView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/shop"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="商品库存不足"
+                android:textColor="#ffcccccc"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"></View>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.ymx.driver.view.cardview.LCardView>
+
+
+
+
+
+
+

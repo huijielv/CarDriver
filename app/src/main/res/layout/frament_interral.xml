@@ -25,8 +25,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_app_bg"
+        android:background="@color/white"
         android:orientation="vertical">
+
 
         <FrameLayout
             android:id="@+id/titleFL"
@@ -54,7 +55,6 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </FrameLayout>
-
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -223,16 +223,12 @@
                 android:id="@+id/recyc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d15"
-                android:layout_marginRight="@dimen/d15"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 android:splitMotionEvents="false"
-                app:adapter="@{adapter}"
-                app:itemBinding="@{viewModel.itembinding}"
-                app:itemDecoration="@{LayoutManagers.itemDecoration(2,30)}"
-                app:items="@{viewModel.itemList}"
-                app:layoutManager="@{LayoutManagers.grid(2)}" />
+              />
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
