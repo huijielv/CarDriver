@@ -23,28 +23,39 @@
             android:background="@color/white"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="26dp"></View>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d10"
-                android:layout_marginTop="@dimen/d10"
-                android:text="请选择您要出车的业务模式"></TextView>
+                android:layout_gravity="center_horizontal"
+                android:text="请选择您要出车的业务模式："
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d10"
-                android:layout_marginTop="@dimen/d10"
-                android:layout_marginRight="@dimen/d10"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 android:splitMotionEvents="false" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="26dp"></View>
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/rx_e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="@dimen/d10"
+                android:layout_height="52dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -53,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/cancel"
+                    android:text="取消出车"
                     android:textColor="@color/rx_999999"
                     android:textSize="16sp" />
 
@@ -69,7 +80,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/confirm"
+                    android:text="确定出车"
                     android:textColor="#FF8008"
                     android:textSize="16sp" />
             </LinearLayout>

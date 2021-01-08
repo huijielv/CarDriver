@@ -14,12 +14,15 @@ import com.ymx.driver.base.BaseViewModel;
 
 
 import com.ymx.driver.base.DefaultStyleDialog;
+import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.databinding.TestActivityBinding;
 import com.ymx.driver.dialog.UpdateCarStateDialog;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
 
 
+import com.ymx.driver.entity.app.GrabNewOrderEntity;
 import com.ymx.driver.util.LogUtil;
+import com.ymx.driver.util.NewOrderTTSController;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -111,24 +114,37 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
 //                UpdateCarStateDialog updateCarStateDialog = new UpdateCarStateDialog(TestActivity.this);
 //                updateCarStateDialog.show();
 
-                new DefaultStyleDialog(activity)
-                        .setBody("您确定要锁定吗？锁定后系统将不再为您匹配新的乘客")
-                        .setTitle("行程安全提示")
-                        .setNegativeText("取消")
-                        .setPositiveText("确定锁定")
-                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
-                            @Override
-                            public void negative(Dialog dialog) {
-                                dialog.dismiss();
+//                new DefaultStyleDialog(activity)
+//                        .setBody("您确定要锁定吗？锁定后系统将不再为您匹配新的乘客")
+//                        .setTitle("行程安全提示")
+//                        .setNegativeText("取消")
+//                        .setPositiveText("确定锁定")
+//                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+//                            @Override
+//                            public void negative(Dialog dialog) {
+//                                dialog.dismiss();
+//
+//                            }
+//
+//                            @Override
+//                            public void positive(Dialog dialog) {
+//                                dialog.dismiss();
+//
+//                            }
+//                        }).show();
 
-                            }
-
-                            @Override
-                            public void positive(Dialog dialog) {
-                                dialog.dismiss();
-
-                            }
-                        }).show();
+                GrabNewOrderEntity grabNewOrderEntity = new GrabNewOrderEntity();
+                grabNewOrderEntity.setTips("南山区");
+                grabNewOrderEntity.setCarPoolDescription("拼车(1 人)");
+                grabNewOrderEntity.setPriceDescription("价格12.24元");
+                grabNewOrderEntity.setMarkupPriceDescription("加价10元");
+                BaseGrabOrderEntity baseGrabOrderEntity = new BaseGrabOrderEntity.
+                        Builder().
+                        setTtsMsg(grabNewOrderEntity.getTips()).
+                        setNewOrder(grabNewOrderEntity).
+                        setOrderType(2).
+                        build();
+                NewOrderTTSController.getInstance(YmxApp.getInstance()).onGetText(baseGrabOrderEntity);
             }
         });
 

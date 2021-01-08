@@ -73,7 +73,6 @@ public class UpdateCarStateDialog extends Dialog {
         });
 
 
-
     }
 
 
@@ -82,7 +81,7 @@ public class UpdateCarStateDialog extends Dialog {
         /**
          * 定义选中的下标, 默认-1
          */
-        private int selPos = -1;
+        private int selPos = 0;
 
         public void setSelPos(int selPos) {
             this.selPos = selPos;

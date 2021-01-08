@@ -10,6 +10,23 @@ public class GrabNewOrderEntity extends BaseEntity implements  NewOrderEntity {
     private String tips ;
     private List<String> noShowDialogDriverList;
     private List<String> shieldingDriverList;
+    private String carPoolDescription;
+    private String markupPriceDescription ;
+    private String priceDescription;
+
+
+
+    public void setMarkupPriceDescription(String markupPriceDescription) {
+        this.markupPriceDescription = markupPriceDescription;
+    }
+
+    public String getPriceDescription() {
+        return priceDescription;
+    }
+
+    public void setPriceDescription(String priceDescription) {
+        this.priceDescription = priceDescription;
+    }
 
     public String getMessageNo() {
         return messageNo;
@@ -49,5 +66,17 @@ public class GrabNewOrderEntity extends BaseEntity implements  NewOrderEntity {
 
     public void setShieldingDriverList(List<String> shieldingDriverList) {
         this.shieldingDriverList = shieldingDriverList;
+    }
+
+    public String getCarPoolDescription() {
+        return carPoolDescription;
+    }
+
+    public void setCarPoolDescription(String carPoolDescription) {
+        this.carPoolDescription = carPoolDescription;
+    }
+
+    public String getMarkupPriceDescription() {
+        return markupPriceDescription;
     }
 }

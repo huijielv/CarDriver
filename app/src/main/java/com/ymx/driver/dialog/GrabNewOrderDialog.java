@@ -1,7 +1,9 @@
 package com.ymx.driver.dialog;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -9,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+
 import com.ymx.driver.R;
 import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.databinding.DialogGrabNewOrderBinding;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
+import com.ymx.driver.entity.app.CarpoolGrabOrderEntity;
 import com.ymx.driver.entity.app.GrabNewOrderEntity;
 import com.ymx.driver.entity.app.TransferStationGrabOrder;
 import com.ymx.driver.entity.app.UserEntity;
@@ -43,10 +48,16 @@ public class GrabNewOrderDialog extends Dialog {
     private long lastClickTime;
     private Context context;
 
+    // 处理接送站逻辑 orderType==1  orderType==2 接送站拼车类型
+
+    private int orderType;
+
+
     public GrabNewOrderDialog(@NonNull Context context, BaseGrabOrderEntity grabNewOrderEntity) {
         super(context);
         this.grabNewOrderEntity = (GrabNewOrderEntity) grabNewOrderEntity.getNewOrder();
         this.context = context;
+        this.orderType = grabNewOrderEntity.getOrderType();
         setCancelable(true);
         setCanceledOnTouchOutside(true);
         Window window = getWindow();
@@ -75,10 +86,23 @@ public class GrabNewOrderDialog extends Dialog {
         if (grabNewOrderEntity != null) {
             binding.address.setText(grabNewOrderEntity.getTips());
         }
+
+        if (orderType == 1) {
+            initTransferOrderView();
+        } else {
+            initcarPoolOrder();
+        }
+
+
+        timer = new Timer();
+        countdownTimer();
+
+    }
+
+    public void initTransferOrderView() {
         List<String> noShowDialogDriverList = grabNewOrderEntity.getNoShowDialogDriverList();
         boolean isVisity = false;
         UserEntity userEntity = LoginHelper.getUserEntity();
-
         if (noShowDialogDriverList != null && noShowDialogDriverList.size() > 0) {
             for (String listitem : noShowDialogDriverList) {
                 if (listitem.equals(userEntity.getIdNo())) {
@@ -87,8 +111,6 @@ public class GrabNewOrderDialog extends Dialog {
                 }
             }
         }
-
-
         if (isVisity) {
             binding.grabTv.setVisibility(View.GONE);
         } else {
@@ -97,9 +119,6 @@ public class GrabNewOrderDialog extends Dialog {
             binding.grabTv.setText("接单 (" + mTime + ")");
 
         }
-        timer = new Timer();
-        countdownTimer();
-
         binding.grabTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +134,41 @@ public class GrabNewOrderDialog extends Dialog {
 
             }
         });
-
     }
+
+    public void initcarPoolOrder() {
+        binding.grabTv.setVisibility(View.VISIBLE);
+        if (!TextUtils.isEmpty(grabNewOrderEntity.getMarkupPriceDescription())) {
+            binding.markupPriceDescriptioTv.setVisibility(View.VISIBLE);
+            binding.markupPriceDescriptioTv.setText(grabNewOrderEntity.getMarkupPriceDescription());
+        } else {
+            binding.markupPriceDescriptioTv.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(grabNewOrderEntity.getCarPoolDescription())) {
+            binding.carPoolTv.setVisibility(View.VISIBLE);
+            binding.carPoolTv.setText(grabNewOrderEntity.getCarPoolDescription());
+        }
+        binding.priceDescriptionTv.setText(grabNewOrderEntity.getPriceDescription());
+        binding.carPoolGrabLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFastDoubleClick()) {
+                    UIUtils.showToast("操作太频繁了");
+                    return;
+                }
+            }
+        });
+    }
+
+    public void initGrabTv(boolean enabled, Drawable drawable, String info) {
+        if (binding.grabTv != null) {
+            binding.grabTv.setEnabled(enabled);
+            binding.grabTv.setBackground(drawable);
+            binding.grabTv.setText(info);
+        }
+    }
+
 
     @Override
     protected void onStop() {
@@ -180,10 +232,11 @@ public class GrabNewOrderDialog extends Dialog {
                     }
 
                 } else if (mTime <= 5) {
-                    if (binding.grabTv != null) {
-                        binding.grabTv.setEnabled(true);
-                        binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_soli_item));
-                        binding.grabTv.setText("接单");
+                    if (orderType == 1) {
+                        initGrabTv(true, UIUtils.getDrawable(R.drawable.bg_soli_item), "接单");
+                    } else {
+                        binding.grabTv.setVisibility(View.GONE);
+                        binding.carPoolGrabLl.setVisibility(View.VISIBLE);
                     }
                 } else {
                     if (binding.grabTv != null) {
@@ -198,6 +251,37 @@ public class GrabNewOrderDialog extends Dialog {
         }
     };
 
+    public void carpoolGrabOrder(String orderNo) {
+        RetrofitFactory.sApiService.carpoolGrabOrder(orderNo)
+                .map(new TFunc<>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new TObserver<CarpoolGrabOrderEntity>() {
+                    @Override
+                    protected void onRequestStart() {
+
+                    }
+
+                    @Override
+                    protected void onRequestEnd() {
+
+                    }
+
+                    @Override
+                    protected void onSuccees(CarpoolGrabOrderEntity carpoolGrabOrderEntity) {
+                        if (mTime >= 0) {
+                            dismiss();
+                        }
+
+                    }
+
+                    @Override
+                    protected void onFailure(String message) {
+                        UIUtils.showToast(message);
+
+                    }
+                });
+    }
 
     public void ransferStationGrabOrder(String orderNo) {
         RetrofitFactory.sApiService.transferStationGrabOrder(orderNo)
@@ -262,6 +346,7 @@ public class GrabNewOrderDialog extends Dialog {
                     }
                 });
     }
+
 
     public boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();

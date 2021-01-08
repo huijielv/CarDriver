@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <import type="android.view.View" />
     </data>
 
@@ -13,46 +15,109 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/d15"
-            android:paddingBottom="@dimen/d15"
             android:layout_marginTop="45dp"
+            android:background="@drawable/bg_dailog_grab_transfer_new_order"
             android:shadowColor="#1a333333"
             android:shadowDx="0"
-            android:shadowDy="3"
-            android:background="@drawable/bg_dailog_grab_transfer_new_order"
-            >
+            android:shadowDy="3">
 
 
             <TextView
-                android:id="@+id/address"
+                android:id="@+id/carPoolTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/d10"
-                android:layout_marginRight="@dimen/d10"
-                android:layout_toLeftOf="@+id/grabTv"
-                android:text=""
-                android:textColor="#ff333333"
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:id="@+id/grabTv"
-                android:layout_width="@dimen/d80"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/d10"
-                android:background="@drawable/bg_grey"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingBottom="@dimen/d5"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_carpool"
+                android:paddingLeft="2dp"
+                android:paddingTop="2dp"
+                android:paddingRight="@dimen/d10"
+                android:paddingBottom="2dp"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:textSize="@dimen/text_size_12"
+                android:visibility="gone"></TextView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/d15"
+                android:paddingBottom="@dimen/d15">
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
+                    android:layout_toLeftOf="@+id/grabLl"
+                    android:text=""
+                    android:textColor="#ff333333"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/grabLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/grabTv"
+                        android:layout_width="@dimen/d80"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_grey"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="@dimen/d5"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/carPoolGrabLl"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_soli_item"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/d5"
+                        android:paddingBottom="@dimen/d5"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="接单"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/markupPriceDescriptioTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text=""
+                            android:textColor="#ffffffff"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/priceDescriptionTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text=""
+                            android:textColor="#ffffffff"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
     </RelativeLayout>
 </layout>

@@ -9,6 +9,7 @@ import com.ymx.driver.entity.WalletInfoEntity;
 import com.ymx.driver.entity.app.AcceptOrderCirculationBodyEntity;
 import com.ymx.driver.entity.app.CancelOrderEntity;
 import com.ymx.driver.entity.app.CarStateEntity;
+import com.ymx.driver.entity.app.CarpoolGrabOrderEntity;
 import com.ymx.driver.entity.app.CharterOrderDetailsEntity;
 import com.ymx.driver.entity.app.ConfirmExchangeCommodityEntity;
 import com.ymx.driver.entity.app.ConfirmOrderEntity;
@@ -559,5 +560,13 @@ public interface ApiService {
      */
     @POST("v2/driver/transferStation/orderDetail")
     Observable<HttpResult<RangDriverPassgerFinishOederDetails>> transferStationOrderDetails(@Query("orderNo") String orderNo );
+
+
+    /**
+     * 司机抢单接口（网约车、出租车）
+     */
+    @POST("v2/driver/carpool/grabOrder")
+    Observable<HttpResult<CarpoolGrabOrderEntity>> carpoolGrabOrder(@Query("orderNo") String orderNo );
+
 
 }
