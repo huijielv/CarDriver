@@ -1,5 +1,4 @@
 package com.ymx.driver.dialog;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-
 import com.ymx.driver.R;
 import com.ymx.driver.base.YmxApp;
-import com.ymx.driver.databinding.DialogGrabTransferNewOrderBinding;
-import com.ymx.driver.entity.app.TransferNewOrderEntity;
+import com.ymx.driver.databinding.DialogGrabNewOrderBinding;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
+import com.ymx.driver.entity.app.GrabNewOrderEntity;
 import com.ymx.driver.entity.app.TransferStationGrabOrder;
 import com.ymx.driver.entity.app.UserEntity;
 import com.ymx.driver.http.RetrofitFactory;
@@ -28,7 +26,6 @@ import com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderListActivity;
 import com.ymx.driver.util.UIUtils;
 
-
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,18 +33,19 @@ import java.util.TimerTask;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class GrapNewTransferDialog extends Dialog {
-    private DialogGrabTransferNewOrderBinding binding;
-    private TransferNewOrderEntity transferNewOrderEntity;
+// 系统全局Dialog
+public class GrabNewOrderDialog extends Dialog {
+    private DialogGrabNewOrderBinding binding;
+    private GrabNewOrderEntity grabNewOrderEntity;
     private static Timer timer;
     private static CountdownTask countdownTask;
     private int mTime = 10;
     private long lastClickTime;
     private Context context;
 
-    public GrapNewTransferDialog(@NonNull Context context, TransferNewOrderEntity transferNewOrderEntity) {
+    public GrabNewOrderDialog(@NonNull Context context, BaseGrabOrderEntity grabNewOrderEntity) {
         super(context);
-        this.transferNewOrderEntity = transferNewOrderEntity;
+        this.grabNewOrderEntity = (GrabNewOrderEntity) grabNewOrderEntity.getNewOrder();
         this.context = context;
         setCancelable(true);
         setCanceledOnTouchOutside(true);
@@ -71,17 +69,15 @@ public class GrapNewTransferDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.dialog_grab_transfer_new_order, null, false);
+                R.layout.dialog_grab_new_order, null, false);
         setContentView(binding.getRoot());
 
-        if (transferNewOrderEntity != null) {
-            binding.address.setText(transferNewOrderEntity.getTips());
-
+        if (grabNewOrderEntity != null) {
+            binding.address.setText(grabNewOrderEntity.getTips());
         }
-        List<String> noShowDialogDriverList = transferNewOrderEntity.getNoShowDialogDriverList();
+        List<String> noShowDialogDriverList = grabNewOrderEntity.getNoShowDialogDriverList();
         boolean isVisity = false;
         UserEntity userEntity = LoginHelper.getUserEntity();
-
 
         if (noShowDialogDriverList != null && noShowDialogDriverList.size() > 0) {
             for (String listitem : noShowDialogDriverList) {
@@ -113,8 +109,8 @@ public class GrapNewTransferDialog extends Dialog {
                 }
 
 
-                if (!TextUtils.isEmpty(transferNewOrderEntity.getOrderNo())) {
-                    ransferStationGrabOrder(transferNewOrderEntity.getOrderNo());
+                if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
+                    ransferStationGrabOrder(grabNewOrderEntity.getOrderNo());
                 }
 
             }
@@ -174,31 +170,31 @@ public class GrapNewTransferDialog extends Dialog {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-           try {
-               mTime--;
+            try {
+                mTime--;
 
-               if (mTime < 0) {
-                   cancal();
-                   if (context != null) {
-                       dismiss();
-                   }
+                if (mTime < 0) {
+                    cancal();
+                    if (context != null) {
+                        dismiss();
+                    }
 
-               } else if (mTime <= 5) {
-                   if (binding.grabTv != null) {
-                       binding.grabTv.setEnabled(true);
-                       binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_soli_item));
-                       binding.grabTv.setText("接单");
-                   }
-               } else {
-                   if (binding.grabTv != null) {
-                       binding.grabTv.setEnabled(false);
-                       binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_grey));
-                       binding.grabTv.setText("接单 (" + mTime + ")");
-                   }
-               }
-           }catch (Exception e){
-               e.printStackTrace();
-           }
+                } else if (mTime <= 5) {
+                    if (binding.grabTv != null) {
+                        binding.grabTv.setEnabled(true);
+                        binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_soli_item));
+                        binding.grabTv.setText("接单");
+                    }
+                } else {
+                    if (binding.grabTv != null) {
+                        binding.grabTv.setEnabled(false);
+                        binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_grey));
+                        binding.grabTv.setText("接单 (" + mTime + ")");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
 
@@ -276,5 +272,4 @@ public class GrapNewTransferDialog extends Dialog {
         lastClickTime = time;
         return false;
     }
-
 }

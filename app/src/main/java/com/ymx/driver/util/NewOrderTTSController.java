@@ -1,24 +1,15 @@
 package com.ymx.driver.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-
 import com.baidu.tts.client.SpeechError;
 import com.baidu.tts.client.SpeechSynthesizerListener;
-import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.config.MessageEvent;
-import com.ymx.driver.entity.app.NewOrderEntity;
-import com.ymx.driver.entity.app.TransferNewOrderEntity;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
 import com.ymx.driver.tts.BaiduSpeech;
-import com.ymx.driver.ui.main.activity.MainActivity;
-import com.ymx.driver.ui.test.TestNewOrderEntity;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.LinkedList;
-
 public class NewOrderTTSController {
 
     public static NewOrderTTSController ttsManager;
@@ -26,7 +17,7 @@ public class NewOrderTTSController {
     private BaiduSpeech mTts;
     public boolean isPlaying = false;
 
-    private LinkedList<NewOrderEntity> wordList = new LinkedList();
+    private LinkedList<BaseGrabOrderEntity> wordList = new LinkedList();
     private final int TTS_PLAY = 1;
     private final int CHECK_TTS_PLAY = 2;
 
@@ -49,11 +40,10 @@ public class NewOrderTTSController {
                 case TTS_PLAY:
                     synchronized (mTts) {
 
-                        if (!isPlaying && mTts != null && wordList.size() > 0 && (GrapNewTransferManager.getInstance().grapNewTransferDialog == null || !GrapNewTransferManager.getInstance().isShow())) {
+                        if (!isPlaying && mTts != null && wordList.size() > 0 && (GrapNewOrderManager.getInstance().grabNewOrderDialog== null || !GrapNewOrderManager.getInstance().isShow())) {
                             isPlaying = true;
-                            NewOrderEntity newOrderEntity = wordList.removeFirst();
-                            TransferNewOrderEntity transferNewOrderEntity = (TransferNewOrderEntity) newOrderEntity;
-                            String playtts = transferNewOrderEntity.getTips();
+                            BaseGrabOrderEntity newOrderEntity = wordList.removeFirst();
+                            String playtts = newOrderEntity.getTtsMsg();
 
                             if (mTts == null) {
                                 mTts = BaiduSpeech.getInstance(mContext);
@@ -79,9 +69,9 @@ public class NewOrderTTSController {
                                 public void onSpeechStart(String s) {
                                     isPlaying = true;
 
-                                    LogUtil.d("test","2222222222222222222");
+
                                     if (MyLifecycleHandler.isApplicationInForeground()) {
-                                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_TRANSFER_NEW_ORDER_CODE, transferNewOrderEntity));
+                                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_TRANSFER_NEW_ORDER_CODE, newOrderEntity));
                                     }
 
 
@@ -164,7 +154,7 @@ public class NewOrderTTSController {
         }
     }
 
-    public void onGetText(NewOrderEntity arg1) {
+    public void onGetText(BaseGrabOrderEntity arg1) {
         if (wordList != null) {
             wordList.addLast(arg1);
 

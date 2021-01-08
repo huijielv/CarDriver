@@ -238,4 +238,9 @@
     <string name="transfer_pessener_destination">是否已确认所有乘客已到达上车点？ </string>
     <string name="transfer_order_no">订单号：</string>
 
+
+    <string name="carpooling_safety_tips">请各位司机注意，接取拼车订单后，行驶过程中可能存在新订单推送提示，请您在确保行车安全的前提下接单，防止产生行驶过程中的安全隐患。</string>
+
+
+
 </resources>

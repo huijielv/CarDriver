@@ -4,7 +4,7 @@ import com.ymx.driver.entity.BaseEntity;
 
 import java.util.List;
 
-public class TransferNewOrderEntity extends BaseEntity implements  NewOrderEntity {
+public class GrabNewOrderEntity extends BaseEntity implements  NewOrderEntity {
     private String messageNo;
     private String orderNo;
     private String tips ;

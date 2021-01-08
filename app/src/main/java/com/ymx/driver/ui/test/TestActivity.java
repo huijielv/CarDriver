@@ -2,17 +2,23 @@ package com.ymx.driver.ui.test;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.ymx.driver.R;
 import com.ymx.driver.base.AppManager;
 import com.ymx.driver.base.BaseActivity;
 import com.ymx.driver.base.BaseViewModel;
 
-import com.ymx.driver.base.YmxApp;
+
+import com.ymx.driver.base.DefaultStyleDialog;
 import com.ymx.driver.databinding.TestActivityBinding;
-import com.ymx.driver.tts.BaiduSpeech;
+import com.ymx.driver.dialog.UpdateCarStateDialog;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
+
+
 import com.ymx.driver.util.LogUtil;
 
 import io.reactivex.Observable;
@@ -54,13 +60,11 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
     public void initParam() {
 
     }
-    int i =1;
+
+    int i = 1;
+
     @Override
     public void initView(Bundle savedInstanceState) {
-
-
-
-
 
 
         //创建观察者
@@ -82,7 +86,7 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
 
             @Override
             public void onNext(String info) {
-             LogUtil.d("Rxjava--Test-----------",info);
+                LogUtil.d("Rxjava--Test-----------", info);
             }
 
             @Override
@@ -99,18 +103,32 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
         observable.subscribe(observer);
 
 
-
-
-
-
         binding.info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                TestNewOrderEntity testNewOrderEntity2 = new TestNewOrderEntity();
-//
-//                BaiduSpeech.getInstance(YmxApp.getInstance()).playText("测试我叫汪狼涛",null);
+//                BaseGrabOrderEntity baseGraoOrderEntity  = new BaseGrabOrderEntity();
 
-                BaiduSpeech.getInstance(YmxApp.getInstance()).playText("测试我");
+//                UpdateCarStateDialog updateCarStateDialog = new UpdateCarStateDialog(TestActivity.this);
+//                updateCarStateDialog.show();
+
+                new DefaultStyleDialog(activity)
+                        .setBody("您确定要锁定吗？锁定后系统将不再为您匹配新的乘客")
+                        .setTitle("行程安全提示")
+                        .setNegativeText("取消")
+                        .setPositiveText("确定锁定")
+                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+                            @Override
+                            public void negative(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void positive(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+                        }).show();
             }
         });
 
@@ -121,13 +139,7 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
     public void initData() {
 
 
-
     }
-
-
-
-
-
 
 
     @Override

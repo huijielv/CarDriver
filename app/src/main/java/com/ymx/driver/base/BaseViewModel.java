@@ -5,7 +5,7 @@ import android.app.Application;
 import com.amap.api.location.AMapLocation;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.ymx.driver.config.MessageEvent;
-import com.ymx.driver.entity.app.TransferNewOrderEntity;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -138,7 +138,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel, i
                 break;
 
             case MessageEvent.MSG_TRANSFER_NEW_ORDER_CODE:
-                getUC(). getTransferNewOrderEvent().setValue((TransferNewOrderEntity) event.src);
+                getUC(). getTransferNewOrderEvent().setValue((BaseGrabOrderEntity) event.src);
 
 
                 break;
@@ -184,7 +184,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel, i
         private SingleLiveEvent<AMapLocation> locateSuccess;
         private SingleLiveEvent<Void> hideSoftKeyBoard;
         private SingleLiveEvent<Void> toMain;
-        public SingleLiveEvent<TransferNewOrderEntity> transferNewOrder ;
+        public SingleLiveEvent<BaseGrabOrderEntity> transferNewOrder ;
         public SingleLiveEvent<String> getShowDialogEvent() {
             return showDialogEvent = createLiveData(showDialogEvent);
         }
@@ -205,7 +205,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel, i
             return toMain = createLiveData(toMain);
         }
 
-        public SingleLiveEvent<TransferNewOrderEntity> getTransferNewOrderEvent() {
+        public SingleLiveEvent<BaseGrabOrderEntity> getTransferNewOrderEvent() {
             return transferNewOrder = createLiveData(transferNewOrder);
         }
 

@@ -32,11 +32,12 @@ import com.umeng.message.PushAgent;
 import com.umeng.socialize.UMShareAPI;
 import com.ymx.driver.R;
 import com.ymx.driver.databinding.ActivityBaseBinding;
-import com.ymx.driver.entity.app.TransferNewOrderEntity;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
+
+import com.ymx.driver.entity.app.GrabNewOrderEntity;
 import com.ymx.driver.ui.main.activity.MainActivity;
-import com.ymx.driver.util.GrapNewTransferManager;
+import com.ymx.driver.util.GrapNewOrderManager;
 import com.ymx.driver.util.LogUtil;
-import com.ymx.driver.util.NewOrderFilterUtiles;
 import com.ymx.driver.util.SoftKeyboardUtil;
 import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.util.keyboardutil.IkeyBoardCallback;
@@ -45,8 +46,6 @@ import com.ymx.driver.view.LoadingDialog;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 import me.jessyan.autosize.AutoSizeConfig;
@@ -142,7 +141,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         }
         ImmersionBar.with(this).destroy();
         KeyBoardEventBus.getDefault().unregister(activity);
-        GrapNewTransferManager.getInstance().dismiss();
+        GrapNewOrderManager.getInstance().dismiss();
         dismissLoading();
 
     }
@@ -335,17 +334,20 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
                 hideSoftKeyBoard();
             }
         });
-        viewModel.getUC().getTransferNewOrderEvent().observe(this, new Observer<TransferNewOrderEntity>() {
+        viewModel.getUC().getTransferNewOrderEvent().observe(this, new Observer<BaseGrabOrderEntity>() {
             @Override
-            public void onChanged(TransferNewOrderEntity transferNewOrderEntity) {
+            public void onChanged(BaseGrabOrderEntity baseGrabOrderEntity) {
 //                if (!NewOrderFilterUtiles.hasOrder(transferNewOrderEntity.getOrderNo())) {
 //                    return;
 //                }
 
 
-                GrapNewTransferManager.getInstance().setCurrentActivity(AppManager.getAppManager().currentActivity());
-                GrapNewTransferManager.getInstance().setTransferNewOrderEntity(transferNewOrderEntity);
-                GrapNewTransferManager.getInstance().showDialog();
+
+                    GrapNewOrderManager.getInstance().setCurrentActivity(AppManager.getAppManager().currentActivity());
+                    GrapNewOrderManager.getInstance().setBaseGrabOrderEntity(baseGrabOrderEntity);
+                    GrapNewOrderManager.getInstance().showDialog();
+
+
 
             }
         });
