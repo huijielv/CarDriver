@@ -156,7 +156,6 @@ public class HomeViewModel extends BaseViewModel {
         public SingleLiveEvent<String> ucGrapPassengerSucess = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucMyWallet = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> refreshSucess = new SingleLiveEvent<>();
-        public SingleLiveEvent<Void> ucUploadGps = new SingleLiveEvent<>();
         public SingleLiveEvent<String> ucCancelOrder = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucSystemCancelOrder = new SingleLiveEvent<>();
         public SingleLiveEvent<NetChangeEntity> ucNetChange = new SingleLiveEvent<>();
@@ -164,6 +163,7 @@ public class HomeViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucTodayIncome = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucLockDrvier = new SingleLiveEvent<>();
         public SingleLiveEvent<DriverLockEntity> ucLockDrvierHiHt = new SingleLiveEvent<>();
+        public SingleLiveEvent<Void> ucSafetyTipsShow = new SingleLiveEvent<>();
     }
 
     public void loadData() {
@@ -380,8 +380,8 @@ public class HomeViewModel extends BaseViewModel {
     }
     // 发车
 
-    public void startWork() {
-        RetrofitFactory.sApiService.startWork()
+    public void startWork(int businessType) {
+        RetrofitFactory.sApiService.startWork(businessType)
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -399,7 +399,10 @@ public class HomeViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(CarStateEntity s) {
                         driverStatus.set(s.getCarState());
-                        uc.ucUploadGps.call();
+
+                        if (businessType == 1) {
+                            uc.ucSafetyTipsShow.call();
+                        }
                         YmxCache.setCarState(s.getCarState());
                     }
 

@@ -163,7 +163,7 @@ public interface ApiService {
      * 司机收车
      */
     @POST("v1/driver/user/startWork")
-    Observable<HttpResult<CarStateEntity>> startWork();
+    Observable<HttpResult<CarStateEntity>> startWork( @Query("businessType") int    businessType);
 
     /**
      * 我的钱包接口

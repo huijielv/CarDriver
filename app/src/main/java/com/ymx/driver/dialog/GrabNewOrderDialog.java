@@ -48,8 +48,7 @@ public class GrabNewOrderDialog extends Dialog {
     private long lastClickTime;
     private Context context;
 
-    // 处理接送站逻辑 orderType==1  orderType==2 接送站拼车类型
-
+    // orderType==1  处理接送站逻辑  orderType==2 网约车拼车或者出租车拼车
     private int orderType;
 
 

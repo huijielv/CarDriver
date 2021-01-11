@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+
 import com.amap.api.maps.TextureMapView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -17,6 +18,8 @@ import com.ymx.driver.base.YmxCache;
 import com.ymx.driver.databinding.FragmentHomeBinding;
 import com.ymx.driver.dialog.GrapOrderDailog;
 import com.ymx.driver.dialog.GrapOrderTipsDialog;
+import com.ymx.driver.dialog.SafetyTipsDialog;
+import com.ymx.driver.dialog.UpdateCarStateDialog;
 import com.ymx.driver.entity.NetChangeEntity;
 import com.ymx.driver.entity.app.DriverLockEntity;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
@@ -35,8 +38,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
 
-
-
 /**
  * Created by xuweihua
  * 2020/5/4
@@ -44,6 +45,8 @@ import androidx.lifecycle.Observer;
 public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewModel> {
 
     private String TAG = this.getClass().getSimpleName();
+    private UpdateCarStateDialog updateCarStateDialog;
+    private SafetyTipsDialog safetyTipsDialog;
 
     public static HomeFragment newInstance() {
         return newInstance(null);
@@ -89,6 +92,12 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (updateCarStateDialog != null && updateCarStateDialog.isShowing()) {
+            updateCarStateDialog.dismiss();
+        }
+        if (safetyTipsDialog != null && safetyTipsDialog.isShowing()) {
+            safetyTipsDialog.dismiss();
+        }
 
     }
 
@@ -96,8 +105,6 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
     protected TextureMapView getTextureMapView() {
         return null;
     }
-
-
 
 
     @Override
@@ -125,7 +132,27 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
 
 
                 if (xviewModel.driverStatus.get() != 0) {
-                    xviewModel.startWork();
+                    if (YmxCache.getDriverType() == 6 || YmxCache.getDriverType() == 1) {
+                        updateCarStateDialog = new UpdateCarStateDialog(getActivity(), YmxCache.getDriverType());
+                        updateCarStateDialog.setSelectPostion(new UpdateCarStateDialog.selectCarStatePostion() {
+                            @Override
+                            public void getSelectPostion(int position) {
+                                updateCarStateDialog.dismiss();
+                                if (position==0){
+                                    xviewModel.startWork(1);
+                                }else if (position==1){
+                                    xviewModel.startWork(2);
+                                }
+
+
+                            }
+                        });
+                        updateCarStateDialog.show();
+
+                    } else {
+                        xviewModel.startWork(0);
+                    }
+
 
                 }
 
@@ -304,6 +331,13 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
 
                             }
                         }).show();
+            }
+        });
+        xviewModel.uc.ucSafetyTipsShow.observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(Void aVoid) {
+                safetyTipsDialog = new SafetyTipsDialog(getActivity());
+                safetyTipsDialog.show();
             }
         });
 

@@ -3,6 +3,7 @@ package com.ymx.driver.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.ymx.driver.R;
-
 import com.ymx.driver.databinding.DialogUpdateCarStateBinding;
+
 import com.ymx.driver.util.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,13 +35,26 @@ public class UpdateCarStateDialog extends Dialog {
     private UpdateCarStateAdapter adapter;
     private Context context;
     private List<String> list = new ArrayList<>();
+    private selectCarStatePostion selectCarStatePostion;
+    public selectCarStatePostion getSelectPostion() {
+        return selectCarStatePostion;
+    }
 
+    public void setSelectPostion(selectCarStatePostion selectCarStatePostion) {
+        this.selectCarStatePostion = selectCarStatePostion;
+    }
 
-    public UpdateCarStateDialog(@NonNull Context context) {
+    public UpdateCarStateDialog(@NonNull Context context, int driverType) {
         super(context, R.style.Theme_Light_Dialog);
         this.context = context;
-        list.add("网约车一口价(接受拼单)");
-        list.add("网约车一口价(接受拼单)");
+        if (driverType == 6) {
+            list.add("出租车一口价(接受拼单)");
+            list.add("出租车打表计价");
+        } else if (driverType == 1) {
+            list.add("网约车一口价(接受拼单)");
+            list.add("网约车里程计价");
+        }
+
         setCancelable(true);
         setCanceledOnTouchOutside(false);
         Window window = getWindow();
@@ -72,8 +86,25 @@ public class UpdateCarStateDialog extends Dialog {
             }
         });
 
+        stateBinding.negativeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        stateBinding.positiveText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectCarStatePostion != null && adapter != null) {
+                    selectCarStatePostion.getSelectPostion(adapter.selPos);
+                }
+            }
+        });
 
     }
+
+
+
 
 
     public class UpdateCarStateAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -103,5 +134,7 @@ public class UpdateCarStateDialog extends Dialog {
 
     }
 
-
+    public interface selectCarStatePostion {
+        void getSelectPostion(int position);
+    }
 }
