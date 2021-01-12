@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Ll"
+    android:layout_width="wrap_content"
+    android:layout_marginTop="@dimen/d10"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/d32"
+        android:layout_height="@dimen/d32"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/icon_headiv"
+        ></ImageView>
+
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/d10"
+        android:layout_marginTop="@dimen/d4"
+        android:layout_marginRight="@dimen/d10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_12"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/d3"
+        android:layout_marginTop="@dimen/d4"
+        android:layout_marginRight="@dimen/d3"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_12"
+        android:textStyle="bold">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/d4"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_12"
+        android:textStyle="bold">
+    </TextView>
+</LinearLayout>

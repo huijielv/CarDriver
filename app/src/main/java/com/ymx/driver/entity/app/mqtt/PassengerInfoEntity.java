@@ -28,6 +28,9 @@ public class PassengerInfoEntity extends BaseEntity {
     private String timeDescribe;
     private int transferOrderState;
     private String transferOrderTips;
+    private String titleText;
+
+
 
 
     public String getTransferOrderTips() {
@@ -81,6 +84,13 @@ public class PassengerInfoEntity extends BaseEntity {
         this.passengerList = passengerList;
     }
 
+    public String getTitleText() {
+        return titleText;
+    }
+
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
+    }
     public String getOrderTypeName() {
         return orderTypeName;
     }
@@ -227,6 +237,7 @@ public class PassengerInfoEntity extends BaseEntity {
     public void setTransferOrderState(int transferOrderState) {
         this.transferOrderState = transferOrderState;
     }
+
 
 
 }

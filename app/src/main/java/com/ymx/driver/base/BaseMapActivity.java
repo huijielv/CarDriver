@@ -9,6 +9,10 @@ import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.ymx.driver.map.AMapUtil;
+import com.ymx.driver.map.LocationManager;
+import com.ymx.driver.util.NavUtil;
+import com.ymx.driver.util.NavigationMapUtils;
+import com.ymx.driver.viewmodel.mine.NavSettingViewModel;
 
 import java.util.List;
 
@@ -156,4 +160,7 @@ public abstract class BaseMapActivity<V extends ViewDataBinding, VM extends Base
      * initViews比initMapCreate先执行
      */
     protected abstract void initMapLoad();
+
+
+
 }

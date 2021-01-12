@@ -35,14 +35,18 @@ import com.ymx.driver.databinding.ActivityBaseBinding;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
 
 import com.ymx.driver.entity.app.GrabNewOrderEntity;
+import com.ymx.driver.map.LocationManager;
 import com.ymx.driver.ui.main.activity.MainActivity;
 import com.ymx.driver.util.GrapNewOrderManager;
 import com.ymx.driver.util.LogUtil;
+import com.ymx.driver.util.NavUtil;
+import com.ymx.driver.util.NavigationMapUtils;
 import com.ymx.driver.util.SoftKeyboardUtil;
 import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.util.keyboardutil.IkeyBoardCallback;
 import com.ymx.driver.util.keyboardutil.KeyBoardEventBus;
 import com.ymx.driver.view.LoadingDialog;
+import com.ymx.driver.viewmodel.mine.NavSettingViewModel;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -537,6 +541,21 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
      */
     public <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
         return ViewModelProviders.of(activity).get(cls);
+    }
+
+
+    public void mapNavigation(double lat, double log, String addressName) {
+        if (YmxCache.getNavStatus() == 0) {
+            if (YmxCache.getNavMode() == NavSettingViewModel.NAV_MODE_GAODE) {
+                NavigationMapUtils.goGaodeMap(getApplicationContext(), lat, log, addressName);
+            } else if (YmxCache.getNavMode() == NavSettingViewModel.NAV_MODE_BAIDU) {
+                NavUtil.openBaiDuNavi(getApplicationContext(), "", LocationManager.getInstance(getApplicationContext()).getLatitude(), LocationManager.getInstance(getApplicationContext()).getLongitude(), addressName, lat, log);
+            } else if (YmxCache.getNavMode() == NavSettingViewModel.NAV_MODE_TENCENT) {
+                NavUtil.openTencentMap(getApplicationContext(), "", LocationManager.getInstance(getApplicationContext()).getLatitude(), LocationManager.getInstance(getApplicationContext()).getLongitude(), addressName, lat, log);
+            }
+        } else {
+            NavUtil.neizhiGaodeNavi(getApplicationContext(), LocationManager.getInstance(getApplicationContext()).getLatitude(), LocationManager.getInstance(getApplicationContext()).getLongitude(), lat, log, addressName);
+        }
     }
 
 

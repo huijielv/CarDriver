@@ -163,7 +163,7 @@ public interface ApiService {
      * 司机收车
      */
     @POST("v1/driver/user/startWork")
-    Observable<HttpResult<CarStateEntity>> startWork( @Query("businessType") int    businessType);
+    Observable<HttpResult<CarStateEntity>> startWork(@Query("businessType") int businessType);
 
     /**
      * 我的钱包接口
@@ -242,14 +242,14 @@ public interface ApiService {
      * 月收入明细接口
      */
     @GET("v1/driver/center/monthIncomeDetail")
-    Observable<HttpResult<MonthIncomeDetailEntity>> getMonthIncomeDetail(@Query("year") String year, @Query("month") String month ,@Query("incomeType") int    incomeType);
+    Observable<HttpResult<MonthIncomeDetailEntity>> getMonthIncomeDetail(@Query("year") String year, @Query("month") String month, @Query("incomeType") int incomeType);
 
 
     /**
      * 日收入明细接口
      */
     @GET("v1/driver/center/dayIncomeDetail")
-    Observable<HttpResult<DayIncomeDetailEntity>> getDayIncomeDetail(@Query("dayTime") String dayTime, @Query("pageSize") int pageSize, @Query("currentPage") int currentPage ,@Query("incomeType") int incomeType);
+    Observable<HttpResult<DayIncomeDetailEntity>> getDayIncomeDetail(@Query("dayTime") String dayTime, @Query("pageSize") int pageSize, @Query("currentPage") int currentPage, @Query("incomeType") int incomeType);
 
 
     /**
@@ -528,45 +528,63 @@ public interface ApiService {
      */
     @POST("v2/driver/transferStation/recoverOrder")
     Observable<HttpResult<TransferStationRecoverEntity>> recoverTransferStationOrderDetails(@Query("orderNo") String orderNo);
+
     /**
      * 接送站司机取消订单
      */
     @POST("v2/driver/transferStation/cancelOrder")
     Observable<HttpResult<TransferCancalOrderEntity>> transferCancalOrder(@Query("orderNo") String orderNo);
+
     /**
      * 接送站司机修改接送时间
      */
     @POST("v2/driver/transferStation/chooseAfterDrivingTime")
-    Observable<HttpResult<BaseEntity>> chooseAfterDrivingTime(@Query("orderNo") String orderNo,@Query("afterDrivingTime") long afterDrivingTime);
+    Observable<HttpResult<BaseEntity>> chooseAfterDrivingTime(@Query("orderNo") String orderNo, @Query("afterDrivingTime") long afterDrivingTime);
+
     /**
      * 接送站司机更改状态
      */
     @POST("v2/driver/transferStation/action")
     Observable<HttpResult<TransferStationRecoverEntity>> updateTransferStationAction(@Body UpdateTransferStationActionEntity updateTransferStationActionEntity);
+
     /**
      * 接送站子订单修改状态
      */
     @POST("v2/driver/transferStation/arrivePlace")
     Observable<HttpResult<TransferStationRecoverEntity>> transferArrivePlace(@Body UpdateTransferStationActionEntity updateTransferStationActionEntity);
+
     /**
      * 网约车订单修改状态
      */
     @POST("v1/carOrder/driver/updateStartAddress")
-    Observable<HttpResult<BaseEntity>> updateStartAddress(@Query("orderNo") String orderNo ,@Query("state") int state);
+    Observable<HttpResult<BaseEntity>> updateStartAddress(@Query("orderNo") String orderNo, @Query("state") int state);
 
 
     /**
      * 网约车订单完成订单
      */
     @POST("v2/driver/transferStation/orderDetail")
-    Observable<HttpResult<RangDriverPassgerFinishOederDetails>> transferStationOrderDetails(@Query("orderNo") String orderNo );
+    Observable<HttpResult<RangDriverPassgerFinishOederDetails>> transferStationOrderDetails(@Query("orderNo") String orderNo);
 
 
     /**
-     * 司机抢单接口（网约车、出租车）
+     * 司机抢单接口（网约车、出租车拼车）
      */
     @POST("v2/driver/carpool/grabOrder")
-    Observable<HttpResult<CarpoolGrabOrderEntity>> carpoolGrabOrder(@Query("orderNo") String orderNo );
+    Observable<HttpResult<CarpoolGrabOrderEntity>> carpoolGrabOrder(@Query("orderNo") String orderNo);
+
+    /**
+     * 拼车切换乘客
+     */
+    @POST("v2/driver/carpool/switchPassenger")
+    Observable<HttpResult<PassengerInfoEntity>> carpoolSwitchPassenger(@Query("orderNo") String orderNo);
+
+
+    /**
+     * 拼车切换乘客
+     */
+    @POST("v2/driver/carpool/action")
+    Observable<HttpResult<PassengerInfoEntity>> carpoolAction(@Body UpdateTransferStationActionEntity updateTransferStationActionEntity);
 
 
 }

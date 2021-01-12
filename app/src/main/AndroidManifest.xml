@@ -305,6 +305,12 @@
         <activity
             android:name="com.ymx.driver.ui.transportsite.TransferStationTripOrderFinishDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity"
+            android:screenOrientation="portrait" />
+
+
+
 
 
 

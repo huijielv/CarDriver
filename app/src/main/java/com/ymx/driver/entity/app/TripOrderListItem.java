@@ -14,6 +14,9 @@ public class TripOrderListItem extends BaseEntity {
     private int channel;
     private int businessType;
     private int color ;
+    private int categoryType;
+
+
 
     public int getColor() {
         return color;
@@ -101,5 +104,13 @@ public class TripOrderListItem extends BaseEntity {
 
     public void setBusinessType(int businessType) {
         this.businessType = businessType;
+    }
+
+    public int getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
     }
 }

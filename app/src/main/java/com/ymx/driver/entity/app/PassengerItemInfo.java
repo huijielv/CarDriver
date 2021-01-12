@@ -15,6 +15,9 @@ public class PassengerItemInfo extends BaseEntity {
     private int priceMarkupState;
     private String priceMarkup;
 
+
+    private String appointmentTime;
+
     public String getPriceMarkup() {
         return priceMarkup;
     }
@@ -129,6 +132,14 @@ public class PassengerItemInfo extends BaseEntity {
 
     public void setPriceMarkupState(int priceMarkupState) {
         this.priceMarkupState = priceMarkupState;
+    }
+
+    public String getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public void setAppointmentTime(String appointmentTime) {
+        this.appointmentTime = appointmentTime;
     }
 
 
