@@ -14,8 +14,12 @@ import com.ymx.driver.base.SingleLiveEvent;
 import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.binding.command.BindingAction;
 import com.ymx.driver.binding.command.BindingCommand;
+import com.ymx.driver.config.MessageEvent;
+import com.ymx.driver.entity.BaseGrabOrderEntity;
+import com.ymx.driver.entity.app.CarPoolCancalOrderEntity;
 import com.ymx.driver.entity.app.UpdateTransferStationActionEntity;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
+import com.ymx.driver.entity.app.mqtt.PhoneOrderSuccessEntity;
 import com.ymx.driver.http.ResultException;
 import com.ymx.driver.http.RetrofitFactory;
 import com.ymx.driver.http.TAddObserver;
@@ -53,6 +57,8 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
         public SingleLiveEvent<PassengerInfoEntity> ucRecoverOrderDetails = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucChangeMap = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucPowPopShow = new SingleLiveEvent<>();
+        public SingleLiveEvent<CarPoolCancalOrderEntity> ucCancalOrder = new SingleLiveEvent<>();
+        public SingleLiveEvent<CarPoolCancalOrderEntity> ucSystemCancalOrder = new SingleLiveEvent<>();
     }
 
     public ObservableArrayList<LatLng> smoothRunningLatLng = new ObservableArrayList<>();
@@ -88,18 +94,18 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onFailure(String message) {
-
+                        UIUtils.showToast(message);
                     }
 
                     @Override
                     protected void onFailure(ResultException e) {
-
+                        UIUtils.showToast(e.getErrMsg());
                     }
                 });
     }
 
     public void carpoolSwitchPassenger(String orderNo) {
-        RetrofitFactory.sApiService.recoverOrderDetails(orderNo)
+        RetrofitFactory.sApiService.carpoolSwitchPassenger(orderNo)
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,16 +123,17 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
                         initPassengerInfo(orderDetailsEntity);
+                        uc.ucPowPopShow.call();
                     }
 
                     @Override
                     protected void onFailure(String message) {
-
+                        UIUtils.showToast(message);
                     }
 
                     @Override
                     protected void onFailure(ResultException e) {
-
+                        UIUtils.showToast(e.getErrMsg());
                     }
                 });
     }
@@ -151,20 +158,54 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
                         initPassengerInfo(orderDetailsEntity);
-                        uc.ucPowPopShow.call();
+
                     }
 
                     @Override
                     protected void onFailure(String message) {
-
+                        UIUtils.showToast(message);
                     }
 
                     @Override
                     protected void onFailure(ResultException e) {
-
+                        UIUtils.showToast(e.getErrMsg());
                     }
                 });
     }
+
+    public void carpoolCanCalOrder(String orderNo) {
+        RetrofitFactory.sApiService.carpoolCancelOrder(orderNo)
+                .map(new TFunc<>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new TAddObserver<CarPoolCancalOrderEntity>() {
+                    @Override
+                    protected void onRequestStart() {
+                        getUC().getShowDialogEvent().call();
+                    }
+
+                    @Override
+                    protected void onRequestEnd() {
+                        getUC().getDismissDialogEvent().call();
+                    }
+
+                    @Override
+                    protected void onSuccees(CarPoolCancalOrderEntity carPoolCancalOrderEntity) {
+                        uc.ucCancalOrder.setValue(carPoolCancalOrderEntity);
+                    }
+
+                    @Override
+                    protected void onFailure(String message) {
+                        UIUtils.showToast(message);
+                    }
+
+                    @Override
+                    protected void onFailure(ResultException e) {
+                        UIUtils.showToast(e.getErrMsg());
+                    }
+                });
+    }
+
 
     public void initPassengerInfo(PassengerInfoEntity orderDetailsEntity) {
         title.set(orderDetailsEntity.getTitleText());
@@ -226,4 +267,21 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
             }
         });
     }
+
+
+    @Override
+    public void onMessageEvent(MessageEvent event) {
+        super.onMessageEvent(event);
+        switch (event.type) {
+            case MessageEvent.MSG_CAR_POOL_CANCAL_ORDER_CODE:
+
+
+                uc.ucSystemCancalOrder.setValue((CarPoolCancalOrderEntity) event.src);
+
+                break;
+
+        }
+    }
+
+
 }

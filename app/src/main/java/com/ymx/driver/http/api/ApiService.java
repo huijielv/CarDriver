@@ -8,6 +8,7 @@ import com.ymx.driver.entity.TodayOrderEntity;
 import com.ymx.driver.entity.WalletInfoEntity;
 import com.ymx.driver.entity.app.AcceptOrderCirculationBodyEntity;
 import com.ymx.driver.entity.app.CancelOrderEntity;
+import com.ymx.driver.entity.app.CarPoolCancalOrderEntity;
 import com.ymx.driver.entity.app.CarStateEntity;
 import com.ymx.driver.entity.app.CarpoolGrabOrderEntity;
 import com.ymx.driver.entity.app.CharterOrderDetailsEntity;
@@ -581,10 +582,16 @@ public interface ApiService {
 
 
     /**
-     * 拼车切换乘客
+     * 状态更新
      */
     @POST("v2/driver/carpool/action")
     Observable<HttpResult<PassengerInfoEntity>> carpoolAction(@Body UpdateTransferStationActionEntity updateTransferStationActionEntity);
+
+    /**
+     * 状态更新
+     */
+    @POST("v2/driver/carpool/cancelOrder")
+    Observable<HttpResult<CarPoolCancalOrderEntity>> carpoolCancelOrder(@Query("orderNo") String orderNo);
 
 
 }

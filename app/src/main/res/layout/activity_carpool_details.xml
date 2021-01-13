@@ -47,7 +47,6 @@
             android:layout_below="@+id/order_title_bar"
             android:background="@color/white"
             android:paddingLeft="@dimen/d15"
-            android:paddingTop="@dimen/d10"
             android:paddingRight="@dimen/d15"
             android:paddingBottom="@dimen/d10">
 
@@ -67,7 +66,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="19dp"
+                        android:layout_marginTop="15dp"
                         android:src="@drawable/icon_headiv" />
 
                     <TextView
@@ -82,9 +81,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/d12"
+                    android:layout_marginTop="@dimen/d10"
                     android:layout_toEndOf="@+id/ll_header"
                     android:orientation="vertical">
 

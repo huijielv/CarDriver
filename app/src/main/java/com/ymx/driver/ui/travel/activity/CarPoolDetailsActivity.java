@@ -1,9 +1,11 @@
 package com.ymx.driver.ui.travel.activity;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,7 +36,6 @@ import com.amap.api.services.route.DriveStep;
 import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.ymx.driver.R;
@@ -42,9 +43,11 @@ import com.ymx.driver.base.AppManager;
 import com.ymx.driver.base.BaseMapActivity;
 import com.ymx.driver.base.DefaultStyleDialog;
 import com.ymx.driver.config.MessageEvent;
+import com.ymx.driver.config.PermissionConfig;
 import com.ymx.driver.databinding.ActivityCarpoolDetailsBinding;
 
 import com.ymx.driver.databinding.CarPoolDetailsUpdatePassengerBinding;
+import com.ymx.driver.entity.app.CarPoolCancalOrderEntity;
 import com.ymx.driver.entity.app.PassengerItemInfo;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
 import com.ymx.driver.map.AMapUtil;
@@ -80,6 +83,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
     private int locateSuccess = 0;
     private int ocateSuccessNumber = 10;
     private int distanceStatus = 0;
+    private String passengerNo;
 
     private DefaultStyleDialog confimActionDialog;
 
@@ -264,6 +268,48 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             }
         });
 
+        xviewModel.uc.ucCancalOrder.observe(this, new Observer<CarPoolCancalOrderEntity>() {
+            @Override
+            public void onChanged(CarPoolCancalOrderEntity carPoolCancalOrderEntity) {
+                if (carPoolCancalOrderEntity.getDriverState() == 1) {
+                    xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getOrderNo());
+                } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
+                    doSthIsExit();
+                }
+            }
+        });
+
+        xviewModel.uc.ucSystemCancalOrder.observe(this, new Observer<CarPoolCancalOrderEntity>() {
+            @Override
+            public void onChanged(CarPoolCancalOrderEntity carPoolCancalOrderEntity) {
+
+                new DefaultStyleDialog(activity)
+                        .setBody(carPoolCancalOrderEntity.getTips())
+                        .setNegativeText("取消")
+                        .setPositiveText("确定")
+                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+                            @Override
+                            public void negative(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void positive(Dialog dialog) {
+                                dialog.dismiss();
+                                if (carPoolCancalOrderEntity.getDriverState() == 1) {
+                                    xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getDriverOrderNo());
+                                } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
+                                    doSthIsExit();
+                                }
+
+                            }
+                        }).show();
+
+
+            }
+        });
+
     }
 
     public void showPopupWindow() {
@@ -320,6 +366,39 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                             break;
                     }
                 }
+            }
+        });
+
+        popWindowBinding.callPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+                requestPermission(PermissionConfig.PC_CALL_PHONE, false, Manifest.permission.CALL_PHONE);
+            }
+        });
+        popWindowBinding.canceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+                new DefaultStyleDialog(activity)
+                        .setBody("是否取消尾号" + xviewModel.passengerInfo.get() + "乘客订单？")
+                        .setNegativeText("取消")
+                        .setPositiveText("确定")
+                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+                            @Override
+                            public void negative(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void positive(Dialog dialog) {
+                                dialog.dismiss();
+                                xviewModel.carpoolCanCalOrder(passengerNo);
+
+                            }
+                        }).show();
+
             }
         });
 
@@ -503,6 +582,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             headImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    passengerNo = passengerItemInfo.getOrderNo();
                     if (xviewModel.phoneNum != null && xviewModel.phoneNum.get() != null) {
                         if (xviewModel.phoneNum.get().equals(passengerItemInfo.getPhone())) {
                             showPopupWindow();
@@ -570,6 +650,24 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     }
                     getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                 }
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+
+    @Override
+    protected void permissionGranted(int requestCode) {
+        if (requestCode == PermissionConfig.PC_CALL_PHONE) {
+            try {
+                if (TextUtils.isEmpty(xviewModel.phoneNum.get())) {
+                    return;
+                }
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                Uri data = Uri.parse("tel:" + xviewModel.phoneNum.get());
+                intent.setData(data);
+                startActivity(intent);
             } catch (Exception e) {
 
             }

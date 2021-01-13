@@ -159,5 +159,7 @@ public class MessageEvent {
     public static final int MSG_TRANSFER_NEW_ORDER_CODE = 78;
     // 主订单界面取消订单消失
     public static final int MSG_MAIN_CANCAL_DIALOG_DISS_CODE = 79;
+    // 主订单界面取消订单消失
+    public static final int MSG_CAR_POOL_CANCAL_ORDER_CODE = 80;
 
 }
