@@ -6,10 +6,10 @@ package com.ymx.driver.config;
  * 佛祖保佑       永无BUG
  */
 public class MqttConfig {
-//
-//    public static final String MQTT_DEBUG_URL = "tcp://admin.xysc16.com";
+    //
+    public static final String MQTT_DEBUG_URL = "tcp://admin.xysc16.com";
 
-    public static final String MQTT_DEBUG_URL = "tcp://39.101.196.81:1883";
+//    public static final String MQTT_DEBUG_URL = "tcp://39.101.196.81:1883";
 
     public static final String MQTT_RELEASE_URL = "tcp://scapp.xysc16.com";
     public static final String MQTT_TOPIC_USER_EVENT = "driver/event/d_";
@@ -71,5 +71,7 @@ public class MqttConfig {
     public static final String MQTT_CODE_CAR_POOP_CANCAL_ORDER_TYPE = "2050";
 
     public static final String MQTT_CODE_CAR_POOL_NEW_ORDER_TYPE = "2008";
+
+    public static final String MQTT_CODE_RECOVER_ORDER_TYPE = "2051";
 
 }

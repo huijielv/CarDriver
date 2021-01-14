@@ -594,4 +594,11 @@ public interface ApiService {
     Observable<HttpResult<CarPoolCancalOrderEntity>> carpoolCancelOrder(@Query("orderNo") String orderNo);
 
 
+    /**
+     * 状态更新
+     */
+    @POST("v2/driver/carpool/endTrip")
+    Observable<HttpResult<PassengerInfoEntity>> driverCarpoolEndTrip(@Query("orderNo") String orderNo, @Query("lng") Double lng, @Query("lat") Double lat);
+
+
 }

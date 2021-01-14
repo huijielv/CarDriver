@@ -3,6 +3,7 @@ package com.ymx.driver.mqtt;
 import com.ymx.driver.config.MqttConfig;
 import com.ymx.driver.mqtt.Factory.CarPoolCancanFactory;
 import com.ymx.driver.mqtt.Factory.CarPoolNewOrderFactoty;
+import com.ymx.driver.mqtt.Factory.RecoverOrderFactory;
 import com.ymx.driver.mqtt.Factory.TransferNewOrderFactory;
 import com.ymx.driver.mqtt.inters.MqttConfigFactory;
 
@@ -17,6 +18,8 @@ public class MqttConfigFactoryMap {
         cachedFactories.put(MqttConfig.MQTT_CODE_CAR_POOP_CANCAL_ORDER_TYPE, new CarPoolCancanFactory());
         cachedFactories.put(MqttConfig.MQTT_CODE_TRANSFER_NEW_ORDER_TYPE, new TransferNewOrderFactory());
         cachedFactories.put(MqttConfig.MQTT_CODE_CAR_POOL_NEW_ORDER_TYPE, new CarPoolNewOrderFactoty());
+        cachedFactories.put(MqttConfig.MQTT_CODE_RECOVER_ORDER_TYPE, new RecoverOrderFactory());
+
     }
 
     public static MqttConfigFactory getParserFactory(String type) {

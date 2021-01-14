@@ -63,10 +63,10 @@ public class GrabNewOrderDialog extends Dialog {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        window.setWindowAnimations(R.style.dialogWindowAnim);
+//        window.setWindowAnimations(R.style.dialogWindowAnim);
         window.getDecorView().setBackgroundColor(UIUtils.getColor(R.color.rx_transparent));
         window.getDecorView().setPadding(0, 0, 0, 0);
-        window.setGravity(Gravity.TOP);
+        window.setGravity(Gravity.CENTER);
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.dimAmount = 0.0f;
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -114,7 +114,6 @@ public class GrabNewOrderDialog extends Dialog {
             binding.grabTv.setVisibility(View.GONE);
         } else {
             binding.grabTv.setVisibility(View.VISIBLE);
-            binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_grey));
             binding.grabTv.setText("接单 (" + mTime + ")");
 
         }
@@ -156,14 +155,18 @@ public class GrabNewOrderDialog extends Dialog {
                     UIUtils.showToast("操作太频繁了");
                     return;
                 }
+
+                if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
+                    carpoolGrabOrder(grabNewOrderEntity.getOrderNo());
+                }
             }
+
         });
     }
 
     public void initGrabTv(boolean enabled, Drawable drawable, String info) {
         if (binding.grabTv != null) {
             binding.grabTv.setEnabled(enabled);
-            binding.grabTv.setBackground(drawable);
             binding.grabTv.setText(info);
         }
     }
@@ -240,7 +243,6 @@ public class GrabNewOrderDialog extends Dialog {
                 } else {
                     if (binding.grabTv != null) {
                         binding.grabTv.setEnabled(false);
-                        binding.grabTv.setBackground(UIUtils.getDrawable(R.drawable.bg_grey));
                         binding.grabTv.setText("接单 (" + mTime + ")");
                     }
                 }

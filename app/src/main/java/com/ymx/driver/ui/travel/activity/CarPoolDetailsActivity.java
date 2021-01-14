@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
@@ -42,17 +41,23 @@ import com.ymx.driver.R;
 import com.ymx.driver.base.AppManager;
 import com.ymx.driver.base.BaseMapActivity;
 import com.ymx.driver.base.DefaultStyleDialog;
+import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.config.MessageEvent;
 import com.ymx.driver.config.PermissionConfig;
 import com.ymx.driver.databinding.ActivityCarpoolDetailsBinding;
 
 import com.ymx.driver.databinding.CarPoolDetailsUpdatePassengerBinding;
 import com.ymx.driver.entity.app.CarPoolCancalOrderEntity;
+import com.ymx.driver.entity.app.LongDrivingPaySuccessEntigy;
 import com.ymx.driver.entity.app.PassengerItemInfo;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
 import com.ymx.driver.map.AMapUtil;
 import com.ymx.driver.map.LocationManager;
 import com.ymx.driver.map.overlay.DrivingRouteOverlay;
+import com.ymx.driver.ui.longrange.driving.RangeDrivingPayMoneyQrcodeFrament;
+import com.ymx.driver.ui.main.activity.MainActivity;
+import com.ymx.driver.ui.mine.Frament.PayDialogFragment;
+import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.view.ClassicPopupWindow;
 import com.ymx.driver.view.SwipeButton;
 import com.ymx.driver.viewmodel.orderdetails.CarPoolDetailsViewModel;
@@ -83,7 +88,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
     private int locateSuccess = 0;
     private int ocateSuccessNumber = 10;
     private int distanceStatus = 0;
-    private String passengerNo;
+    private PassengerItemInfo passengerInfo;
 
     private DefaultStyleDialog confimActionDialog;
 
@@ -182,7 +187,10 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
             @Override
             public void onSwipeConfirm() {
-
+                AMapLocation aMapLocation = LocationManager.getInstance(YmxApp.getInstance()).getAMapLocation();
+                if (aMapLocation != null) {
+                    xviewModel.driverCarpoolEndTrip(orderNo, aMapLocation.getLongitude(), aMapLocation.getLatitude());
+                }
 
             }
         });
@@ -225,7 +233,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
         Intent intent = getIntent();
         if (intent.hasExtra(ORDERI_ID)) {
             orderNo = intent.getStringExtra(ORDERI_ID);
-            xviewModel.orderId.set(orderNo);
+//            xviewModel.orderId.set(orderNo);
             xviewModel.recoverOrderDetails(orderNo);
         }
     }
@@ -236,25 +244,24 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             @Override
             public void onChanged(PassengerInfoEntity passengerInfoEntity) {
 
-//                try {
-                mStartPoint = new LatLonPoint(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude());
-                mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
-                actionType = xviewModel.orderStatus.get();
+                try {
+                    mStartPoint = new LatLonPoint(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude());
+                    mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
+                    actionType = xviewModel.orderStatus.get();
 
 
-                if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 4) {
-                    moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
+                    if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 4) {
+                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
 
-                } else {
+                    } else {
 
-                    getaMap().clear();
-                    searchRouteResult();
+                        getaMap().clear();
+                        searchRouteResult();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
                 xbinding.btnSubmit.setText(xviewModel.buttonText.get());
                 carPoolAdapter.setNewData(passengerInfoEntity.getPassengerList());
 
@@ -275,6 +282,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getOrderNo());
                 } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
                     doSthIsExit();
+                    MainActivity.start(activity);
                 }
             }
         });
@@ -301,12 +309,67 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                                     xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getDriverOrderNo());
                                 } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
                                     doSthIsExit();
+                                    MainActivity.start(activity);
                                 }
 
                             }
                         }).show();
 
 
+            }
+        });
+
+
+        xviewModel.uc.ucErrorMsg.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                new DefaultStyleDialog(activity)
+                        .setBody(s)
+                        .setPositiveText("确定")
+                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+                            @Override
+                            public void negative(Dialog dialog) {
+                                dialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void positive(Dialog dialog) {
+                                dialog.dismiss();
+
+
+                            }
+                        }).show();
+            }
+        });
+
+        xviewModel.uc.ucPayDialog.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String orderId) {
+                Bundle bundle = new Bundle();
+                bundle.putString(PayDialogFragment.ORDER_NO,
+                        passengerInfo.getOrderNo());
+                PayDialogFragment.newInstance(bundle).show(getSupportFragmentManager(),
+                        PayDialogFragment.class.getSimpleName());
+            }
+        });
+
+        xviewModel.uc.ucPaySuccess.observe(this, new Observer<LongDrivingPaySuccessEntigy>() {
+            @Override
+            public void onChanged(LongDrivingPaySuccessEntigy longDrivingPaySuccessEntigy) {
+
+//                if (longDrivingPaySuccessEntigy.getDriverOrderNo().equals(orderNo)) {
+
+                xviewModel.recoverOrderDetails(longDrivingPaySuccessEntigy.getDriverOrderNo());
+//                }
+
+            }
+        });
+
+        xviewModel.uc.ucBack.observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(Void aVoid) {
+                doSthIsExit();
             }
         });
 
@@ -318,14 +381,52 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                 null, false);
         popWindow.setView(popWindowBinding.getRoot()).build().showAsBottom_AnchorRight_Right(xbinding.leftLine, 0);
 
-        if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 1) {
-            popWindowBinding.updateOrderStatusTv.setText("去接乘客");
-        } else if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 2) {
-            popWindowBinding.updateOrderStatusTv.setText("到达上车点");
-        } else if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 3) {
-            popWindowBinding.updateOrderStatusTv.setText("乘客已上车");
-        } else if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == 4) {
-            popWindowBinding.updateOrderStatusTv.setText("到达目的地");
+        if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null) {
+            switch (xviewModel.orderStatus.get()) {
+                case 1:
+                    popWindowBinding.updateOrderStatusIv.setBackground(UIUtils.getDrawable(R.drawable.icon_qujieichengke));
+                    popWindowBinding.updateOrderStatusTv.setText("去接乘客");
+                    break;
+                case 2:
+                    popWindowBinding.updateOrderStatusIv.setBackground(UIUtils.getDrawable(R.drawable.icon_daodashangchedian));
+                    popWindowBinding.updateOrderStatusTv.setText("到达上车点");
+                    break;
+                case 3:
+                    popWindowBinding.updateOrderStatusIv.setBackground(UIUtils.getDrawable(R.drawable.icon_yishangche));
+                    popWindowBinding.updateOrderStatusTv.setText("乘客已上车");
+                    popWindowBinding.canceOrderTv.setText("未联系乘客");
+                    popWindowBinding.canceOrderIv.setBackground(getDrawable(R.drawable.icon_long_driving_weijiedaochengke));
+
+                    break;
+
+                case 4:
+                    popWindowBinding.updateOrderStatusIv.setBackground(UIUtils.getDrawable(R.drawable.icon_daodamudidi));
+
+                    if (passengerInfo.getPassengerState() == 4) {
+                        popWindowBinding.updateOrderStatusTv.setText("到达目的地");
+                    } else if (passengerInfo.getPassengerState() == 7) {
+                        popWindowBinding.updateOrderStatusTv.setText("服务结束");
+                    }
+
+                    if (passengerInfo.getPayState() == 1) {
+                        popWindowBinding.qRcodeLl.setVisibility(View.GONE);
+                    } else if (passengerInfo.getPayState() == 0) {
+                        popWindowBinding.qRcodeLl.setVisibility(View.VISIBLE);
+                    }
+                    popWindowBinding.callPhone.setVisibility(View.GONE);
+                    popWindowBinding.canceOrder.setVisibility(View.GONE);
+                    break;
+                case 7:
+                    if (passengerInfo.getPayState() == 0) {
+                        popWindowBinding.updateOrderStatusTv.setText("行程结束");
+                        popWindowBinding.qRcodeLl.setVisibility(View.VISIBLE);
+                    }
+                    popWindowBinding.callPhone.setVisibility(View.GONE);
+                    popWindowBinding.canceOrder.setVisibility(View.GONE);
+                    break;
+            }
+
+
         }
 
         popWindowBinding.navigationLl.setOnClickListener(new View.OnClickListener() {
@@ -353,15 +454,21 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                 if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null) {
                     switch (xviewModel.orderStatus.get()) {
                         case 1:
-                            xviewModel.orderStartLocation(xviewModel.orderId.get(), 1);
+                            xviewModel.orderStartLocation(passengerInfo.getOrderNo(), 1);
                             break;
                         case 2:
-                            updateOrderStatus(xviewModel.orderId.get(), 2);
+                            updateOrderStatus(passengerInfo.getOrderNo(), 2);
+                            break;
                         case 3:
-                            updateOrderStatus(xviewModel.orderId.get(), 3);
+                            updateOrderStatus(passengerInfo.getOrderNo(), 3);
                             break;
                         case 4:
-                            updateOrderStatus(xviewModel.orderId.get(), 4);
+                            if (passengerInfo.getPassengerState() == 4) {
+                                updateOrderStatus(passengerInfo.getOrderNo(), 4);
+                            } else if (passengerInfo.getPassengerState() == 7) {
+                                xviewModel.orderStartLocation(passengerInfo.getOrderNo(), 5);
+                            }
+
 
                             break;
                     }
@@ -394,7 +501,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                             @Override
                             public void positive(Dialog dialog) {
                                 dialog.dismiss();
-                                xviewModel.carpoolCanCalOrder(passengerNo);
+                                xviewModel.carpoolCanCalOrder(passengerInfo.getOrderNo());
 
                             }
                         }).show();
@@ -402,18 +509,30 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             }
         });
 
+        popWindowBinding.qRcodeLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString(RangeDrivingPayMoneyQrcodeFrament.ORDER_ID,
+                        passengerInfo.getOrderNo());
+                RangeDrivingPayMoneyQrcodeFrament.newInstance(bundle).show(getSupportFragmentManager(),
+                        RangeDrivingPayMoneyQrcodeFrament.class.getSimpleName());
+            }
+        });
+
 
     }
 
-    public void updateOrderStatus(String orderNo, int actionType) {
-
-
+    public void updateOrderStatus(String passengerNo, int actionType) {
         StringBuffer stringBuffer = new StringBuffer();
         if (actionType == 2) {
             stringBuffer.append("是否确定已到达" + xviewModel.passengerInfo.get() + "乘客上车点？");
         } else if (actionType == 3) {
             stringBuffer.append("是否确定" + xviewModel.passengerInfo.get() + "乘客已上车？");
         } else if (actionType == 4) {
+            stringBuffer.append("是否确定" + xviewModel.passengerInfo.get() + "已到达目的地?");
+        } else if (actionType == 5) {
             stringBuffer.append("是否确定" + xviewModel.passengerInfo.get() + "乘客结束行程并付款?");
         }
 
@@ -432,7 +551,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     public void positive(Dialog dialog) {
                         dialog.dismiss();
 
-                        xviewModel.orderStartLocation(orderNo, actionType);
+                        xviewModel.orderStartLocation(passengerNo, actionType);
 
                     }
                 });
@@ -486,7 +605,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                                 String length = new Formatter().format("%.2f", disDistans).toString();
                                 sb.append(length).append("公里");
                             }
-                            sb.append("    ");
+                            sb.append(" ");
                             sb.append(AMapUtil.getFriendlyTime(dur));
                             xviewModel.orderTimeDesc.set(sb.toString());
 
@@ -565,7 +684,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
     @Override
     protected void doSthIsExit() {
         AppManager.getAppManager().finishActivity(activity);
-        overridePendingTransition(R.anim.slide_enter_right, R.anim.slide_exit_left);
+
     }
 
 
@@ -582,7 +701,8 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             headImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    passengerNo = passengerItemInfo.getOrderNo();
+                    passengerInfo = passengerItemInfo;
+
                     if (xviewModel.phoneNum != null && xviewModel.phoneNum.get() != null) {
                         if (xviewModel.phoneNum.get().equals(passengerItemInfo.getPhone())) {
                             showPopupWindow();
@@ -628,8 +748,6 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     smoothMarker.startSmoothMove();
                     xviewModel.smoothRunningLatLng.remove(0);
 
-                    getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-
                 } else {
                     getaMap().clear();
                     Marker marker = getaMap().addMarker(new MarkerOptions()
@@ -648,7 +766,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                                 .position(AMapUtil.convertToLatLng(result.getTargetPos()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_end)));
                     }
-                    getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+
                 }
             } catch (Exception e) {
 

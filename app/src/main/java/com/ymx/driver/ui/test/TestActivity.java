@@ -114,24 +114,7 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
 //                UpdateCarStateDialog updateCarStateDialog = new UpdateCarStateDialog(TestActivity.this);
 //                updateCarStateDialog.show();
 
-//                new DefaultStyleDialog(activity)
-//                        .setBody("您确定要锁定吗？锁定后系统将不再为您匹配新的乘客")
-//                        .setTitle("行程安全提示")
-//                        .setNegativeText("取消")
-//                        .setPositiveText("确定锁定")
-//                        .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
-//                            @Override
-//                            public void negative(Dialog dialog) {
-//                                dialog.dismiss();
-//
-//                            }
-//
-//                            @Override
-//                            public void positive(Dialog dialog) {
-//                                dialog.dismiss();
-//
-//                            }
-//                        }).show();
+
 
                 GrabNewOrderEntity grabNewOrderEntity = new GrabNewOrderEntity();
                 grabNewOrderEntity.setTips("南山区");

@@ -15,11 +15,11 @@ import com.ymx.driver.base.YmxApp;
 import com.ymx.driver.binding.command.BindingAction;
 import com.ymx.driver.binding.command.BindingCommand;
 import com.ymx.driver.config.MessageEvent;
-import com.ymx.driver.entity.BaseGrabOrderEntity;
 import com.ymx.driver.entity.app.CarPoolCancalOrderEntity;
+import com.ymx.driver.entity.app.LongDrivingPaySuccessEntigy;
+import com.ymx.driver.entity.app.RecoverOrderEntity;
 import com.ymx.driver.entity.app.UpdateTransferStationActionEntity;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
-import com.ymx.driver.entity.app.mqtt.PhoneOrderSuccessEntity;
 import com.ymx.driver.http.ResultException;
 import com.ymx.driver.http.RetrofitFactory;
 import com.ymx.driver.http.TAddObserver;
@@ -33,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class CarPoolDetailsViewModel extends BaseViewModel {
-
+    public ObservableField<Boolean> isLoad = new ObservableField<>();
     public ObservableField<String> phoneNum = new ObservableField<>();
     public ObservableField<String> title = new ObservableField<>();
     public ObservableField<String> passengerInfo = new ObservableField<>();
@@ -48,6 +48,7 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
     public CarPoolDetailsViewModel(@NonNull Application application) {
         super(application);
+        isLoad.set(false);
     }
 
     public UIChangeObservable uc = new UIChangeObservable();
@@ -59,6 +60,9 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucPowPopShow = new SingleLiveEvent<>();
         public SingleLiveEvent<CarPoolCancalOrderEntity> ucCancalOrder = new SingleLiveEvent<>();
         public SingleLiveEvent<CarPoolCancalOrderEntity> ucSystemCancalOrder = new SingleLiveEvent<>();
+        public SingleLiveEvent<String> ucErrorMsg = new SingleLiveEvent<>();
+        public SingleLiveEvent<String> ucPayDialog = new SingleLiveEvent<>();
+        public SingleLiveEvent<LongDrivingPaySuccessEntigy> ucPaySuccess = new SingleLiveEvent<>();
     }
 
     public ObservableArrayList<LatLng> smoothRunningLatLng = new ObservableArrayList<>();
@@ -89,16 +93,19 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
+                        isLoad.set(true);
                         initPassengerInfo(orderDetailsEntity);
                     }
 
                     @Override
                     protected void onFailure(String message) {
+                        isLoad.set(false);
                         UIUtils.showToast(message);
                     }
 
                     @Override
                     protected void onFailure(ResultException e) {
+                        isLoad.set(true);
                         UIUtils.showToast(e.getErrMsg());
                     }
                 });
@@ -207,6 +214,52 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
     }
 
 
+    public void driverCarpoolEndTrip(String orderNo, Double lng, Double lat) {
+        RetrofitFactory.sApiService.driverCarpoolEndTrip(orderNo, lng, lat)
+                .map(new TFunc<>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new TAddObserver<PassengerInfoEntity>() {
+                    @Override
+                    protected void onRequestStart() {
+                        getUC().getShowDialogEvent().call();
+                    }
+
+                    @Override
+                    protected void onRequestEnd() {
+                        getUC().getDismissDialogEvent().call();
+                    }
+
+                    @Override
+                    protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
+
+                        uc.ucBack.call();
+                    }
+
+                    @Override
+                    protected void onFailure(String message) {
+//                        UIUtils.showToast(message);
+
+
+                        UIUtils.showToast(message);
+
+
+                    }
+
+                    @Override
+                    protected void onFailure(ResultException e) {
+                        if (e.getErrMsg().contains("乘客")) {
+                            uc.ucErrorMsg.setValue(e.getErrMsg());
+                        } else {
+                            UIUtils.showToast(e.getErrMsg());
+                        }
+
+
+                    }
+                });
+    }
+
+
     public void initPassengerInfo(PassengerInfoEntity orderDetailsEntity) {
         title.set(orderDetailsEntity.getTitleText());
         orderStatus.set(orderDetailsEntity.getDriverState());
@@ -279,6 +332,27 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                 uc.ucSystemCancalOrder.setValue((CarPoolCancalOrderEntity) event.src);
 
                 break;
+
+            // 司机支付弹窗
+            case MessageEvent.MSG_QUERY_LONG_DRIVIER_PAY_SUCCESS:
+                LongDrivingPaySuccessEntigy paySuccessEntigy = (LongDrivingPaySuccessEntigy) event.src;
+                uc.ucPaySuccess.setValue(paySuccessEntigy);
+
+                break;
+            case MessageEvent.MSG_QUERY_SHOW_PAY_DIALOG:
+
+                String orderPayId = (String) event.src;
+                uc.ucPayDialog.setValue(orderPayId);
+                break;
+
+            case MessageEvent.MSG_CAR_POOL_RECOVER_ORDER_CODE:
+                RecoverOrderEntity recoverOrderEntity = (RecoverOrderEntity) event.src;
+                if (recoverOrderEntity != null) {
+                    recoverOrderDetails(recoverOrderEntity.getDriverOrderNo());
+                }
+
+                break;
+
 
         }
     }
