@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.ymx.driver.R;
 import com.ymx.driver.base.YmxApp;
+import com.ymx.driver.base.YmxCache;
 import com.ymx.driver.databinding.DialogGrabNewOrderBinding;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
 import com.ymx.driver.entity.app.CarpoolGrabOrderEntity;
@@ -29,6 +30,8 @@ import com.ymx.driver.http.TObserver;
 import com.ymx.driver.ui.login.LoginHelper;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderListActivity;
+import com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity;
+import com.ymx.driver.ui.travel.activity.TravelActivity;
 import com.ymx.driver.util.UIUtils;
 
 import java.util.List;
@@ -63,10 +66,10 @@ public class GrabNewOrderDialog extends Dialog {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-//        window.setWindowAnimations(R.style.dialogWindowAnim);
+        window.setWindowAnimations(R.style.dialogWindowAnim);
         window.getDecorView().setBackgroundColor(UIUtils.getColor(R.color.rx_transparent));
         window.getDecorView().setPadding(0, 0, 0, 0);
-        window.setGravity(Gravity.CENTER);
+        window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.dimAmount = 0.0f;
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -82,16 +85,67 @@ public class GrabNewOrderDialog extends Dialog {
                 R.layout.dialog_grab_new_order, null, false);
         setContentView(binding.getRoot());
 
-        if (grabNewOrderEntity != null) {
-            binding.address.setText(grabNewOrderEntity.getTips());
-        }
-
         if (orderType == 1) {
             initTransferOrderView();
         } else {
             initcarPoolOrder();
         }
 
+        if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderTypeDescription())) {
+            binding.orderTypeDescriptionTv.setText(grabNewOrderEntity.getOrderTypeDescription());
+        }
+
+        binding.rideNumberLl.setVisibility(grabNewOrderEntity.getRideNumber() == 0 ? View.GONE : View.VISIBLE);
+        if (grabNewOrderEntity.getRideNumber() > 0) {
+            binding.rideNumberTv.setText(grabNewOrderEntity.getRideNumber());
+        }
+
+        if (grabNewOrderEntity.getPrice() > 0) {
+            binding.priceLl.setVisibility(View.VISIBLE);
+            binding.priceTv.setText(String.valueOf(grabNewOrderEntity.getPrice()));
+
+        } else {
+            binding.priceLl.setVisibility(View.GONE);
+        }
+
+
+        if (grabNewOrderEntity.getMarkupPrice() > 0) {
+            binding.markupPriceLl.setVisibility(View.VISIBLE);
+            binding.markupPriceTv.setText(String.valueOf(grabNewOrderEntity.getMarkupPrice()));
+
+        } else {
+            binding.markupPriceLl.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(grabNewOrderEntity.getStartAddress())) {
+            binding.startAddressTv.setText(grabNewOrderEntity.getStartAddress());
+        }
+
+        if (!TextUtils.isEmpty(grabNewOrderEntity.getEndAddress())) {
+            binding.endAddressTv.setText(grabNewOrderEntity.getEndAddress());
+        }
+
+
+        binding.grabTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFastDoubleClick()) {
+                    UIUtils.showToast("操作太频繁了");
+                    return;
+                }
+
+
+                if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
+                    if (orderType == 1) {
+                        ransferStationGrabOrder(grabNewOrderEntity.getOrderNo());
+                    } else if (orderType == 2) {
+                        carpoolGrabOrder(grabNewOrderEntity.getOrderNo());
+                    }
+
+                }
+
+            }
+        });
 
         timer = new Timer();
         countdownTimer();
@@ -111,61 +165,27 @@ public class GrabNewOrderDialog extends Dialog {
             }
         }
         if (isVisity) {
+            binding.grabLl.setVisibility(View.GONE);
+            binding.line.setVisibility(View.GONE);
             binding.grabTv.setVisibility(View.GONE);
         } else {
+            binding.grabLl.setVisibility(View.VISIBLE);
+            binding.line.setVisibility(View.VISIBLE);
             binding.grabTv.setVisibility(View.VISIBLE);
             binding.grabTv.setText("接单 (" + mTime + ")");
 
         }
-        binding.grabTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isFastDoubleClick()) {
-                    UIUtils.showToast("操作太频繁了");
-                    return;
-                }
 
-
-                if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
-                    ransferStationGrabOrder(grabNewOrderEntity.getOrderNo());
-                }
-
-            }
-        });
     }
 
     public void initcarPoolOrder() {
         binding.grabTv.setVisibility(View.VISIBLE);
-        if (!TextUtils.isEmpty(grabNewOrderEntity.getMarkupPriceDescription())) {
-            binding.markupPriceDescriptioTv.setVisibility(View.VISIBLE);
-            binding.markupPriceDescriptioTv.setText(grabNewOrderEntity.getMarkupPriceDescription());
-        } else {
-            binding.markupPriceDescriptioTv.setVisibility(View.GONE);
-        }
 
-        if (!TextUtils.isEmpty(grabNewOrderEntity.getCarPoolDescription())) {
-            binding.carPoolTv.setVisibility(View.VISIBLE);
-            binding.carPoolTv.setText(grabNewOrderEntity.getCarPoolDescription());
-        }
-        binding.priceDescriptionTv.setText(grabNewOrderEntity.getPriceDescription());
-        binding.carPoolGrabLl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isFastDoubleClick()) {
-                    UIUtils.showToast("操作太频繁了");
-                    return;
-                }
-
-                if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
-                    carpoolGrabOrder(grabNewOrderEntity.getOrderNo());
-                }
-            }
-
-        });
     }
 
     public void initGrabTv(boolean enabled, Drawable drawable, String info) {
         if (binding.grabTv != null) {
+            binding.grabLl.setBackground(drawable);
             binding.grabTv.setEnabled(enabled);
             binding.grabTv.setText(info);
         }
@@ -234,16 +254,13 @@ public class GrabNewOrderDialog extends Dialog {
                     }
 
                 } else if (mTime <= 5) {
-                    if (orderType == 1) {
-                        initGrabTv(true, UIUtils.getDrawable(R.drawable.bg_soli_item), "接单");
-                    } else {
-                        binding.grabTv.setVisibility(View.GONE);
-                        binding.carPoolGrabLl.setVisibility(View.VISIBLE);
-                    }
+
+                    initGrabTv(true, UIUtils.getDrawable(R.drawable.bg_grab_order_type_2), "接单");
+
                 } else {
                     if (binding.grabTv != null) {
-                        binding.grabTv.setEnabled(false);
-                        binding.grabTv.setText("接单 (" + mTime + ")");
+                        initGrabTv(false, UIUtils.getDrawable(R.drawable.bg_grab_order_type_1), "接单 (" + mTime + ")");
+
                     }
                 }
             } catch (Exception e) {
@@ -272,6 +289,22 @@ public class GrabNewOrderDialog extends Dialog {
                     protected void onSuccees(CarpoolGrabOrderEntity carpoolGrabOrderEntity) {
                         if (mTime >= 0) {
                             dismiss();
+                        }
+
+                        if (carpoolGrabOrderEntity.getCategoryType() == 2) {
+                            Intent intent = new Intent();
+                            intent.putExtra(CarPoolDetailsActivity.ORDERI_ID, carpoolGrabOrderEntity.getOrderNodeNo());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setClass(YmxApp.getInstance(), CarPoolDetailsActivity.class);
+                            YmxApp.getInstance().startActivity(intent);
+                        } else {
+                            Intent intent = new Intent();
+                            intent.putExtra(CarPoolDetailsActivity.ORDERI_ID, carpoolGrabOrderEntity.getOrderNodeNo());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setClass(YmxApp.getInstance(), TravelActivity.class);
+                            YmxApp.getInstance().startActivity(intent);
                         }
 
                     }

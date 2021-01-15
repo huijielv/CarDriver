@@ -95,6 +95,8 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
     public static void start(Activity activity, Intent extras) {
         Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setClass(activity, TravelActivity.class);
         if (extras != null) {
             intent.putExtras(extras);
@@ -564,14 +566,14 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                             @Override
                             public void negative(Dialog dialog) {
                                 dialog.dismiss();
-                                xviewModel.updateStartAddress(updateStartAddressEntity.getOrderNo(),2);
+                                xviewModel.updateStartAddress(updateStartAddressEntity.getOrderNo(), 2);
                             }
 
                             @Override
                             public void positive(Dialog dialog) {
                                 dialog.dismiss();
-                                xviewModel.updateStartAddress(updateStartAddressEntity.getOrderNo(),1);
-                                BaiduSpeech.getInstance(YmxApp.getInstance()).playText(updateStartAddressEntity.getVoiceText(),null);
+                                xviewModel.updateStartAddress(updateStartAddressEntity.getOrderNo(), 1);
+                                BaiduSpeech.getInstance(YmxApp.getInstance()).playText(updateStartAddressEntity.getVoiceText(), null);
                             }
                         }).show();
             }

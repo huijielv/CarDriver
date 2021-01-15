@@ -7,116 +7,273 @@
         <import type="android.view.View" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/rx_transparent">
+        android:background="@color/rx_transparent"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/d48"
-            android:layout_marginRight="@dimen/d48"
-            android:background="@drawable/bg_dailog_grab_transfer_new_order"
+            android:layout_height="180dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/icon_dialog_grab_new_order"
             android:orientation="vertical">
 
+
             <TextView
-                android:id="@+id/carPoolTv"
+                android:id="@+id/orderTypeDescriptionTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/bg_carpool"
-                android:paddingLeft="2dp"
-                android:paddingTop="2dp"
-                android:paddingRight="@dimen/d10"
-                android:paddingBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/d15"
+                android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12"
-                android:visibility="gone"></TextView>
+                android:textSize="16sp" />
 
-
-            <RelativeLayout
-                android:id="@+id/addressRl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="40dp"
-                android:paddingBottom="40dp">
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text=""
-                    android:textColor="#ff333333"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/grabLl"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_below="@+id/addressRl"
-                android:background="#4F5165"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/grabTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/carPoolGrabLl"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:id="@+id/rideNumberLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="@dimen/d60"
                     android:orientation="vertical"
                     android:visibility="gone">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人数"
+                        android:textColor="#ffdcdcdc"
+                        android:textSize="12sp" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/rideNumberTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/rideNumberTv"
+                            android:layout_toRightOf="@+id/rideNumberTv"
+                            android:text="人"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/priceLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="@dimen/d60"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="7dp"
-                        android:text="接单"
-                        android:textColor="#ffffffff"
-                        android:textSize="16sp" />
+                        android:text="车费金额"
+                        android:textColor="#ffdcdcdc"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d4">
+
+                        <TextView
+                            android:id="@+id/priceTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/d4"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/priceTv"
+                            android:text="元"
+                            android:layout_alignBaseline="@id/priceTv"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/markupPriceLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="@dimen/d60"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/d2"
-                        android:orientation="horizontal">
+                        android:text="加价金额"
+                        android:textColor="#ffdcdcdc"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d4">
 
                         <TextView
-                            android:id="@+id/markupPriceDescriptioTv"
+                            android:id="@+id/markupPriceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/d4"
                             android:text=""
-                            android:textColor="#ffffffff"
-                            android:textSize="11sp" />
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/priceDescriptionTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/d5"
-                            android:text=""
-                            android:textColor="#ffffffff"
-                            android:textSize="11sp" />
+                            android:layout_toRightOf="@+id/markupPriceTv"
+                            android:text="元"
+                            android:layout_alignBaseline="@id/markupPriceTv"
+                            android:textColor="@color/white" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginTop="@dimen/d10"
+                android:layout_marginRight="@dimen/d10"
+                android:background="#ff999999">
+
+            </View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <TextView
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_trip_order_start_address"></TextView>
+
+                    <TextView
+                        android:id="@+id/startAddressTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/d10"
+                    android:orientation="horizontal"
+
+                    >
+
+
+                    <TextView
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_trip_order_end_address"></TextView>
+
+                    <TextView
+                        android:id="@+id/endAddressTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14" />
                 </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/grabLl"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d5"
+            android:layout_marginRight="@dimen/d15"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/grabTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"></View>
+    </LinearLayout>
 </layout>

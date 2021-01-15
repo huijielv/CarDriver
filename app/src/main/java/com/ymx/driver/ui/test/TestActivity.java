@@ -118,9 +118,12 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
 
                 GrabNewOrderEntity grabNewOrderEntity = new GrabNewOrderEntity();
                 grabNewOrderEntity.setTips("南山区");
-                grabNewOrderEntity.setCarPoolDescription("拼车(1 人)");
-                grabNewOrderEntity.setPriceDescription("价格12.24元");
-                grabNewOrderEntity.setMarkupPriceDescription("加价10元");
+                grabNewOrderEntity.setMarkupPrice(5.0);
+                grabNewOrderEntity.setOrderTypeDescription("拼车送站");
+                grabNewOrderEntity.setPrice(10.0);
+                grabNewOrderEntity.setStartAddress("南山区");
+                grabNewOrderEntity.setEndAddress("南山区");
+
                 BaseGrabOrderEntity baseGrabOrderEntity = new BaseGrabOrderEntity.
                         Builder().
                         setTtsMsg(grabNewOrderEntity.getTips()).

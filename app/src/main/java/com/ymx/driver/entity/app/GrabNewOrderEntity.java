@@ -10,23 +10,57 @@ public class GrabNewOrderEntity extends BaseEntity implements  NewOrderEntity {
     private String tips ;
     private List<String> noShowDialogDriverList;
     private List<String> shieldingDriverList;
-    private String carPoolDescription;
-    private String markupPriceDescription ;
-    private String priceDescription;
 
 
 
-    public void setMarkupPriceDescription(String markupPriceDescription) {
-        this.markupPriceDescription = markupPriceDescription;
+    private String orderTypeDescription;
+
+
+
+    private int rideNumber;
+    private double markupPrice;
+    private double price;
+
+    public double getMarkupPrice() {
+        return markupPrice;
     }
 
-    public String getPriceDescription() {
-        return priceDescription;
+    public void setMarkupPrice(double markupPrice) {
+        this.markupPrice = markupPrice;
     }
 
-    public void setPriceDescription(String priceDescription) {
-        this.priceDescription = priceDescription;
+    public double getPrice() {
+        return price;
     }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    private String startAddress;
+    private String endAddress;
+
+
+
+
+
+    public String getStartAddress() {
+        return startAddress;
+    }
+
+    public void setStartAddress(String startAddress) {
+        this.startAddress = startAddress;
+    }
+
+    public String getEndAddress() {
+        return endAddress;
+    }
+
+    public void setEndAddress(String endAddress) {
+        this.endAddress = endAddress;
+    }
+
+
 
     public String getMessageNo() {
         return messageNo;
@@ -68,15 +102,23 @@ public class GrabNewOrderEntity extends BaseEntity implements  NewOrderEntity {
         this.shieldingDriverList = shieldingDriverList;
     }
 
-    public String getCarPoolDescription() {
-        return carPoolDescription;
+
+
+    public String getOrderTypeDescription() {
+        return orderTypeDescription;
     }
 
-    public void setCarPoolDescription(String carPoolDescription) {
-        this.carPoolDescription = carPoolDescription;
+    public void setOrderTypeDescription(String orderTypeDescription) {
+        this.orderTypeDescription = orderTypeDescription;
     }
 
-    public String getMarkupPriceDescription() {
-        return markupPriceDescription;
+
+    public int getRideNumber() {
+        return rideNumber;
     }
+
+    public void setRideNumber(int rideNumber) {
+        this.rideNumber = rideNumber;
+    }
+
 }
