@@ -30,7 +30,8 @@
                 android:layout_marginTop="@dimen/d15"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -51,8 +52,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="人数"
                         android:layout_gravity="center_horizontal"
+                        android:text="人数"
                         android:textColor="#ffdcdcdc"
                         android:textSize="12sp" />
 
@@ -67,9 +68,8 @@
                             android:id="@+id/rideNumberTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -78,7 +78,8 @@
                             android:layout_alignBaseline="@id/rideNumberTv"
                             android:layout_toRightOf="@+id/rideNumberTv"
                             android:text="人"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
 
@@ -101,8 +102,7 @@
                         android:layout_gravity="center_horizontal"
                         android:text="车费金额"
                         android:textColor="#ffdcdcdc"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
 
 
                     <RelativeLayout
@@ -117,7 +117,8 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -125,7 +126,8 @@
                             android:layout_alignBaseline="@id/priceTv"
                             android:layout_toRightOf="@+id/priceTv"
                             android:text="元"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
 
@@ -146,8 +148,7 @@
                         android:layout_gravity="center_horizontal"
                         android:text="加价金额"
                         android:textColor="#ffdcdcdc"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textSize="12sp" />
 
 
                     <RelativeLayout
@@ -162,7 +163,8 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -170,7 +172,8 @@
                             android:layout_alignBaseline="@id/markupPriceTv"
                             android:layout_toRightOf="@+id/markupPriceTv"
                             android:text="元"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
@@ -269,7 +272,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <View

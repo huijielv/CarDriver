@@ -21,6 +21,7 @@ import com.ymx.driver.dialog.GrapOrderTipsDialog;
 import com.ymx.driver.dialog.SafetyTipsDialog;
 import com.ymx.driver.dialog.UpdateCarStateDialog;
 import com.ymx.driver.entity.NetChangeEntity;
+import com.ymx.driver.entity.app.ConfirmOrderEntity;
 import com.ymx.driver.entity.app.DriverLockEntity;
 import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
 import com.ymx.driver.mqtt.MQTTService;
@@ -29,8 +30,10 @@ import com.ymx.driver.ui.longrange.driving.LongRangeDrivingDetails;
 import com.ymx.driver.ui.mine.head.TodayIncomeActivity;
 import com.ymx.driver.ui.mine.head.TodayOrderActivity;
 import com.ymx.driver.ui.my.wallet.MyWalletActivity;
+import com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity;
 import com.ymx.driver.ui.travel.activity.TravelActivity;
 import com.ymx.driver.ui.trip.activity.TripOrderListActivity;
+import com.ymx.driver.util.LogUtil;
 import com.ymx.driver.viewmodel.main.HomeViewModel;
 
 
@@ -138,9 +141,9 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
                             @Override
                             public void getSelectPostion(int position) {
                                 updateCarStateDialog.dismiss();
-                                if (position==0){
+                                if (position == 0) {
                                     xviewModel.startWork(1);
-                                }else if (position==1){
+                                } else if (position == 1) {
                                     xviewModel.startWork(2);
                                 }
 
@@ -211,10 +214,18 @@ public class HomeFragment extends BaseMapFragment<FragmentHomeBinding, HomeViewM
                 MQTTService.start(YmxApp.getInstance(), MQTTService.Action);
             }
         });
-        xviewModel.uc.ucGrapPassengerSucess.observe(this, new Observer<String>() {
+        xviewModel.uc.ucGrapPassengerSucess.observe(this, new Observer<ConfirmOrderEntity>() {
             @Override
-            public void onChanged(String s) {
-                showAutoReceiveOrderDialog(HomeViewModel.manualOrderType, s);
+            public void onChanged(ConfirmOrderEntity confirmOrderEntity) {
+
+                if (confirmOrderEntity.getCategoryType() == 2) {
+                    Intent intent = new Intent();
+                    intent.putExtra(TravelActivity.ORDERI_ID,  confirmOrderEntity.getOrderNo());
+                    CarPoolDetailsActivity.start(activity, intent);
+                } else {
+                    showAutoReceiveOrderDialog(HomeViewModel.manualOrderType, confirmOrderEntity.getOrderNo());
+                }
+
             }
         });
 

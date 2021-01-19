@@ -9,6 +9,7 @@ import com.ymx.driver.http.TFunc;
 import com.ymx.driver.http.TObserver;
 import com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity;
 import com.ymx.driver.ui.travel.activity.TravelActivity;
+import com.ymx.driver.util.NewOrderFilterUtiles;
 import com.ymx.driver.util.UIUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,7 +35,7 @@ public class CarPoolGrabOrder implements GrabOrderInterface {
 
                     @Override
                     protected void onSuccees(CarpoolGrabOrderEntity carpoolGrabOrderEntity) {
-
+                        NewOrderFilterUtiles.hasOrder(orderNo);
                         grabResult.onSuccees(carpoolGrabOrderEntity);
                         grabResult.onSuccees();
 

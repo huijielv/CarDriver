@@ -44,6 +44,7 @@ public class TransferNewOrderMessage implements SendMessage {
                     Builder().
                     setTtsMsg(transferNewOrderEntity.getData().getTips()).
                     setNewOrder(transferNewOrderEntity.getData()).
+                    setOrderNo(transferNewOrderEntity.getData().getOrderNo()).
                     setOrderType(1).
                     build();
             NewOrderTTSController.getInstance(YmxApp.getInstance()).onGetText(baseGrabOrderEntity);

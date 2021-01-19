@@ -33,8 +33,24 @@ public class OrderDetailsEntity extends BaseEntity {
     private int isVip;
     private String unPayFee;
     private int  driverType;
+    private int categoryType;
+    private int chargeRuleId;
 
+    public int getCategoryType() {
+        return categoryType;
+    }
 
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
+    }
+
+    public int getChargeRuleId() {
+        return chargeRuleId;
+    }
+
+    public void setChargeRuleId(int chargeRuleId) {
+        this.chargeRuleId = chargeRuleId;
+    }
 
     public int getIsVip() {
         return isVip;

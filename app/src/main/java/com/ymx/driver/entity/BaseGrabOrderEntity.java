@@ -6,12 +6,21 @@ public class BaseGrabOrderEntity {
     private int orderType;
     private NewOrderEntity newOrder;
     private String ttsMsg;
+    private String orderNo;
 
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
     private BaseGrabOrderEntity(Builder builder) {
         orderType = builder.orderType;
         newOrder = builder.newOrder;
         ttsMsg = builder.ttsMsg;
+        orderNo = builder.orderNo;
     }
 
     public NewOrderEntity getNewOrder() {
@@ -44,6 +53,7 @@ public class BaseGrabOrderEntity {
         private int orderType;
         private NewOrderEntity newOrder;
         private String ttsMsg;
+        private String orderNo;
 
         public Builder() {
         }
@@ -63,8 +73,14 @@ public class BaseGrabOrderEntity {
             return this;
         }
 
+        public Builder setOrderNo(String orderNo) {
+            this.orderNo = orderNo;
+            return this;
+        }
+
         public BaseGrabOrderEntity build() {
-            return new  BaseGrabOrderEntity(this);}
+            return new BaseGrabOrderEntity(this);
+        }
     }
 }
 

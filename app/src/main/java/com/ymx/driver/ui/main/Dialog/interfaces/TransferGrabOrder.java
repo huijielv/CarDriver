@@ -10,6 +10,7 @@ import com.ymx.driver.http.TFunc;
 import com.ymx.driver.http.TObserver;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderListActivity;
+import com.ymx.driver.util.NewOrderFilterUtiles;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,6 +36,7 @@ public class TransferGrabOrder implements GrabOrderInterface {
 
                     @Override
                     protected void onSuccees(TransferStationGrabOrder transferStationGrabOrder) {
+                        NewOrderFilterUtiles.hasOrder(orderNo);
                         grabResult.onSuccees(transferStationGrabOrder);
                         grabResult.onSuccees();
                         switch (transferStationGrabOrder.getIsChooseTrip()) {

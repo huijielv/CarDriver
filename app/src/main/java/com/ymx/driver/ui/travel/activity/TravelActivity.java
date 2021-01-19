@@ -187,19 +187,19 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
         if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
             clearMap();
-            if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.businessType.get() == 10) {
-
-                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
-            } else if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
-
-                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
-            } else {
+//            if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.businessType.get() == 10) {
+//
+//                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
+//            } else if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+//
+//                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
+//            } else {
                 locateSuccess++;
                 if (xviewModel.lat != null && xviewModel.lat.get() != null) {
                     mStartPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                     mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
                 }
-                if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
+//                if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
                     if (locateSuccess / ocateSuccessNumber == 1) {
                         clearMap();
                         removeMapRouteView();
@@ -219,8 +219,8 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     }
 
 
-                }
-            }
+
+//            }
 
         }
 
@@ -433,16 +433,16 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     actionType = xviewModel.orderStatus.get();
                     orderNo = xviewModel.orderId.get();
                     //出租车逻辑
-                    if (actionType == 4 && xviewModel.businessType.get() == 10) {
-                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
-                        //出租车好友逻辑
-                    } else if (actionType == 4 && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
-                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
-                    } else {
+//                    if (actionType == 4 && xviewModel.businessType.get() == 10) {
+//                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
+//                        //出租车好友逻辑
+//                    } else if (actionType == 4 && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+//                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
+//                    } else {
                         //网约车逻辑
                         getaMap().clear();
                         searchRouteResult();
-                    }
+//                    }
 
 
                 } catch (Exception e) {
@@ -769,13 +769,13 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     smoothMarker.startSmoothMove();
                     xviewModel.smoothRunningLatLng.remove(0);
 
-                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
-                        if (xviewModel.businessType.get() == 10) {
-                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
-                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                        }
-                    }
+//                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
+//                        if (xviewModel.businessType.get() == 10) {
+//                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+//                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//                        }
+//                    }
 
                 } else {
                     getaMap().clear();
@@ -795,13 +795,13 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                                 .position(AMapUtil.convertToLatLng(result.getTargetPos()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_end)));
                     }
-                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
-                        if (xviewModel.businessType.get() == 10) {
-                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
-                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                        }
-                    }
+//                    if (xviewModel.businessType != null && xviewModel.businessType.get() != null) {
+//                        if (xviewModel.businessType.get() == 10) {
+//                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//                        } else if (xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
+//                            getaMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//                        }
+//                    }
 
 
                 }

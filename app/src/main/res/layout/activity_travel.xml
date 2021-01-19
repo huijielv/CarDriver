@@ -89,7 +89,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_passenger_head" />
+                        android:src="@drawable/icon_headiv" />
 
                     <TextView
                         android:id="@+id/tv_phoneNum"

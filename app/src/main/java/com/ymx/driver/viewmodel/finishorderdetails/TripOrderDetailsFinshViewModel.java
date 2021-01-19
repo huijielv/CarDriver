@@ -150,7 +150,9 @@ public class TripOrderDetailsFinshViewModel extends BaseViewModel {
                                 append(orderDetailsEntity.getAreaCode()).append("&token=").append(LoginHelper.getUserEntity().getToken())
                                 .append("&orderNo=").append(orderDetailsEntity.getOrderNo())
                                 .append("&driverType=").append(orderDetailsEntity.getDriverType())
-                                .append("&businessType=").append(orderDetailsEntity.getBusinessType());
+                                .append("&businessType=").append(orderDetailsEntity.getBusinessType())
+                                .append("&chargeRuleId=").append(orderDetailsEntity.getChargeRuleId())
+                                .append("&categoryType=").append(orderDetailsEntity.getCategoryType());
 
                         billingRulesUrl.set(billingRulesUrlSb.toString());
                         uc.ucOrderDetails.call();
@@ -165,9 +167,6 @@ public class TripOrderDetailsFinshViewModel extends BaseViewModel {
                     }
                 });
     }
-
-
-
 
 
     @Override

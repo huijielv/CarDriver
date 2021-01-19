@@ -21,6 +21,7 @@ public class CarPoolNewOrderMessage implements SendMessage {
                 Builder().
                 setTtsMsg(baseMqttEntity.getData().getTips()).
                 setNewOrder(baseMqttEntity.getData()).
+                setOrderNo(baseMqttEntity.getData().getOrderNo()).
                 setOrderType(2).
                 build();
         NewOrderTTSController.getInstance(YmxApp.getInstance()).onGetText(baseGrabOrderEntity);

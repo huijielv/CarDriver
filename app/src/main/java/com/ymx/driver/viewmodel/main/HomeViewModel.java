@@ -19,6 +19,8 @@ import com.ymx.driver.entity.app.mqtt.PassengerInfoEntity;
 import com.ymx.driver.http.RetrofitFactory;
 import com.ymx.driver.http.TFunc;
 import com.ymx.driver.http.TObserver;
+import com.ymx.driver.util.LogUtil;
+import com.ymx.driver.util.NewOrderTTSController;
 import com.ymx.driver.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -90,8 +92,10 @@ public class HomeViewModel extends BaseViewModel {
                 uc.ucGrapPassengerInfo.setValue(grabPassenger);
                 break;
             case MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS:
-                String orderNo = (String) event.src;
-                uc.ucGrapPassengerSucess.setValue(orderNo);
+                ConfirmOrderEntity confirmOrderEntity = (ConfirmOrderEntity) event.src;
+//                String orderNo = (String) event.src;
+                LogUtil.d("TEST-------------------------","---------------------------------------");
+                uc.ucGrapPassengerSucess.setValue(confirmOrderEntity);
                 break;
 
             case MessageEvent.MSG_ORDER_SERVICE_COMPLETED:
@@ -153,7 +157,7 @@ public class HomeViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucGoToTripOrderActicity = new SingleLiveEvent<>();
         public SingleLiveEvent<PassengerInfoEntity> ucPassengerInfo = new SingleLiveEvent<>();
         public SingleLiveEvent<PassengerInfoEntity> ucGrapPassengerInfo = new SingleLiveEvent<>();
-        public SingleLiveEvent<String> ucGrapPassengerSucess = new SingleLiveEvent<>();
+        public SingleLiveEvent<ConfirmOrderEntity> ucGrapPassengerSucess = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucMyWallet = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> refreshSucess = new SingleLiveEvent<>();
         public SingleLiveEvent<String> ucCancelOrder = new SingleLiveEvent<>();
@@ -290,7 +294,7 @@ public class HomeViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(ConfirmOrderEntity s) {
 
-                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS, s.getOrderNo()));
+                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS, s));
                         getHeadDetailInfo();
                     }
 
@@ -369,6 +373,8 @@ public class HomeViewModel extends BaseViewModel {
                         YmxCache.setLockDriverLock(s.getLockState());
                         orderList.clear();
                         getHeadDetailInfo();
+
+                        NewOrderTTSController.getInstance(UIUtils.getContext()).stopSpeaking();
 
                     }
 
