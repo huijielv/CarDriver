@@ -74,6 +74,7 @@ import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_READY
  */
 public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, TravelViewModel> {
     public static final String ORDERI_ID = "orderNo";
+    public static final String CATEGORY_TYPE = "categoryType";
     private PassengerInfoEntity passengerInfoEntity;
     private LatLonPoint mStartPoint; //起点
     private LatLonPoint mEndPoint;//终点
@@ -159,7 +160,12 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
         } else if (intent.hasExtra(ORDERI_ID)) {
             orderNo = intent.getStringExtra(ORDERI_ID);
+            if (intent.hasExtra(CATEGORY_TYPE) && !TextUtils.isEmpty(intent.getStringExtra(CATEGORY_TYPE))) {
+                xviewModel.categoryType.set(Integer.parseInt(intent.getStringExtra(CATEGORY_TYPE)));
+            }
+
             xviewModel.orderId.set(orderNo);
+
             xviewModel.recoverOrderDetails(orderNo);
         }
 
@@ -405,6 +411,10 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                 if (actionType == DRIVER_STATE_CONFIRM_COST) {
                     Intent intent = new Intent();
                     intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderNo);
+                    if (xviewModel.categoryType != null && xviewModel.categoryType.get() != null) {
+                        intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(xviewModel.categoryType.get()));
+                    }
+
                     TravelOrderDetailsActivity.start(activity, intent);
                     doSthIsExit();
                     VoicePlayMannager.getInstance(getApplication()).play(R.raw.reach_destination);

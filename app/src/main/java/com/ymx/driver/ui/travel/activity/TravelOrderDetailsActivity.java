@@ -43,7 +43,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
     public static final String ORDERI_ID = "orderNo";
     public static final int DRIVER_END_SERVICE = 6;
     public static final String ACTION_TYPE = "actionType";
-
+    public static final String CATEGORY_TYPE = "categoryType";
 
     public static void start(Activity activity) {
         start(activity, null);
@@ -116,6 +116,10 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
         if (intent.hasExtra(ORDERI_ID)) {
             String orderNo = intent.getStringExtra(ORDERI_ID);
             int actionType = intent.getIntExtra(ACTION_TYPE, 0);
+            if (intent.hasExtra(CATEGORY_TYPE) && !TextUtils.isEmpty(intent.getStringExtra(CATEGORY_TYPE))) {
+                viewModel.categoryType.set(Integer.parseInt(intent.getStringExtra(CATEGORY_TYPE)));
+            }
+
             viewModel.orderStatus.set(actionType);
             viewModel.orderId.set(orderNo);
             viewModel.getOrderDetails(orderNo);
@@ -146,7 +150,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                     binding.vip.setVisibility(View.VISIBLE);
                 }
 
-                if ((viewModel.businessType.get() == 10) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
+                if ((viewModel.businessType.get() == 10 && viewModel.categoryType.get() == 0) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
                     binding.taxiLl.setVisibility(View.VISIBLE);
                     binding.priceInfoLl.setVisibility(View.GONE);
                 }

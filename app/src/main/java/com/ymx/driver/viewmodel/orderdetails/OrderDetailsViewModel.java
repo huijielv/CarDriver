@@ -61,6 +61,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
     public ObservableField<Boolean> isLoad = new ObservableField<>();
     public ObservableField<Integer> businessType = new ObservableField<>();
     public ObservableField<Integer> driverType = new ObservableField<>();
+    public ObservableField<Integer> categoryType = new ObservableField<>();
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
@@ -75,6 +76,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
         public SingleLiveEvent<Void> ucQcodeVisible = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucPay = new SingleLiveEvent<>();
         public SingleLiveEvent<PhoneOrderSuccessEntity> ucPaySuccess = new SingleLiveEvent<>();
+        public ObservableField<Integer> categoryType = new ObservableField<>();
     }
 
     public BindingCommand callPhone = new BindingCommand(new BindingAction() {

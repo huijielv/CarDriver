@@ -20,6 +20,7 @@ import com.ymx.driver.ui.longrange.driving.LongRangDrivingFinishDetails;
 import com.ymx.driver.ui.longrange.driving.LongRangeFerryFinishDetails;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity;
 import com.ymx.driver.ui.transportsite.TransferStationTripOrderFinishDetailsActivity;
+import com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity;
 import com.ymx.driver.ui.travel.activity.TravelActivity;
 import com.ymx.driver.ui.travel.activity.TravelOrderDetailsActivity;
 import com.ymx.driver.ui.travel.activity.TravelOrderDetailsFinshActivity;
@@ -83,6 +84,7 @@ public class TodayOrderActivity extends BaseActivity<ActivityTodayOrderBinding, 
                 String orderId = todayOrderEntity.getOrderNo();
 
                 int businessType = todayOrderEntity.getBusinessType();
+                int categoryType = todayOrderEntity.getCategoryType();
                 if (businessType == 6 || businessType == 7) {
                     Intent intent = new Intent();
                     intent.putExtra(TravelActivity.ORDERI_ID, orderId);
@@ -95,38 +97,44 @@ public class TodayOrderActivity extends BaseActivity<ActivityTodayOrderBinding, 
                     Intent intent = new Intent();
                     intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
                     CharterOrderFinishOrderDetailsActivity.start(activity, intent);
-                } else  if ( businessType==11){
-                    if (driverState==7||driverState==8){
+                } else if (businessType == 11) {
+                    if (driverState == 7 || driverState == 8) {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderFinishDetailsActivity.ORDERI_ID, orderId);
                         TransferStationTripOrderFinishDetailsActivity.start(activity, intent);
-                    }else {
+                    } else {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderDetailsActivity.ORDER_NO, orderId);
                         TransferStationTripOrderDetailsActivity.start(activity, intent);
                     }
-                }
+                } else {
 
-                else {
                     if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_START || driverState == TripOrderListViewModel.DRIVER_STATE_READY_TO_GO || driverState == TripOrderListViewModel.DRIVER_STATE_ROADING || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PASSENGERS) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                        TravelActivity.start(activity, intent);
+
+                        if (categoryType == 2) {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                            CarPoolDetailsActivity.start(activity, intent);
+                        } else {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                            TravelActivity.start(activity, intent);
+                        }
+
                     } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
                         Intent intent = new Intent();
                         intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
                         intent.putExtra(TravelOrderDetailsActivity.ACTION_TYPE, driverState);
                         TravelOrderDetailsActivity.start(activity, intent);
-                    } else {
+                    } else if (driverState == TripOrderListViewModel.DRIVER_ORDER_FINISH || driverState == TripOrderListViewModel.DRIVER_ORDER_CLOSED) {
                         Intent intent = new Intent();
                         intent.putExtra(TravelOrderDetailsFinshActivity.ORDERI_ID, orderId);
                         intent.putExtra(TravelOrderDetailsFinshActivity.ACTION_TYPE, driverState);
                         TravelOrderDetailsFinshActivity.start(activity, intent);
                     }
                 }
-
-
             }
+
 
 //            }
         });

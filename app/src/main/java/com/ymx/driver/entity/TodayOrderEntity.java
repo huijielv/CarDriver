@@ -13,6 +13,16 @@ public class TodayOrderEntity extends BaseEntity {
     private int businessType;
     private int color ;
 
+    public int getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
+    }
+
+    private  int categoryType ;
+
     public int getColor() {
         return color;
     }

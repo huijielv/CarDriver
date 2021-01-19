@@ -233,6 +233,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                             } else if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_START || driverState == TripOrderListViewModel.DRIVER_STATE_READY_TO_GO || driverState == TripOrderListViewModel.DRIVER_STATE_ROADING || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PASSENGERS) {
                                 Intent intent = new Intent();
                                 intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                                intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
                                 TravelActivity.start(activity, intent);
                             } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PAY) {
 
@@ -240,6 +241,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                     if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
                                         Intent intent = new Intent();
                                         intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
+                                        intent.putExtra(TravelActivity.CATEGORY_TYPE, categoryType);
                                         intent.putExtra(TravelOrderDetailsActivity.ACTION_TYPE, driverState);
                                         TravelOrderDetailsActivity.start(activity, intent);
                                     } else if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_PAY) {
@@ -249,9 +251,10 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                         PhoneOrderPayActivity.start(activity, intent);
                                     }
 
-                                } else {
+                                } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
                                     Intent intent = new Intent();
                                     intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
+                                    intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
                                     intent.putExtra(TravelOrderDetailsActivity.ACTION_TYPE, driverState);
                                     TravelOrderDetailsActivity.start(activity, intent);
                                 }

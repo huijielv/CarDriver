@@ -12,6 +12,7 @@ import com.amap.api.maps.model.LatLng;
 import com.ymx.driver.base.BaseViewModel;
 import com.ymx.driver.base.SingleLiveEvent;
 import com.ymx.driver.base.YmxApp;
+import com.ymx.driver.base.YmxCache;
 import com.ymx.driver.binding.command.BindingAction;
 import com.ymx.driver.binding.command.BindingCommand;
 import com.ymx.driver.config.MessageEvent;
@@ -129,7 +130,11 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
+                        if (orderDetailsEntity.getDriverState() == 2 || orderDetailsEntity.getDriverState() == 3 || orderDetailsEntity.getDriverState() == 4) {
+                            YmxCache.setOrderId(orderDetailsEntity.getOrderNo());
+                        }
                         initPassengerInfo(orderDetailsEntity);
+
                         uc.ucPowPopShow.call();
                     }
 
@@ -164,6 +169,9 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
+                        if (orderDetailsEntity.getDriverState() == 2 || orderDetailsEntity.getDriverState() == 3 || orderDetailsEntity.getDriverState() == 4) {
+                            YmxCache.setOrderId(orderDetailsEntity.getOrderNo());
+                        }
                         initPassengerInfo(orderDetailsEntity);
 
                     }
@@ -232,7 +240,7 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onSuccees(PassengerInfoEntity orderDetailsEntity) {
-
+                        YmxCache.setOrderId("");
                         uc.ucBack.call();
                     }
 

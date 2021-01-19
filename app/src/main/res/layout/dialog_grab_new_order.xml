@@ -52,12 +52,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="人数"
+                        android:layout_gravity="center_horizontal"
                         android:textColor="#ffdcdcdc"
                         android:textSize="12sp" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/d4"
                         android:orientation="horizontal">
 
@@ -87,6 +89,7 @@
                     android:id="@+id/priceLl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="@dimen/d60"
                     android:orientation="vertical"
@@ -105,14 +108,13 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/d4">
 
                         <TextView
                             android:id="@+id/priceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/d4"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="18sp" />
@@ -120,9 +122,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/priceTv"
                             android:layout_toRightOf="@+id/priceTv"
                             android:text="元"
-                            android:layout_alignBaseline="@id/priceTv"
                             android:textColor="@color/white" />
                     </RelativeLayout>
 
@@ -151,14 +153,13 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/d4">
 
                         <TextView
                             android:id="@+id/markupPriceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/d4"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="18sp" />
@@ -166,9 +167,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/markupPriceTv"
                             android:layout_toRightOf="@+id/markupPriceTv"
                             android:text="元"
-                            android:layout_alignBaseline="@id/markupPriceTv"
                             android:textColor="@color/white" />
 
                     </RelativeLayout>

@@ -111,6 +111,7 @@ public class TravelViewModel extends BaseViewModel {
     public ObservableField<Boolean> rightTitleShow = new ObservableField<>();
     public ObservableField<Integer> transferOrderState = new ObservableField<>(0);
     public ObservableField<String> transferOrderTips = new ObservableField<>();
+    public ObservableField<Integer> categoryType = new ObservableField<>();
 
 
     public UIChangeObservable uc = new UIChangeObservable();
@@ -129,7 +130,7 @@ public class TravelViewModel extends BaseViewModel {
         public SingleLiveEvent<CancelOrderEntity> ucCancelOrderSuccess = new SingleLiveEvent<>();
         public SingleLiveEvent<Void> ucChangeMap = new SingleLiveEvent<>();
         public SingleLiveEvent<String> ucFailsMsg = new SingleLiveEvent<>();
-        public SingleLiveEvent<UpdateStartAddressEntity> ucUpdateAddress= new SingleLiveEvent<>();
+        public SingleLiveEvent<UpdateStartAddressEntity> ucUpdateAddress = new SingleLiveEvent<>();
     }
 
 
@@ -165,14 +166,19 @@ public class TravelViewModel extends BaseViewModel {
 
             if (orderStatus != null && orderStatus.get() != null && businessType != null && businessType.get() != null) {
                 if (orderStatus.get() == 2 && businessType.get() == 1) {
-                    switch (transferOrderState.get()) {
-                        case 1:
-                            cancelTransferOrder(orderId.get());
-                            break;
-                        case 0:
-                            uc.ucTransferOrder.call();
 
-                            break;
+                    if (categoryType != null && categoryType.get() == 1) {
+                        uc.ucCancelOrder.call();
+                    } else if (categoryType != null && categoryType.get() == 0) {
+                        switch (transferOrderState.get()) {
+                            case 1:
+                                cancelTransferOrder(orderId.get());
+                                break;
+                            case 0:
+                                uc.ucTransferOrder.call();
+
+                                break;
+                        }
                     }
 
 
@@ -255,7 +261,12 @@ public class TravelViewModel extends BaseViewModel {
 
     public void initRightTitleStatus(int code, int businessType, int transferOrderState) {
         if (businessType == 1 && code == 2) {
-            rightTitle.set((transferOrderState == 0 ? "转单" : "取消转单"));
+            if (categoryType.get() != null && categoryType.get() == 0) {
+                rightTitle.set((transferOrderState == 0 ? "转单" : "取消转单"));
+            } else {
+                rightTitle.set("取消");
+            }
+
         } else {
             rightTitle.set("取消");
         }
@@ -286,7 +297,7 @@ public class TravelViewModel extends BaseViewModel {
                 stringBuffer.append(getApplication().getString(R.string.transfer_order_hiht_number));
                 stringBuffer.append(String.valueOf(updateOrderStatusEntity.getCancalNumber()));
                 stringBuffer.append("次");
-                BaiduSpeech.getInstance(YmxApp.getInstance()).playText(stringBuffer.toString(),null);
+                BaiduSpeech.getInstance(YmxApp.getInstance()).playText(stringBuffer.toString(), null);
             }
         } else if (updateOrderStatusEntity.getDriverState() == TravelViewModel.DRIVER_STATE_READY_TO_GO) {
             if (isVoice) {
@@ -358,9 +369,6 @@ public class TravelViewModel extends BaseViewModel {
             }
         });
     }
-
-
-
 
 
     public void updateOrderDetailsStatus(String orderNo, String currentCoord, String actionType, String otherCharge) {
@@ -584,7 +592,7 @@ public class TravelViewModel extends BaseViewModel {
                 });
     }
 
-    public void updateStartAddress(String orderNo , int state) {
+    public void updateStartAddress(String orderNo, int state) {
         RetrofitFactory.sApiService.updateStartAddress(orderNo, state)
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
@@ -614,9 +622,6 @@ public class TravelViewModel extends BaseViewModel {
     }
 
 
-
-
-
     @Override
     public void onMessageEvent(MessageEvent event) {
         super.onMessageEvent(event);
@@ -643,15 +648,13 @@ public class TravelViewModel extends BaseViewModel {
                 uc.ucBack.call();
 
                 break;
-            case MessageEvent.MSG_MINE_ORDER_UPDATE_ADDRESSS_TYPE_CODE :
+            case MessageEvent.MSG_MINE_ORDER_UPDATE_ADDRESSS_TYPE_CODE:
                 UpdateStartAddressEntity updateStartAddressEntity = (UpdateStartAddressEntity) event.src;
-                if (updateStartAddressEntity!=null){
-                    uc. ucUpdateAddress.setValue(updateStartAddressEntity);
+                if (updateStartAddressEntity != null) {
+                    uc.ucUpdateAddress.setValue(updateStartAddressEntity);
                 }
 
                 break;
-
-
 
 
         }

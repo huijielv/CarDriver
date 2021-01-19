@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
@@ -42,6 +43,7 @@ import com.ymx.driver.base.AppManager;
 import com.ymx.driver.base.BaseMapActivity;
 import com.ymx.driver.base.DefaultStyleDialog;
 import com.ymx.driver.base.YmxApp;
+import com.ymx.driver.base.YmxCache;
 import com.ymx.driver.config.MessageEvent;
 import com.ymx.driver.config.PermissionConfig;
 import com.ymx.driver.databinding.ActivityCarpoolDetailsBinding;
@@ -282,6 +284,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getOrderNo());
                 } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
                     doSthIsExit();
+                    YmxCache.setOrderId("");
                     MainActivity.start(activity);
                 }
             }
@@ -309,6 +312,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                                     xviewModel.recoverOrderDetails(carPoolCancalOrderEntity.getDriverOrderNo());
                                 } else if (carPoolCancalOrderEntity.getDriverState() == 8) {
                                     doSthIsExit();
+                                    YmxCache.setOrderId("");
                                     MainActivity.start(activity);
                                 }
 
@@ -698,7 +702,8 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, PassengerItemInfo passengerItemInfo) {
             ImageView headImg = baseViewHolder.getView(R.id.img);
-            headImg.setOnClickListener(new View.OnClickListener() {
+            LinearLayout Ll= baseViewHolder.getView(R.id.Ll);
+            Ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     passengerInfo = passengerItemInfo;

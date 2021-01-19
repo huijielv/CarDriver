@@ -1,8 +1,7 @@
-package com.ymx.driver.dialog;
+package com.ymx.driver.ui.main.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,30 +15,22 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.ymx.driver.R;
-import com.ymx.driver.base.YmxApp;
-import com.ymx.driver.base.YmxCache;
 import com.ymx.driver.databinding.DialogGrabNewOrderBinding;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
-import com.ymx.driver.entity.app.CarpoolGrabOrderEntity;
 import com.ymx.driver.entity.app.GrabNewOrderEntity;
-import com.ymx.driver.entity.app.TransferStationGrabOrder;
 import com.ymx.driver.entity.app.UserEntity;
-import com.ymx.driver.http.RetrofitFactory;
-import com.ymx.driver.http.TFunc;
-import com.ymx.driver.http.TObserver;
 import com.ymx.driver.ui.login.LoginHelper;
-import com.ymx.driver.ui.transportsite.TransferStationTripOrderDetailsActivity;
-import com.ymx.driver.ui.transportsite.TransferStationTripOrderListActivity;
-import com.ymx.driver.ui.travel.activity.CarPoolDetailsActivity;
-import com.ymx.driver.ui.travel.activity.TravelActivity;
+import com.ymx.driver.ui.main.Dialog.interfaces.CarPoolGrabOrder;
+import com.ymx.driver.ui.main.Dialog.interfaces.GrabOrderInterface;
+import com.ymx.driver.ui.main.Dialog.interfaces.GrabResult;
+import com.ymx.driver.ui.main.Dialog.interfaces.TransferGrabOrder;
+import com.ymx.driver.util.NewOrderTTSController;
 import com.ymx.driver.util.UIUtils;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 // 系统全局Dialog
 public class GrabNewOrderDialog extends Dialog {
@@ -97,7 +88,7 @@ public class GrabNewOrderDialog extends Dialog {
 
         binding.rideNumberLl.setVisibility(grabNewOrderEntity.getRideNumber() == 0 ? View.GONE : View.VISIBLE);
         if (grabNewOrderEntity.getRideNumber() > 0) {
-            binding.rideNumberTv.setText(grabNewOrderEntity.getRideNumber());
+            binding.rideNumberTv.setText(String.valueOf(grabNewOrderEntity.getRideNumber()));
         }
 
         if (grabNewOrderEntity.getPrice() > 0) {
@@ -134,14 +125,49 @@ public class GrabNewOrderDialog extends Dialog {
                     return;
                 }
 
-
+                GrabOrderInterface grabOrderInterface = null;
                 if (!TextUtils.isEmpty(grabNewOrderEntity.getOrderNo())) {
                     if (orderType == 1) {
-                        ransferStationGrabOrder(grabNewOrderEntity.getOrderNo());
+                        grabOrderInterface = new TransferGrabOrder();
                     } else if (orderType == 2) {
-                        carpoolGrabOrder(grabNewOrderEntity.getOrderNo());
+                        grabOrderInterface = new CarPoolGrabOrder();
                     }
+                    grabOrderInterface.GrapOrder(grabNewOrderEntity.getOrderNo(), new GrabResult() {
 
+                        @Override
+                        public void onRequestStart() {
+
+                        }
+
+                        @Override
+                        public void onRequestEnd() {
+
+                        }
+
+                        @Override
+                        public void onSuccees(Object o) {
+
+                        }
+
+                        @Override
+                        public void onSuccees() {
+                            if (mTime >= 0 && isShowing()) {
+                                dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+                            if (mTime >= 0 && isShowing()) {
+                                dismiss();
+                            }
+                            if (binding != null && binding.grabTv != null) {
+                                binding.grabTv.setEnabled(true);
+
+                            }
+                            UIUtils.showToast(message);
+                        }
+                    });
                 }
 
             }
@@ -172,14 +198,17 @@ public class GrabNewOrderDialog extends Dialog {
             binding.grabLl.setVisibility(View.VISIBLE);
             binding.line.setVisibility(View.VISIBLE);
             binding.grabTv.setVisibility(View.VISIBLE);
-            binding.grabTv.setText("接单 (" + mTime + ")");
+            binding.grabTv.setText("接单 (" + String.valueOf(mTime - 5) + ")");
 
         }
 
     }
 
     public void initcarPoolOrder() {
+        binding.grabLl.setVisibility(View.VISIBLE);
+        binding.line.setVisibility(View.VISIBLE);
         binding.grabTv.setVisibility(View.VISIBLE);
+        initGrabTv(false, UIUtils.getDrawable(R.drawable.bg_grab_order_type_1), "接单 (" + String.valueOf(mTime - 5) + ")");
 
     }
 
@@ -196,6 +225,7 @@ public class GrabNewOrderDialog extends Dialog {
     protected void onStop() {
         super.onStop();
         cancal();
+        NewOrderTTSController.getInstance(UIUtils.getContext()).stop();
         UIUtils.removeTask(runnable);
         context = null;
 
@@ -227,8 +257,6 @@ public class GrabNewOrderDialog extends Dialog {
         @Override
         public void run() {
 
-//            UIUtils.postTask(runnable );
-
             UIUtils.postTask(runnable);
         }
     }
@@ -259,8 +287,8 @@ public class GrabNewOrderDialog extends Dialog {
 
                 } else {
                     if (binding.grabTv != null) {
-                        initGrabTv(false, UIUtils.getDrawable(R.drawable.bg_grab_order_type_1), "接单 (" + mTime + ")");
-
+                        binding.grabTv.setEnabled(false);
+                        binding.grabTv.setText("接单 (" + String.valueOf(mTime - 5) + ")");
                     }
                 }
             } catch (Exception e) {
@@ -269,123 +297,10 @@ public class GrabNewOrderDialog extends Dialog {
         }
     };
 
-    public void carpoolGrabOrder(String orderNo) {
-        RetrofitFactory.sApiService.carpoolGrabOrder(orderNo)
-                .map(new TFunc<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TObserver<CarpoolGrabOrderEntity>() {
-                    @Override
-                    protected void onRequestStart() {
-
-                    }
-
-                    @Override
-                    protected void onRequestEnd() {
-
-                    }
-
-                    @Override
-                    protected void onSuccees(CarpoolGrabOrderEntity carpoolGrabOrderEntity) {
-                        if (mTime >= 0) {
-                            dismiss();
-                        }
-
-                        if (carpoolGrabOrderEntity.getCategoryType() == 2) {
-                            Intent intent = new Intent();
-                            intent.putExtra(CarPoolDetailsActivity.ORDERI_ID, carpoolGrabOrderEntity.getOrderNodeNo());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setClass(YmxApp.getInstance(), CarPoolDetailsActivity.class);
-                            YmxApp.getInstance().startActivity(intent);
-                        } else {
-                            Intent intent = new Intent();
-                            intent.putExtra(CarPoolDetailsActivity.ORDERI_ID, carpoolGrabOrderEntity.getOrderNodeNo());
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setClass(YmxApp.getInstance(), TravelActivity.class);
-                            YmxApp.getInstance().startActivity(intent);
-                        }
-
-                    }
-
-                    @Override
-                    protected void onFailure(String message) {
-                        UIUtils.showToast(message);
-
-                    }
-                });
-    }
-
-    public void ransferStationGrabOrder(String orderNo) {
-        RetrofitFactory.sApiService.transferStationGrabOrder(orderNo)
-                .map(new TFunc<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TObserver<TransferStationGrabOrder>() {
-                    @Override
-                    protected void onRequestStart() {
-
-                    }
-
-                    @Override
-                    protected void onRequestEnd() {
-
-                    }
-
-                    @Override
-                    protected void onSuccees(TransferStationGrabOrder transferStationGrabOrder) {
-                        if (mTime >= 0) {
-                            dismiss();
-                        }
-                        switch (transferStationGrabOrder.getIsChooseTrip()) {
-
-                            case 0:
-
-                                if (!TextUtils.isEmpty(transferStationGrabOrder.getOrderNodeNo())) {
-                                    Intent intent = new Intent();
-                                    intent.putExtra(TransferStationTripOrderListActivity.ORDER_NO, transferStationGrabOrder.getOrderNodeNo());
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    intent.setClass(YmxApp.getInstance(), TransferStationTripOrderDetailsActivity.class);
-                                    YmxApp.getInstance().startActivity(intent);
-
-
-                                }
-
-
-                                break;
-                            case 1:
-                                // 跳转行程界面
-
-                                Intent goTo = new Intent();
-                                goTo.putExtra(TransferStationTripOrderListActivity.ORDER_NO, transferStationGrabOrder.getOrderNo());
-                                goTo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                goTo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                goTo.setClass(YmxApp.getInstance(), TransferStationTripOrderListActivity.class);
-                                YmxApp.getInstance().startActivity(goTo);
-
-
-                                break;
-                        }
-                    }
-
-                    @Override
-                    protected void onFailure(String message) {
-                        UIUtils.showToast(message);
-                        if (binding != null && binding.grabTv != null) {
-                            binding.grabTv.setEnabled(true);
-
-                        }
-                    }
-                });
-    }
-
-
     public boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < 1000) {       //1000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
+        if (0 < timeD && timeD < 1500) {       //1000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
             return true;
         }
         lastClickTime = time;

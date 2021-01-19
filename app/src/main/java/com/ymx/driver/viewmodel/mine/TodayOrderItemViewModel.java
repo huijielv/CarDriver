@@ -35,7 +35,17 @@ public class TodayOrderItemViewModel extends ItemViewModel<TodayOrderViewModel> 
         if (entity.get() == null) {
             return UIUtils.getDrawable(R.drawable.bg_order_type);
         }
-        if (entity.get().getColor() == 1) {
+        if (entity.get().getBusinessType() == 1){
+
+            if (entity.get().getCategoryType()==0 ){
+                return UIUtils.getDrawable(R.drawable.bg_order_type);
+            }else if (entity.get().getCategoryType()==2){
+                return UIUtils.getDrawable(R.drawable.bg_order_type_8);
+            }else {
+                return UIUtils.getDrawable(R.drawable.bg_order_type_7);
+            }
+
+        }else if (entity.get().getColor() == 1) {
             return UIUtils.getDrawable(R.drawable.bg_order_type);
         } else if (entity.get().getColor() == 2) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_2);

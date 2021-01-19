@@ -44,26 +44,33 @@ public class TripNotFinishOrderListItemViewModel extends ItemViewModel<NotFinish
     });
 
 
-    public Drawable getStatusBg( ) {
+    public Drawable getStatusBg() {
         if (entity.get() == null) {
             return UIUtils.getDrawable(R.drawable.bg_order_type);
         }
-        if (entity.get().getBusinessType() == 10) {
+        if (entity.get().getBusinessType() == 1) {
+            if (entity.get().getCategoryType() == 0) {
+                return UIUtils.getDrawable(R.drawable.bg_order_type);
+            } else if (entity.get().getCategoryType() == 2) {
+                return UIUtils.getDrawable(R.drawable.bg_order_type_8);
+            } else {
+                return UIUtils.getDrawable(R.drawable.bg_order_type_7);
+            }
+
+        } else if
+        (entity.get().getBusinessType() == 10) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_5);
-        }else if (entity.get().getColor() == 1) {
-               return UIUtils.getDrawable(R.drawable.bg_order_type);
+        } else if (entity.get().getColor() == 1) {
+            return UIUtils.getDrawable(R.drawable.bg_order_type);
         } else if (entity.get().getColor() == 2) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_2);
         } else if (entity.get().getColor() == 3) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_3);
-        }else if  (entity.get().getBusinessType() == 9) {
+        } else if (entity.get().getBusinessType() == 9) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_4);
-        }
-        else if  (entity.get().getBusinessType() == 11) {
+        } else if (entity.get().getBusinessType() == 11) {
             return UIUtils.getDrawable(R.drawable.bg_order_type_6);
-        }
-
-        else if (entity.get().getColor() == 4) {
+        } else if (entity.get().getColor() == 4) {
 
             return UIUtils.getDrawable(R.drawable.bg_order_type_appointment);
 

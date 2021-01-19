@@ -1,9 +1,8 @@
 package com.ymx.driver.util;
 import android.app.Activity;
 import com.ymx.driver.base.AppManager;
-import com.ymx.driver.dialog.GrabNewOrderDialog;
 import com.ymx.driver.entity.BaseGrabOrderEntity;
-
+import com.ymx.driver.ui.main.Dialog.GrabNewOrderDialog;
 
 
 import java.lang.ref.WeakReference;

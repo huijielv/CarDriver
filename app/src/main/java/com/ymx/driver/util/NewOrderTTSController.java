@@ -139,6 +139,16 @@ public class NewOrderTTSController {
         isPlaying = false;
     }
 
+    public void stop (){
+        if (mTts != null) {
+
+            mTts.stop();
+        }
+        isPlaying = false;
+    }
+
+
+
     public void destroy() {
         if (wordList != null) {
             wordList.clear();
