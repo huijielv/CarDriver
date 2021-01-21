@@ -144,7 +144,7 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
             xviewModel.businessType.set(passengerInfoEntity.getBusinessType());
             mStartPoint = new LatLonPoint(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude());
             mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
-
+            xviewModel.categoryType.set(0);
             if (!TextUtils.isEmpty(passengerInfoEntity.getPhone())) {
                 StringBuffer sb = new StringBuffer();
                 sb.append("尾号  ");
@@ -194,30 +194,29 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 //
 //                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
 //            } else {
-                locateSuccess++;
-                if (xviewModel.lat != null && xviewModel.lat.get() != null) {
-                    mStartPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                    mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
-                }
+            locateSuccess++;
+            if (xviewModel.lat != null && xviewModel.lat.get() != null) {
+                mStartPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
+            }
 //                if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
-                    if (locateSuccess / ocateSuccessNumber == 1) {
-                        clearMap();
-                        removeMapRouteView();
+            if (locateSuccess / ocateSuccessNumber == 1) {
+                clearMap();
+                removeMapRouteView();
 
-                        if (distanceStatus == 1) {
-                            searchRouteResult();
+                if (distanceStatus == 1) {
+                    searchRouteResult();
 
-                        }
-                        locateSuccess = 0;
+                }
+                locateSuccess = 0;
 
 
-                    }
-                    // 小于300KM 地图规划策略
-                    if (distanceStatus == 0) {
+            }
+            // 小于300KM 地图规划策略
+            if (distanceStatus == 0) {
 
-                        searchRouteResult();
-                    }
-
+                searchRouteResult();
+            }
 
 
 //            }
@@ -439,9 +438,9 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 //                    } else if (actionType == 4 && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
 //                        moveIngCar(new LatLng(LocationManager.getInstance(activity).getLatitude(), LocationManager.getInstance(activity).getLongitude()), null);
 //                    } else {
-                        //网约车逻辑
-                        getaMap().clear();
-                        searchRouteResult();
+                    //网约车逻辑
+                    getaMap().clear();
+                    searchRouteResult();
 //                    }
 
 

@@ -59,6 +59,7 @@ import com.ymx.driver.map.overlay.DrivingRouteOverlay;
 import com.ymx.driver.ui.longrange.driving.RangeDrivingPayMoneyQrcodeFrament;
 import com.ymx.driver.ui.main.activity.MainActivity;
 import com.ymx.driver.ui.mine.Frament.PayDialogFragment;
+import com.ymx.driver.util.LogUtil;
 import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.view.ClassicPopupWindow;
 import com.ymx.driver.view.SwipeButton;
@@ -189,10 +190,35 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
             @Override
             public void onSwipeConfirm() {
-                AMapLocation aMapLocation = LocationManager.getInstance(YmxApp.getInstance()).getAMapLocation();
-                if (aMapLocation != null) {
-                    xviewModel.driverCarpoolEndTrip(orderNo, aMapLocation.getLongitude(), aMapLocation.getLatitude());
+                if(carPoolAdapter.getData().size()==0){
+                    AMapLocation aMapLocation = LocationManager.getInstance(YmxApp.getInstance()).getAMapLocation();
+                    if (aMapLocation != null) {
+                        xviewModel.driverCarpoolEndTrip(orderNo, aMapLocation.getLongitude(), aMapLocation.getLatitude());
+                    }
+                }else if ( carPoolAdapter.getData().size()>0){
+
+
+                    new DefaultStyleDialog(activity)
+                            .setBody("存在乘客未到达目的地，\n" +
+                                    "请完成所有订单后结束行程")
+                            .setNegativeText("取消")
+                            .setPositiveText("确定")
+                            .setOnDialogListener(new DefaultStyleDialog.DialogListener() {
+                                @Override
+                                public void negative(Dialog dialog) {
+                                    dialog.dismiss();
+
+                                }
+
+                                @Override
+                                public void positive(Dialog dialog) {
+                                    dialog.dismiss();
+
+
+                                }
+                            }).show();
                 }
+
 
             }
         });
@@ -398,7 +424,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                 case 3:
                     popWindowBinding.updateOrderStatusIv.setBackground(UIUtils.getDrawable(R.drawable.icon_yishangche));
                     popWindowBinding.updateOrderStatusTv.setText("乘客已上车");
-                    popWindowBinding.canceOrderTv.setText("未联系乘客");
+                    popWindowBinding.canceOrderTv.setText("未接到乘客");
                     popWindowBinding.canceOrderIv.setBackground(getDrawable(R.drawable.icon_long_driving_weijiedaochengke));
 
                     break;
@@ -409,13 +435,15 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     if (passengerInfo.getPassengerState() == 4) {
                         popWindowBinding.updateOrderStatusTv.setText("到达目的地");
                     } else if (passengerInfo.getPassengerState() == 7) {
-                        popWindowBinding.updateOrderStatusTv.setText("服务结束");
+                        popWindowBinding.updateOrderStatusTv.setText("行程结束");
                     }
 
                     if (passengerInfo.getPayState() == 1) {
                         popWindowBinding.qRcodeLl.setVisibility(View.GONE);
+                        popWindowBinding.qRcodeAndCancalLl.setVisibility(View.GONE);
                     } else if (passengerInfo.getPayState() == 0) {
                         popWindowBinding.qRcodeLl.setVisibility(View.VISIBLE);
+                        popWindowBinding.qRcodeAndCancalLl.setVisibility(View.VISIBLE);
                     }
                     popWindowBinding.callPhone.setVisibility(View.GONE);
                     popWindowBinding.canceOrder.setVisibility(View.GONE);
@@ -424,6 +452,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                     if (passengerInfo.getPayState() == 0) {
                         popWindowBinding.updateOrderStatusTv.setText("行程结束");
                         popWindowBinding.qRcodeLl.setVisibility(View.VISIBLE);
+                        popWindowBinding.qRcodeAndCancalLl.setVisibility(View.VISIBLE);
                     }
                     popWindowBinding.callPhone.setVisibility(View.GONE);
                     popWindowBinding.canceOrder.setVisibility(View.GONE);
@@ -701,7 +730,6 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, PassengerItemInfo passengerItemInfo) {
-            ImageView headImg = baseViewHolder.getView(R.id.img);
             LinearLayout Ll= baseViewHolder.getView(R.id.Ll);
             Ll.setOnClickListener(new View.OnClickListener() {
                 @Override

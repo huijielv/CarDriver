@@ -43,6 +43,13 @@ public class NewOrderTTSController {
                         if (!isPlaying && mTts != null && wordList.size() > 0 && (GrapNewOrderManager.getInstance().grabNewOrderDialog== null || !GrapNewOrderManager.getInstance().isShow())) {
                             isPlaying = true;
                             BaseGrabOrderEntity newOrderEntity = wordList.removeFirst();
+
+                            if (!NewOrderFilterUtiles.newOrder(newOrderEntity.getOrderNo()) ){
+                                isPlaying = false;
+
+                                return;
+                            }
+
                             String playtts = newOrderEntity.getTtsMsg();
 
                             if (mTts == null) {

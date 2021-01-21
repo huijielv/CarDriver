@@ -36,7 +36,7 @@ public class TransferGrabOrder implements GrabOrderInterface {
 
                     @Override
                     protected void onSuccees(TransferStationGrabOrder transferStationGrabOrder) {
-                        NewOrderFilterUtiles.hasOrder(orderNo);
+                        NewOrderFilterUtiles.hasSucscessOrder(orderNo);
                         grabResult.onSuccees(transferStationGrabOrder);
                         grabResult.onSuccees();
                         switch (transferStationGrabOrder.getIsChooseTrip()) {

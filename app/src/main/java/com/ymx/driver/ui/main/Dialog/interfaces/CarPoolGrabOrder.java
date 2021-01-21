@@ -35,7 +35,7 @@ public class CarPoolGrabOrder implements GrabOrderInterface {
 
                     @Override
                     protected void onSuccees(CarpoolGrabOrderEntity carpoolGrabOrderEntity) {
-                        NewOrderFilterUtiles.hasOrder(orderNo);
+                        NewOrderFilterUtiles.hasSucscessOrder(orderNo);
                         grabResult.onSuccees(carpoolGrabOrderEntity);
                         grabResult.onSuccees();
 

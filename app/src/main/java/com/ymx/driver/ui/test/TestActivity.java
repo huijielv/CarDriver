@@ -22,6 +22,7 @@ import com.ymx.driver.entity.BaseGrabOrderEntity;
 
 import com.ymx.driver.entity.app.GrabNewOrderEntity;
 import com.ymx.driver.util.LogUtil;
+import com.ymx.driver.util.NewOrderFilterUtiles;
 import com.ymx.driver.util.NewOrderTTSController;
 
 import io.reactivex.Observable;
@@ -118,19 +119,40 @@ public class TestActivity extends BaseActivity<TestActivityBinding, BaseViewMode
 
                 GrabNewOrderEntity grabNewOrderEntity = new GrabNewOrderEntity();
                 grabNewOrderEntity.setTips("南山区");
-                grabNewOrderEntity.setMarkupPrice(5.0);
+                grabNewOrderEntity.setMarkupPrice(5.00);
                 grabNewOrderEntity.setOrderTypeDescription("拼车送站");
-                grabNewOrderEntity.setPrice(10.0);
+                grabNewOrderEntity.setPrice(10.00);
                 grabNewOrderEntity.setStartAddress("南山区");
                 grabNewOrderEntity.setEndAddress("南山区");
-
+                grabNewOrderEntity.setOrderNo("111111111111111111111111111111111111111");
                 BaseGrabOrderEntity baseGrabOrderEntity = new BaseGrabOrderEntity.
                         Builder().
                         setTtsMsg(grabNewOrderEntity.getTips()).
                         setNewOrder(grabNewOrderEntity).
+                        setOrderNo(grabNewOrderEntity.getOrderNo()).
                         setOrderType(2).
                         build();
                 NewOrderTTSController.getInstance(YmxApp.getInstance()).onGetText(baseGrabOrderEntity);
+                NewOrderFilterUtiles.hasSucscessOrder( grabNewOrderEntity.getOrderNo());
+
+
+                GrabNewOrderEntity grabNewOrderEntity2 = new GrabNewOrderEntity();
+                grabNewOrderEntity2.setTips("南山区2");
+                grabNewOrderEntity2.setMarkupPrice(5.000);
+                grabNewOrderEntity2.setOrderTypeDescription("拼车送站2");
+                grabNewOrderEntity2.setPrice(10.000);
+                grabNewOrderEntity2.setRideNumber(55);
+                grabNewOrderEntity2.setStartAddress("南山区2");
+                grabNewOrderEntity2.setEndAddress("南山区2");
+                grabNewOrderEntity2.setOrderNo("111111111111111111111111111111111111112");
+                BaseGrabOrderEntity baseGrabOrderEntity2 = new BaseGrabOrderEntity.
+                        Builder().
+                        setTtsMsg(grabNewOrderEntity2.getTips()).
+                        setNewOrder(grabNewOrderEntity2).
+                        setOrderNo(grabNewOrderEntity2.getOrderNo()).
+                        setOrderType(2).
+                        build();
+                NewOrderTTSController.getInstance(YmxApp.getInstance()).onGetText(baseGrabOrderEntity2);
             }
         });
 

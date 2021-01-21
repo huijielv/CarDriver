@@ -401,7 +401,13 @@ public class TravelViewModel extends BaseViewModel {
 
                     @Override
                     protected void onFailure(ResultException e) {
-                        uc.ucFailsMsg.setValue(e.getErrMsg());
+
+                        if (e.getErrMsg().equals(UIUtils.getString(R.string.system_error)) || e.getErrMsg().equals(UIUtils.getString(R.string.no_arrival_prompt))) {
+                            UIUtils.showToast(e.getErrMsg());
+                        } else {
+                            uc.ucFailsMsg.setValue(e.getErrMsg());
+                        }
+
                     }
                 });
     }

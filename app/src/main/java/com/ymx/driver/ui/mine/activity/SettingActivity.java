@@ -89,8 +89,8 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding, Settin
         viewModel.uc.ucAbout.observe(this, new Observer<Void>() {
             @Override
             public void onChanged(Void aVoid) {
-//                TestActivity.start(activity);
-                AboutActivity.start(activity);
+                TestActivity.start(activity);
+//                AboutActivity.start(activity);
 
             }
         });

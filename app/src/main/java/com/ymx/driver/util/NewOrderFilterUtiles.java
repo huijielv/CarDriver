@@ -28,7 +28,7 @@ public class NewOrderFilterUtiles {
     }
 
 
-    private static final Map<String, String> newOrderSucscessCache = new LinkedHashMap<String, String>(DEFAULT_CACHE_LIMIT, 0.75f, true) {
+   public static final Map<String, String> newOrderSucscessCache = new LinkedHashMap<String, String>(DEFAULT_CACHE_LIMIT, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
             if (size() > DEFAULT_CACHE_LIMIT) {
@@ -44,6 +44,16 @@ public class NewOrderFilterUtiles {
     public static synchronized boolean hasSucscessOrder(String orderID) {
         if (!newOrderSucscessCache.containsKey(orderID)) {
             newOrderSucscessCache.put(orderID, orderID);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static synchronized boolean newOrder(String orderID) {
+        if (!newOrderSucscessCache.containsKey(orderID)) {
+
             return true;
         } else {
             return false;

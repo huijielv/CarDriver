@@ -251,7 +251,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                         PhoneOrderPayActivity.start(activity, intent);
                                     }
 
-                                } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
+                                } else  {
                                     Intent intent = new Intent();
                                     intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
                                     intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
