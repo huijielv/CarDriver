@@ -120,7 +120,7 @@ public class TravelOrderDetailsFinshActivity extends BaseActivity<ActivityTripOr
             public void onChanged(Void aVoid) {
 
 
-                if ((viewModel.businessType.get() == 10) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
+                if ((viewModel.businessType.get() == 10&&viewModel.categoryType.get()==0) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
                     binding.taxiLl.setVisibility(View.VISIBLE);
                     binding.recyc.setVisibility(View.GONE);
                 }

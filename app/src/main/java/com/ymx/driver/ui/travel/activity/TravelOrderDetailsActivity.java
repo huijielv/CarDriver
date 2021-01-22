@@ -150,7 +150,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                     binding.vip.setVisibility(View.VISIBLE);
                 }
 
-                if ((viewModel.businessType.get() == 10 && viewModel.categoryType.get() == 0) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
+                if ((viewModel.businessType.get() == 10 && viewModel.categoryType != null && viewModel.categoryType.get() != null && viewModel.categoryType.get() == 0) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
                     binding.taxiLl.setVisibility(View.VISIBLE);
                     binding.priceInfoLl.setVisibility(View.GONE);
                 }

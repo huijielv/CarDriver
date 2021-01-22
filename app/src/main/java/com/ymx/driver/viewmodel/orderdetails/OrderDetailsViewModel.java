@@ -212,7 +212,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                             sb.append(orderDetailsEntity.getMobile().substring(7));
                             passengerInfo.set(sb.toString());
                         }
-
+                        categoryType.set(orderDetailsEntity.getCategoryType());
 
                         getOrderList(orderDetailsEntity.getCostList());
 

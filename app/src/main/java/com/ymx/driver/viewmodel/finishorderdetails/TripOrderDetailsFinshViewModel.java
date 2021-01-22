@@ -55,6 +55,7 @@ public class TripOrderDetailsFinshViewModel extends BaseViewModel {
     public ObservableField<Integer> orderSource = new ObservableField<>();
     public ObservableField<String> billingRulesUrl = new ObservableField<>();
     public ObservableField<Integer> driverType = new ObservableField<>();
+    public ObservableField<Integer> categoryType = new ObservableField<>();
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
@@ -126,6 +127,7 @@ public class TripOrderDetailsFinshViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(OrderDetailsEntity orderDetailsEntity) {
                         driverType.set(orderDetailsEntity.getDriverType());
+                        categoryType.set(orderDetailsEntity.getCategoryType());
                         businessType.set(orderDetailsEntity.getBusinessType());
                         startAddress.set(orderDetailsEntity.getStartAddress());
                         endAddress.set(orderDetailsEntity.getEndAddress());
