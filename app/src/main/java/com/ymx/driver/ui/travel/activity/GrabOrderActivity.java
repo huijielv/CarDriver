@@ -11,6 +11,7 @@ import com.ymx.driver.base.AppManager;
 import com.ymx.driver.base.BaseActivity;
 import com.ymx.driver.config.MessageEvent;
 import com.ymx.driver.databinding.ActivityGrabOrderDetailsBinding;
+import com.ymx.driver.viewmodel.main.HomeViewModel;
 import com.ymx.driver.viewmodel.orderdetails.OrderDetailsViewModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,10 +84,23 @@ public class GrabOrderActivity extends BaseActivity<ActivityGrabOrderDetailsBind
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
-                    Intent intent = new Intent();
-                    intent.putExtra(TravelActivity.ORDERI_ID, orderNo);
-                    TravelActivity.start(activity, intent);
-                    doSthIsExit();
+                    if (viewModel.categoryType!=null &&viewModel.categoryType.get()!=null){
+
+
+                        if (viewModel.categoryType.get() == 2) {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelActivity.ORDERI_ID,  orderNo);
+                            CarPoolDetailsActivity.start(activity, intent);
+                        } else {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelActivity.ORDERI_ID, orderNo);
+                            TravelActivity.start(activity, intent);
+                        }
+
+
+                        doSthIsExit();
+                    }
+
                 } else {
                     doSthIsExit();
                 }

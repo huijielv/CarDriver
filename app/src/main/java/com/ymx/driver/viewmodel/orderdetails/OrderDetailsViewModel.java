@@ -332,6 +332,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(ConfirmOrderEntity s) {
                         uc.ucGrabOrderStatus.setValue(true);
+                        uc.categoryType.set(s.getCategoryType());
                         EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS,s));
 
                     }

@@ -214,6 +214,10 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                             intent.putExtra(CharterOrderDetailsActivity.ORDERI_ID, orderId);
                             CharterOrderDayFinishActivity.start(activity, intent);
                         }
+                    } else if (businessType == 5) {
+                        Intent intent = new Intent();
+                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                        GrabOrderActivity.start(activity, intent);
                     } else if (businessType == 11) {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderDetailsActivity.ORDER_NO, orderId);
@@ -225,12 +229,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                             intent.putExtra(TravelActivity.ORDERI_ID, orderId);
                             CarPoolDetailsActivity.start(activity, intent);
                         } else {
-                            if (driverState == TripOrderListViewModel.DRIVER_ORDER_N0_CONFIRN) {
-                                Intent intent = new Intent();
-                                intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                                GrabOrderActivity.start(activity, intent);
-
-                            } else if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_START || driverState == TripOrderListViewModel.DRIVER_STATE_READY_TO_GO || driverState == TripOrderListViewModel.DRIVER_STATE_ROADING || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PASSENGERS) {
+                            if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_START || driverState == TripOrderListViewModel.DRIVER_STATE_READY_TO_GO || driverState == TripOrderListViewModel.DRIVER_STATE_ROADING || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PASSENGERS) {
                                 Intent intent = new Intent();
                                 intent.putExtra(TravelActivity.ORDERI_ID, orderId);
                                 intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
@@ -251,7 +250,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                         PhoneOrderPayActivity.start(activity, intent);
                                     }
 
-                                } else  {
+                                } else {
                                     Intent intent = new Intent();
                                     intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
                                     intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
