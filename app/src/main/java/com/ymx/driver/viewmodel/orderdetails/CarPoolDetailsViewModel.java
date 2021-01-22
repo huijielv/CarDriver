@@ -133,8 +133,22 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                         if (orderDetailsEntity.getDriverState() == 2 || orderDetailsEntity.getDriverState() == 3 || orderDetailsEntity.getDriverState() == 4) {
                             YmxCache.setOrderId(orderDetailsEntity.getOrderNo());
                         }
-                        initPassengerInfo(orderDetailsEntity);
-
+                        title.set(orderDetailsEntity.getTitleText());
+                        orderStatus.set(orderDetailsEntity.getDriverState());
+                        phoneNum.set(orderDetailsEntity.getPhone());
+                        endName.set(orderDetailsEntity.getDesName());
+                        startName.set(orderDetailsEntity.getSrcName());
+                        lat.set(orderDetailsEntity.getLat());
+                        lng.set(orderDetailsEntity.getLng());
+                        orderId.set(orderDetailsEntity.getOrderNo());
+                        buttonText.set(orderDetailsEntity.getButtonText());
+                        if (!TextUtils.isEmpty(orderDetailsEntity.getPhone())) {
+                            StringBuffer sb = new StringBuffer();
+                            sb.append("尾号");
+                            sb.append(orderDetailsEntity.getPhone().substring(7));
+                            passengerInfo.set(sb.toString());
+                        }
+                        uc.ucRecoverOrderDetails.setValue(orderDetailsEntity);
                         uc.ucPowPopShow.call();
                     }
 

@@ -11,7 +11,7 @@ public class MqttConfig {
 
 //    public static final String MQTT_DEBUG_URL = "tcp://39.101.196.81:1883";
 
-    public static final String MQTT_RELEASE_URL = "tcp://scapp.xysc16.com";
+    public static final String MQTT_RELEASE_URL = "tcp://admin.xysc16.com";
     public static final String MQTT_TOPIC_USER_EVENT = "driver/event/d_";
     public static final String MQTT_TOPIC_SIDE_ID_LIST = "common/transferStation/";
     public static final String MQTT_TOPIC_GPS_UPLOAD = "common/uploadGps/";

@@ -18,7 +18,7 @@ import androidx.core.widget.PopupWindowCompat;
 import com.ymx.driver.util.UIUtils;
 
 public class ClassicPopupWindow extends PopupWindow {
-    private static boolean popupWindowShowing;
+    public static boolean popupWindowShowing =false;
 
     public void show(View anchor) {
         show(anchor, 0);
@@ -277,9 +277,9 @@ public class ClassicPopupWindow extends PopupWindow {
 
 
     private void showAsDropDownCompat(View anchor, int xoff, int yoff, int gravity) {
-        if (popupWindowShowing) {
-            return;
-        }
+//        if (popupWindowShowing) {
+//            return;
+//        }
         popupWindowShowing = true;
 
         //Build.VERSION_CODES.N api 24  android 7.0

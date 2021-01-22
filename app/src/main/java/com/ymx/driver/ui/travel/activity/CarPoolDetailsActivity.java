@@ -407,6 +407,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
     public void showPopupWindow() {
         ClassicPopupWindow.Builder popWindow = new ClassicPopupWindow.Builder(activity, 1);
+
         CarPoolDetailsUpdatePassengerBinding popWindowBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.car_pool_details_update_passenger,
                 null, false);
         popWindow.setView(popWindowBinding.getRoot()).build().showAsBottom_AnchorRight_Right(xbinding.leftLine, 0);
@@ -743,6 +744,9 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                             xviewModel.carpoolSwitchPassenger(passengerItemInfo.getOrderNo());
 
                         }
+                    }else {
+                        UIUtils.showToast("请稍后再试");
+
                     }
 
 
