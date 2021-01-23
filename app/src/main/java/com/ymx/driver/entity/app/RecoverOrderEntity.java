@@ -6,6 +6,16 @@ import com.ymx.driver.mqtt.inters.SendMessage;
 public class RecoverOrderEntity extends BaseEntity {
     private String driverOrderNo ;
 
+    public int getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
+    }
+
+    private  int categoryType ;
+
     public String getDriverOrderNo() {
         return driverOrderNo;
     }
