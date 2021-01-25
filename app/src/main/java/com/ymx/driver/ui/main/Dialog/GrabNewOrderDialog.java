@@ -121,7 +121,7 @@ public class GrabNewOrderDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (isFastDoubleClick()) {
-                    UIUtils.showToast("操作太频繁了");
+//                    UIUtils.showToast("操作太频繁了");
                     return;
                 }
 
@@ -198,8 +198,7 @@ public class GrabNewOrderDialog extends Dialog {
             binding.grabLl.setVisibility(View.VISIBLE);
             binding.line.setVisibility(View.VISIBLE);
             binding.grabTv.setVisibility(View.VISIBLE);
-            binding.grabTv.setText("接单 (" + String.valueOf(mTime - 5) + ")");
-
+            initGrabTv(false, UIUtils.getDrawable(R.drawable.bg_grab_order_type_1), "接单 (" + String.valueOf(mTime - 5) + ")");
         }
 
     }
@@ -300,7 +299,7 @@ public class GrabNewOrderDialog extends Dialog {
     public boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < 1500) {       //1000毫秒内按钮无效，这样可以控制快速点击，自己调整频率
+        if (0 < timeD && timeD < 3500) {
             return true;
         }
         lastClickTime = time;

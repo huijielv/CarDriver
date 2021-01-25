@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/Ll"
     android:layout_width="wrap_content"
-    android:layout_marginTop="@dimen/d10"
     android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
     android:orientation="vertical">
 
 
@@ -12,8 +12,7 @@
         android:layout_width="@dimen/d32"
         android:layout_height="@dimen/d32"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/icon_headiv"
-        ></ImageView>
+        android:src="@drawable/icon_headiv"></ImageView>
 
 
     <TextView
@@ -53,6 +52,17 @@
         android:layout_marginTop="@dimen/d4"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_12"
-        android:textStyle="bold">
-    </TextView>
+        android:textStyle="bold"></TextView>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/d10"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="@dimen/d10"
+        android:background="#F6F6F6"></View>
+
+
 </LinearLayout>

@@ -169,7 +169,7 @@ public class MonthIncomeDetailViewModel extends BaseViewModel {
             int nowMonth = DateUtils.getMonth(DateUtils.getDate());
             int nowYear = DateUtils.getYear(DateUtils.getDate());
 
-            if (Math.abs(month - nowMonth) < 6) {
+            if ((year== nowYear&& Math.abs(month - nowMonth) < 6)||(year== nowYear-1&& Math.abs(month - nowMonth) > 6) ){
                 monthIncomeList.clear();
                 time.set(DateUtils.priousMonth(time.get()));
                 getMonthIncomeDetail(String.valueOf(DateUtils.getYear(time.get())), String.valueOf(DateUtils.getMonth(time.get())),incomeType.get());

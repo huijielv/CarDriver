@@ -95,6 +95,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
     private PassengerItemInfo passengerInfo;
 
     private DefaultStyleDialog confimActionDialog;
+    private ClassicPopupWindow.Builder popWindow;
 
     public static void start(Activity activity, Intent extras) {
 
@@ -191,12 +192,12 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
             @Override
             public void onSwipeConfirm() {
-                if(carPoolAdapter.getData().size()==0){
+                if (carPoolAdapter.getData().size() == 0) {
                     AMapLocation aMapLocation = LocationManager.getInstance(YmxApp.getInstance()).getAMapLocation();
                     if (aMapLocation != null) {
                         xviewModel.driverCarpoolEndTrip(orderNo, aMapLocation.getLongitude(), aMapLocation.getLatitude());
                     }
-                }else if ( carPoolAdapter.getData().size()>0){
+                } else if (carPoolAdapter.getData().size() > 0) {
 
 
                     new DefaultStyleDialog(activity)
@@ -388,11 +389,8 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
         xviewModel.uc.ucPaySuccess.observe(this, new Observer<LongDrivingPaySuccessEntigy>() {
             @Override
             public void onChanged(LongDrivingPaySuccessEntigy longDrivingPaySuccessEntigy) {
-
-//                if (longDrivingPaySuccessEntigy.getDriverOrderNo().equals(orderNo)) {
-
+                popWindow.dismiss();
                 xviewModel.recoverOrderDetails(longDrivingPaySuccessEntigy.getDriverOrderNo());
-//                }
 
             }
         });
@@ -407,7 +405,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
     }
 
     public void showPopupWindow() {
-        ClassicPopupWindow.Builder popWindow = new ClassicPopupWindow.Builder(activity, 1);
+        popWindow = new ClassicPopupWindow.Builder(activity, 1);
 
         CarPoolDetailsUpdatePassengerBinding popWindowBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.car_pool_details_update_passenger,
                 null, false);
@@ -732,7 +730,10 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
 
         @Override
         protected void convert(@NotNull BaseViewHolder baseViewHolder, PassengerItemInfo passengerItemInfo) {
-            LinearLayout Ll= baseViewHolder.getView(R.id.Ll);
+            LinearLayout Ll = baseViewHolder.getView(R.id.Ll);
+            View line = baseViewHolder.getView(R.id.line);
+//            baseViewHolder.getAdapterPosition()== baseViewHolder.getD
+
             Ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -745,7 +746,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                             xviewModel.carpoolSwitchPassenger(passengerItemInfo.getOrderNo());
 
                         }
-                    }else {
+                    } else {
                         UIUtils.showToast("请稍后再试");
 
                     }
@@ -768,6 +769,11 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             }
             if (!TextUtils.isEmpty(passengerItemInfo.getAppointmentTime())) {
                 timeTv.setText(passengerItemInfo.getAppointmentTime());
+            }
+            if (baseViewHolder.getAdapterPosition() == carPoolAdapter.getData().size() - 1) {
+                line.setVisibility(View.GONE);
+            } else {
+                line.setVisibility(View.VISIBLE);
             }
 
 
@@ -854,7 +860,6 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
         EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_TRIP_REFRESH_DATA_CODE));
         EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_HOME_FRAGMENT_DATA_CODE));
     }
-
 
 
     @Override

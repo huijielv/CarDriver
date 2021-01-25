@@ -214,10 +214,6 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                             intent.putExtra(CharterOrderDetailsActivity.ORDERI_ID, orderId);
                             CharterOrderDayFinishActivity.start(activity, intent);
                         }
-                    } else if (businessType == 5) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                        GrabOrderActivity.start(activity, intent);
                     } else if (businessType == 11) {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderDetailsActivity.ORDER_NO, orderId);
