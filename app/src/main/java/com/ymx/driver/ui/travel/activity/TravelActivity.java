@@ -187,19 +187,13 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
         if (xviewModel.orderStatus != null && xviewModel.orderStatus.get() != null && xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
             clearMap();
-//            if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.businessType.get() == 10) {
-//
-//                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
-//            } else if (xviewModel.businessType != null && xviewModel.businessType.get() != null && xviewModel.driverType != null && xviewModel.driverType.get() != null && xviewModel.businessType.get() == 5 && xviewModel.driverType.get() == 6) {
-//
-//                moveIngCar(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), null);
-//            } else {
+
             locateSuccess++;
             if (xviewModel.lat != null && xviewModel.lat.get() != null) {
                 mStartPoint = new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                 mEndPoint = new LatLonPoint(xviewModel.lat.get(), xviewModel.lng.get());
             }
-//                if (xviewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_ROADING) {
+
             if (locateSuccess / ocateSuccessNumber == 1) {
                 clearMap();
                 removeMapRouteView();
