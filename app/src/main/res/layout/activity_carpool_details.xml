@@ -30,7 +30,7 @@
                 android:layout_marginStart="20dp"
                 android:background="@color/rx_transparent"
                 android:src="@drawable/icon_back"
-                app:onClickCommand="@{viewModel.back}" />
+               />
 
             <TextView
                 android:id="@+id/tv_title"

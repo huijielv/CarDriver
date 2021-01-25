@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.ymx.driver.ui.main.Dialog.interfaces.CarPoolGrabOrder;
 import com.ymx.driver.ui.main.Dialog.interfaces.GrabOrderInterface;
 import com.ymx.driver.ui.main.Dialog.interfaces.GrabResult;
 import com.ymx.driver.ui.main.Dialog.interfaces.TransferGrabOrder;
+import com.ymx.driver.util.LogUtil;
 import com.ymx.driver.util.NewOrderTTSController;
 import com.ymx.driver.util.UIUtils;
 
@@ -36,15 +38,14 @@ import java.util.TimerTask;
 public class GrabNewOrderDialog extends Dialog {
     private DialogGrabNewOrderBinding binding;
     private GrabNewOrderEntity grabNewOrderEntity;
-    private static Timer timer;
-    private static CountdownTask countdownTask;
     private int mTime = 10;
     private long lastClickTime;
     private Context context;
 
     // orderType==1  处理接送站逻辑  orderType==2 网约车拼车或者出租车拼车
     private int orderType;
-
+    private static long autoUpdateTime = 1000;
+    private Handler handler = new Handler();
 
     public GrabNewOrderDialog(@NonNull Context context, BaseGrabOrderEntity grabNewOrderEntity) {
         super(context);
@@ -121,7 +122,7 @@ public class GrabNewOrderDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (isFastDoubleClick()) {
-//                    UIUtils.showToast("操作太频繁了");
+
                     return;
                 }
 
@@ -173,8 +174,12 @@ public class GrabNewOrderDialog extends Dialog {
             }
         });
 
-        timer = new Timer();
-        countdownTimer();
+//        timer = new Timer();
+//        countdownTimer();
+
+        if (handler != null) {
+            handler.postDelayed(runnable, autoUpdateTime);
+        }
 
     }
 
@@ -223,49 +228,14 @@ public class GrabNewOrderDialog extends Dialog {
     @Override
     protected void onStop() {
         super.onStop();
-        cancal();
+
         NewOrderTTSController.getInstance(UIUtils.getContext()).stop();
-        UIUtils.removeTask(runnable);
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+        handler = null;
         context = null;
 
-    }
-
-
-    public void cancal() {
-        if (countdownTask != null) {
-            countdownTask.cancel();
-            countdownTask = null;
-
-        }
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-
-        }
-
-
-    }
-
-    public class CountdownTask extends TimerTask {
-        int time;
-
-        public CountdownTask(int time) {
-            this.time = time;
-        }
-
-        @Override
-        public void run() {
-
-            UIUtils.postTask(runnable);
-        }
-    }
-
-    public void countdownTimer() {
-        if (countdownTask != null) {
-            countdownTask.cancel();
-        }
-        countdownTask = new CountdownTask(mTime);
-        timer.schedule(countdownTask, 1000, 1000);
     }
 
     Runnable runnable = new Runnable() {
@@ -275,7 +245,7 @@ public class GrabNewOrderDialog extends Dialog {
                 mTime--;
 
                 if (mTime < 0) {
-                    cancal();
+//                    cancal();
                     if (context != null) {
                         dismiss();
                     }
@@ -293,13 +263,16 @@ public class GrabNewOrderDialog extends Dialog {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            if (mTime >= 0) {
+                handler.postDelayed(this, autoUpdateTime);
+            }
         }
     };
 
     public boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < 3500) {
+        if (0 < timeD && timeD < 4500) {
             return true;
         }
         lastClickTime = time;
