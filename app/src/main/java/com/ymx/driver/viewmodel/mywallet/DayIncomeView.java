@@ -35,10 +35,7 @@ public class DayIncomeView extends ItemViewModel<DayIncomeViewModel> {
         super(viewModel);
         turn.set(false);
         this.entity.set(entity);
-        if (this.entity.get().getDriverType() == 6) {
-            this.entity.get().setBusinessType(10);
-            this.entity.get().setStateName("线下付款");
-        }
+
 
         List<RemoteIncomeListItem> tripOrderListItemList = entity.getRemoteIncomeList();
 

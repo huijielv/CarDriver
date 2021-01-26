@@ -183,6 +183,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onSuccees(OrderDetailsEntity orderDetailsEntity) {
                         isLoad.set(true);
+                        categoryType.set(orderDetailsEntity.getCategoryType());
                         businessType.set(orderDetailsEntity.getBusinessType());
                         driverType.set(orderDetailsEntity.getDriverType());
                         startAddress.set(orderDetailsEntity.getStartAddress());
@@ -212,7 +213,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                             sb.append(orderDetailsEntity.getMobile().substring(7));
                             passengerInfo.set(sb.toString());
                         }
-                        categoryType.set(orderDetailsEntity.getCategoryType());
+
 
                         getOrderList(orderDetailsEntity.getCostList());
 

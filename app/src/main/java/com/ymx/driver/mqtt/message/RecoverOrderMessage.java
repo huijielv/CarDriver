@@ -34,6 +34,9 @@ public class RecoverOrderMessage implements SendMessage {
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra(TravelActivity.ORDERI_ID, info.getData().getDriverOrderNo());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setClass(YmxApp.getInstance(), TravelActivity.class);
                     YmxApp.getInstance().startActivity(intent);
                 }
 

@@ -31,6 +31,7 @@ import com.ymx.driver.entity.app.UserEntity;
 import com.ymx.driver.entity.app.mqtt.PhoneOrderSuccessEntity;
 import com.ymx.driver.ui.login.LoginHelper;
 import com.ymx.driver.ui.mine.Frament.PayDialogFragment;
+import com.ymx.driver.util.LogUtil;
 import com.ymx.driver.view.CashierInputFilter;
 import com.ymx.driver.view.ScrollSwithViewButton;
 import com.ymx.driver.viewmodel.orderdetails.OrderDetailsViewModel;
@@ -163,6 +164,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                         binding.scrollOrderDetailsSwithViewButton.setText(getString(R.string.phone_order_pay_title));
                     }
                 } else if (viewModel.orderStatus.get() == TravelViewModel.DRIVER_STATE_TO_PAY) {
+
                     binding.scrollOrderDetailsSwithViewButton.setText("完成");
                     viewModel.payOrder.set("未付款");
                     viewModel.orderPay(viewModel.orderId.get());
@@ -191,7 +193,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                         PhoneOrderPayActivity.start(activity, intent);
                         doSthIsExit();
                     }
-                    if (viewModel.businessType.get() == 10 || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
+                    if ((viewModel.businessType.get() == 10 && viewModel.categoryType != null && viewModel.categoryType.get() != null && viewModel.categoryType.get() == 0) || (viewModel.businessType.get() == 5 && viewModel.driverType.get() == 6)) {
                         return;
                     } else {
                         if (viewModel.orderId != null && !TextUtils.isEmpty(viewModel.orderId.get())) {
@@ -199,6 +201,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                             viewModel.orderPay(viewModel.orderId.get());
                         }
                         viewModel.totalFee.set("");
+                        LogUtil.d("TEST", "test");
                         viewModel.getOrderDetails(viewModel.orderId.get());
                     }
 

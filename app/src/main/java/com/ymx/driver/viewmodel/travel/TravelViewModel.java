@@ -221,9 +221,15 @@ public class TravelViewModel extends BaseViewModel {
             return false;
         } else if (mode == TravelViewModel.DRIVER_STATE_CONFIRM_COST) {
             return false;
+        } else if (mode == TravelViewModel.DRIVER_STATE_TO_PAY) {
+            return false;
+        } else if (mode == TravelViewModel.DRIVER_ORDER_FINISH) {
+            return false;
         } else {
             return false;
         }
+
+
     }
 
     public boolean getBackStatus(int mode) {
@@ -267,6 +273,8 @@ public class TravelViewModel extends BaseViewModel {
                 rightTitle.set("取消");
             }
 
+        } else if (code == 6 || code == 7) {
+            rightTitle.set("");
         } else {
             rightTitle.set("取消");
         }

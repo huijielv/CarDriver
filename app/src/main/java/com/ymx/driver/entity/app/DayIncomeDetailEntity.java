@@ -8,6 +8,15 @@ public class DayIncomeDetailEntity extends BaseEntity {
     private String day ;
     private String totalIncome;
     private List<DayIncomItemEntity> list;
+    private int categoryType ;
+
+    public int getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
+    }
 
     public String getDay() {
         return day;

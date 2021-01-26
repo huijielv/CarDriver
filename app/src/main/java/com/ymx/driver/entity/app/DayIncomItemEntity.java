@@ -11,6 +11,7 @@ public class DayIncomItemEntity extends BaseEntity {
     private int orderState;
     private int businessType;
     private int driverType;
+    private int categoryType ;
 
     public int getDriverType() {
         return driverType;
@@ -68,6 +69,14 @@ public class DayIncomItemEntity extends BaseEntity {
 
     public void setBusinessType(int businessType) {
         this.businessType = businessType;
+    }
+
+    public int getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(int categoryType) {
+        this.categoryType = categoryType;
     }
 
 }

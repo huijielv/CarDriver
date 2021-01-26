@@ -65,6 +65,7 @@ import java.util.Formatter;
 import java.util.List;
 
 import static com.amap.api.services.route.RouteSearch.DRIVING_SINGLE_DEFAULT;
+import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_ORDER_FINISH;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_CONFIRM_COST;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_READY_TO_GO;
 
@@ -411,6 +412,8 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                     TravelOrderDetailsActivity.start(activity, intent);
                     doSthIsExit();
                     VoicePlayMannager.getInstance(getApplication()).play(R.raw.reach_destination);
+                } else if (actionType == DRIVER_ORDER_FINISH) {
+                    doSthIsExit();
                 }
                 xbinding.scrollSwithViewButton.setText(xviewModel.updateOrderContent.get());
             }
@@ -590,6 +593,7 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
             try {
                 if (TextUtils.isEmpty(xviewModel.phoneNum.get())) {
                     return;
+
                 }
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 Uri data = Uri.parse("tel:" + xviewModel.phoneNum.get());
