@@ -259,6 +259,10 @@ public class TravelViewModel extends BaseViewModel {
             rightTitleShow.set(false);
         } else if (mode == TravelViewModel.DRIVER_STATE_CONFIRM_COST) {
             rightTitleShow.set(false);
+        }else if (mode == TravelViewModel.DRIVER_STATE_TO_PAY){
+            rightTitleShow.set(false);
+        }else if (mode == TravelViewModel.DRIVER_ORDER_FINISH){
+            rightTitleShow.set(false);
         } else {
             rightTitleShow.set(true);
         }

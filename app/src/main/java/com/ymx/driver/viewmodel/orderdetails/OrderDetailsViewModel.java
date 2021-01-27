@@ -62,6 +62,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
     public ObservableField<Integer> businessType = new ObservableField<>();
     public ObservableField<Integer> driverType = new ObservableField<>();
     public ObservableField<Integer> categoryType = new ObservableField<>();
+    public ObservableField<Integer> successPay = new ObservableField<>(0);
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
@@ -199,10 +200,17 @@ public class OrderDetailsViewModel extends BaseViewModel {
                             totalFee.set(orderDetailsEntity.getTotalFee());
                         } else if (orderDetailsEntity.getOrderState() == TravelViewModel.DRIVER_STATE_TO_PAY) {
                             totalFee.set(orderDetailsEntity.getUnPayFee());
+                        } else if (orderDetailsEntity.getOrderState() == TravelViewModel.DRIVER_ORDER_FINISH) {
+                            if (orderDetailsEntity.getDriverType() == 6 && orderDetailsEntity.getCategoryType() == 0) {
+
+                            } else {
+                                totalFee.set(orderDetailsEntity.getTotalFee());
+                            }
+
                         }
                         uc.ucInitButtonText.call();
 
-                        if (orderDetailsEntity.getChannel() == 5&&orderDetailsEntity.getBusinessType()!=10) {
+                        if (orderDetailsEntity.getChannel() == 5 && orderDetailsEntity.getBusinessType() != 10) {
                             buttonText.set(getString(R.string.pay_order_details_button_text));
                         } else {
                             buttonText.set(getString(R.string.order_details_button_text));
@@ -334,7 +342,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
                     protected void onSuccees(ConfirmOrderEntity s) {
                         uc.ucGrabOrderStatus.setValue(true);
                         uc.categoryType.set(s.getCategoryType());
-                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS,s));
+                        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_GRAB_GOOD_FIREND_ORDER_SUCCESS, s));
 
                     }
 
@@ -347,7 +355,7 @@ public class OrderDetailsViewModel extends BaseViewModel {
 
 
     public void orderPay(String orderNo) {
-        RetrofitFactory.sApiService.orderPay(1, orderNo,2)
+        RetrofitFactory.sApiService.orderPay(1, orderNo, 2)
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

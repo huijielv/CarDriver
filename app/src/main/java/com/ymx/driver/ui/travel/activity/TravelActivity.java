@@ -68,6 +68,7 @@ import static com.amap.api.services.route.RouteSearch.DRIVING_SINGLE_DEFAULT;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_ORDER_FINISH;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_CONFIRM_COST;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_READY_TO_GO;
+import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_TO_PAY;
 
 /**
  * Created by xuweihua
@@ -411,8 +412,19 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
 
                     TravelOrderDetailsActivity.start(activity, intent);
                     doSthIsExit();
+
                     VoicePlayMannager.getInstance(getApplication()).play(R.raw.reach_destination);
-                } else if (actionType == DRIVER_ORDER_FINISH) {
+
+
+                } else if (actionType == DRIVER_STATE_TO_PAY) {
+                    Intent intent = new Intent();
+                    intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderNo);
+                    if (xviewModel.categoryType != null && xviewModel.categoryType.get() != null) {
+                        intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(xviewModel.categoryType.get()));
+                    }
+                    intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderNo);
+                    intent.putExtra(TravelOrderDetailsActivity.SUCCESS_PAY, 1);
+                    TravelOrderDetailsActivity.start(activity, intent);
                     doSthIsExit();
                 }
                 xbinding.scrollSwithViewButton.setText(xviewModel.updateOrderContent.get());

@@ -45,6 +45,7 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
     public static final int DRIVER_END_SERVICE = 6;
     public static final String ACTION_TYPE = "actionType";
     public static final String CATEGORY_TYPE = "categoryType";
+    public static final String SUCCESS_PAY = "success_pay";
 
     public static void start(Activity activity) {
         start(activity, null);
@@ -120,6 +121,9 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
             if (intent.hasExtra(CATEGORY_TYPE) && !TextUtils.isEmpty(intent.getStringExtra(CATEGORY_TYPE))) {
                 viewModel.categoryType.set(Integer.parseInt(intent.getStringExtra(CATEGORY_TYPE)));
             }
+            if (intent.hasExtra(TravelOrderDetailsActivity.SUCCESS_PAY)) {
+                viewModel.successPay.set(1);
+            }
 
             viewModel.orderStatus.set(actionType);
             viewModel.orderId.set(orderNo);
@@ -170,7 +174,9 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                     viewModel.orderPay(viewModel.orderId.get());
 
                 } else if (viewModel.orderStatus.get() == TravelViewModel.DRIVER_ORDER_FINISH) {
-                    doSthIsExit();
+//                    doSthIsExit();
+                    viewModel.payOrder.set("已收款");
+                    binding.scrollOrderDetailsSwithViewButton.setText("完成");
                 }
 
             }
@@ -201,7 +207,6 @@ public class TravelOrderDetailsActivity extends BaseActivity<ActivityOrderDetail
                             viewModel.orderPay(viewModel.orderId.get());
                         }
                         viewModel.totalFee.set("");
-                        LogUtil.d("TEST", "test");
                         viewModel.getOrderDetails(viewModel.orderId.get());
                     }
 

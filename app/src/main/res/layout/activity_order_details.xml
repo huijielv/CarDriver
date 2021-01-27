@@ -419,6 +419,7 @@
                             android:visibility="@{viewModel.orderStatus  == 6? View.VISIBLE :View.GONE }">
 
                             <RelativeLayout
+
                                 android:layout_width="280dp"
                                 android:layout_height="200dp"
                                 android:layout_gravity="center_horizontal">
@@ -473,6 +474,24 @@
                                 app:onClickCommand="@{viewModel.pay}"></TextView>
 
                         </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="280dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center_horizontal"
+                            android:visibility="@{viewModel.successPay==1?View.VISIBLE:View.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@{viewModel.payOrder}"
+                                android:textColor="@color/color_333333"
+                                android:textSize="@dimen/text_size_30"></TextView>
+
+                        </RelativeLayout>
+
                     </LinearLayout>
 
 

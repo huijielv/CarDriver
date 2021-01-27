@@ -195,7 +195,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
                 if (carPoolAdapter.getData().size() == 0) {
                     AMapLocation aMapLocation = LocationManager.getInstance(YmxApp.getInstance()).getAMapLocation();
                     if (aMapLocation != null) {
-                        xviewModel.driverCarpoolEndTrip( xviewModel.orderId.get(), aMapLocation.getLongitude(), aMapLocation.getLatitude());
+                        xviewModel.driverCarpoolEndTrip(xviewModel.orderId.get(), aMapLocation.getLongitude(), aMapLocation.getLatitude());
                     }
                 } else if (carPoolAdapter.getData().size() > 0) {
 
@@ -390,6 +390,7 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             @Override
             public void onChanged(LongDrivingPaySuccessEntigy longDrivingPaySuccessEntigy) {
                 popWindow.dismiss();
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_QUERY_PAY_RESULT));
                 xviewModel.recoverOrderDetails(longDrivingPaySuccessEntigy.getDriverOrderNo());
 
             }
