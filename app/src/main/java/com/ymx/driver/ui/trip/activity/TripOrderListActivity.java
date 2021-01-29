@@ -221,9 +221,13 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                     } else {
 
                         if (categoryType == 2) {
-                            Intent intent = new Intent();
-                            intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                            CarPoolDetailsActivity.start(activity, intent);
+
+                            if (driverState != TripOrderListViewModel.DRIVER_STATE_TO_PAY){
+                                Intent intent = new Intent();
+                                intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                                CarPoolDetailsActivity.start(activity, intent);
+                            }
+
                         } else {
                             if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_START || driverState == TripOrderListViewModel.DRIVER_STATE_READY_TO_GO || driverState == TripOrderListViewModel.DRIVER_STATE_ROADING || driverState == TripOrderListViewModel.DRIVER_STATE_TO_PASSENGERS) {
                                 Intent intent = new Intent();
@@ -246,7 +250,7 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                         PhoneOrderPayActivity.start(activity, intent);
                                     }
 
-                                } else  if ( driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST ){
+                                } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
                                     Intent intent = new Intent();
                                     intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
                                     intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(categoryType));
@@ -263,30 +267,33 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
 
                 } else if (selectIndex == 1) {
                     //完成订单的状态界面 跳转
+                    if (driverState == TripOrderListViewModel.DRIVER_ORDER_CLOSED  ){
 
-                    if (businessType == 6 || businessType == 7) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                        LongRangDrivingFinishDetails.start(activity, intent);
-                    } else if (businessType == 8) {
-                        Intent intent = new Intent();
-                        intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
-                        LongRangeFerryFinishDetails.start(activity, intent);
-                    } else if (businessType == 9) {
+                        if (businessType == 6 || businessType == 7) {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                            LongRangDrivingFinishDetails.start(activity, intent);
+                        } else if (businessType == 8) {
+                            Intent intent = new Intent();
+                            intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
+                            LongRangeFerryFinishDetails.start(activity, intent);
+                        } else if (businessType == 9) {
 
-                        Intent intent = new Intent();
-                        intent.putExtra(CharterOrderDetailsActivity.ORDERI_ID, orderId);
-                        CharterOrderFinishOrderDetailsActivity.start(activity, intent);
-                    } else if (businessType == 11) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TransferStationTripOrderFinishDetailsActivity.ORDERI_ID, orderId);
-                        TransferStationTripOrderFinishDetailsActivity.start(activity, intent);
-                    } else {
-                        Intent intent = new Intent();
-                        intent.putExtra(TravelOrderDetailsFinshActivity.ORDERI_ID, orderId);
-                        intent.putExtra(TravelOrderDetailsFinshActivity.ACTION_TYPE, driverState);
-                        TravelOrderDetailsFinshActivity.start(activity, intent);
+                            Intent intent = new Intent();
+                            intent.putExtra(CharterOrderDetailsActivity.ORDERI_ID, orderId);
+                            CharterOrderFinishOrderDetailsActivity.start(activity, intent);
+                        } else if (businessType == 11) {
+                            Intent intent = new Intent();
+                            intent.putExtra(TransferStationTripOrderFinishDetailsActivity.ORDERI_ID, orderId);
+                            TransferStationTripOrderFinishDetailsActivity.start(activity, intent);
+                        } else {
+                            Intent intent = new Intent();
+                            intent.putExtra(TravelOrderDetailsFinshActivity.ORDERI_ID, orderId);
+                            intent.putExtra(TravelOrderDetailsFinshActivity.ACTION_TYPE, driverState);
+                            TravelOrderDetailsFinshActivity.start(activity, intent);
+                        }
                     }
+
 
 
                 }

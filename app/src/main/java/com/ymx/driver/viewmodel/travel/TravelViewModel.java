@@ -259,9 +259,9 @@ public class TravelViewModel extends BaseViewModel {
             rightTitleShow.set(false);
         } else if (mode == TravelViewModel.DRIVER_STATE_CONFIRM_COST) {
             rightTitleShow.set(false);
-        }else if (mode == TravelViewModel.DRIVER_STATE_TO_PAY){
+        } else if (mode == TravelViewModel.DRIVER_STATE_TO_PAY) {
             rightTitleShow.set(false);
-        }else if (mode == TravelViewModel.DRIVER_ORDER_FINISH){
+        } else if (mode == TravelViewModel.DRIVER_ORDER_FINISH) {
             rightTitleShow.set(false);
         } else {
             rightTitleShow.set(true);
@@ -491,7 +491,7 @@ public class TravelViewModel extends BaseViewModel {
                 .map(new TFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new TObserver<PassengerInfoEntity>() {
+                .subscribe(new TAddObserver<PassengerInfoEntity>() {
                     @Override
                     protected void onRequestStart() {
                         getUC().getShowDialogEvent().call();
@@ -540,6 +540,12 @@ public class TravelViewModel extends BaseViewModel {
                     @Override
                     protected void onFailure(String message) {
                         UIUtils.showToast(message);
+                    }
+
+                    @Override
+                    protected void onFailure(ResultException e) {
+                        uc.ucBack.call();
+                        UIUtils.showToast(e.getErrMsg());
                     }
                 });
     }

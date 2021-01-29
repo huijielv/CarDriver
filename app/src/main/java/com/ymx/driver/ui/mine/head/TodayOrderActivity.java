@@ -86,23 +86,33 @@ public class TodayOrderActivity extends BaseActivity<ActivityTodayOrderBinding, 
                 int businessType = todayOrderEntity.getBusinessType();
                 int categoryType = todayOrderEntity.getCategoryType();
                 if (businessType == 6 || businessType == 7) {
-                    Intent intent = new Intent();
-                    intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                    LongRangDrivingFinishDetails.start(activity, intent);
+                    if (driverState == 8) {
+                        Intent intent = new Intent();
+                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+                        LongRangDrivingFinishDetails.start(activity, intent);
+                    }
+
                 } else if (businessType == 8) {
-                    Intent intent = new Intent();
-                    intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
-                    LongRangeFerryFinishDetails.start(activity, intent);
+                    if (driverState == 8) {
+                        Intent intent = new Intent();
+                        intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
+                        LongRangeFerryFinishDetails.start(activity, intent);
+                    }
+
+
                 } else if (businessType == 9) {
-                    Intent intent = new Intent();
-                    intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
-                    CharterOrderFinishOrderDetailsActivity.start(activity, intent);
+                    if (driverState == 8) {
+                        Intent intent = new Intent();
+                        intent.putExtra(LongRangeFerryFinishDetails.ORDERI_ID, orderId);
+                        CharterOrderFinishOrderDetailsActivity.start(activity, intent);
+                    }
+
                 } else if (businessType == 11) {
-                    if (driverState == 7 || driverState == 8) {
+                    if (driverState == 8) {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderFinishDetailsActivity.ORDERI_ID, orderId);
                         TransferStationTripOrderFinishDetailsActivity.start(activity, intent);
-                    } else {
+                    } else if (driverState == 1 || driverState == 2 || driverState == 3 || driverState == 4) {
                         Intent intent = new Intent();
                         intent.putExtra(TransferStationTripOrderDetailsActivity.ORDER_NO, orderId);
                         TransferStationTripOrderDetailsActivity.start(activity, intent);
@@ -126,7 +136,7 @@ public class TodayOrderActivity extends BaseActivity<ActivityTodayOrderBinding, 
                         intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderId);
                         intent.putExtra(TravelOrderDetailsActivity.ACTION_TYPE, driverState);
                         TravelOrderDetailsActivity.start(activity, intent);
-                    } else if (driverState == TripOrderListViewModel.DRIVER_ORDER_FINISH || driverState == TripOrderListViewModel.DRIVER_ORDER_CLOSED) {
+                    } else if (driverState == TripOrderListViewModel.DRIVER_ORDER_CLOSED) {
                         Intent intent = new Intent();
                         intent.putExtra(TravelOrderDetailsFinshActivity.ORDERI_ID, orderId);
                         intent.putExtra(TravelOrderDetailsFinshActivity.ACTION_TYPE, driverState);
