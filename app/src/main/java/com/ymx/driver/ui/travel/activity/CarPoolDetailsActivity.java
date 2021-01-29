@@ -60,7 +60,7 @@ import com.ymx.driver.map.overlay.DrivingRouteOverlay;
 import com.ymx.driver.ui.longrange.driving.RangeDrivingPayMoneyQrcodeFrament;
 import com.ymx.driver.ui.main.activity.MainActivity;
 import com.ymx.driver.ui.mine.Frament.PayDialogFragment;
-import com.ymx.driver.util.LogUtil;
+import com.ymx.driver.ui.trip.activity.TripOrderListActivity;
 import com.ymx.driver.util.UIUtils;
 import com.ymx.driver.view.ClassicPopupWindow;
 import com.ymx.driver.view.SwipeButton;
@@ -400,6 +400,13 @@ public class CarPoolDetailsActivity extends BaseMapActivity<ActivityCarpoolDetai
             @Override
             public void onChanged(Void aVoid) {
                 doSthIsExit();
+            }
+        });
+        xviewModel.uc.ucGoTtipList. observe(this , new Observer<Void>() {
+            @Override
+            public void onChanged(Void aVoid) {
+                doSthIsExit();
+                TripOrderListActivity.start(activity);
             }
         });
 

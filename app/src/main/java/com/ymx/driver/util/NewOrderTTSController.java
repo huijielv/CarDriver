@@ -27,7 +27,7 @@ public class NewOrderTTSController {
 
 
             handler.obtainMessage(CHECK_TTS_PLAY).sendToTarget();
-            handler.postDelayed(this, 3000);
+            handler.postDelayed(this, 2000);
         }
     };
 
@@ -120,7 +120,7 @@ public class NewOrderTTSController {
         if (mTts == null) {
             createSynthesizer();
         }
-        handler.postDelayed(checkAutoTttPlayrunnable, 3000);
+        handler.postDelayed(checkAutoTttPlayrunnable, 2000);
     }
 
     private void createSynthesizer() {

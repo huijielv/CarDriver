@@ -145,8 +145,13 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         }
         ImmersionBar.with(this).destroy();
         KeyBoardEventBus.getDefault().unregister(activity);
-        GrapNewOrderManager.getInstance().dismiss();
-        dismissLoading();
+        try {
+            GrapNewOrderManager.getInstance().dismiss();
+            dismissLoading();
+        }catch (Exception e){
+
+        }
+
 
     }
 

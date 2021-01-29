@@ -64,6 +64,7 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
         public SingleLiveEvent<String> ucErrorMsg = new SingleLiveEvent<>();
         public SingleLiveEvent<String> ucPayDialog = new SingleLiveEvent<>();
         public SingleLiveEvent<LongDrivingPaySuccessEntigy> ucPaySuccess = new SingleLiveEvent<>();
+        public SingleLiveEvent<Void> ucGoTtipList = new SingleLiveEvent<>();
     }
 
     public ObservableArrayList<LatLng> smoothRunningLatLng = new ObservableArrayList<>();
@@ -72,6 +73,13 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
         @Override
         public void call() {
             uc.ucBack.call();
+        }
+    });
+
+    public BindingCommand load = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            recoverOrderDetails(orderId.get());
         }
     });
 
@@ -106,8 +114,11 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
 
                     @Override
                     protected void onFailure(ResultException e) {
-                        isLoad.set(true);
+                        isLoad.set(false);
                         UIUtils.showToast(e.getErrMsg());
+                        if (e.getErrCode().equals("-100")) {
+                            uc.ucGoTtipList.call();
+                        }
                     }
                 });
     }
@@ -198,6 +209,7 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onFailure(ResultException e) {
                         UIUtils.showToast(e.getErrMsg());
+                        uc.ucGoTtipList.call();
                     }
                 });
     }
@@ -231,6 +243,7 @@ public class CarPoolDetailsViewModel extends BaseViewModel {
                     @Override
                     protected void onFailure(ResultException e) {
                         UIUtils.showToast(e.getErrMsg());
+                        uc.ucGoTtipList.call();
                     }
                 });
     }

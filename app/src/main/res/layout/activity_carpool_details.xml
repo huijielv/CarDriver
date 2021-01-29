@@ -29,8 +29,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:background="@color/rx_transparent"
-                android:src="@drawable/icon_back"
-               />
+                android:src="@drawable/icon_back" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -41,6 +40,38 @@
                 android:textColor="@color/rx_333333"
                 android:textSize="@dimen/text_size_18" />
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="280dp"
+            android:orientation="vertical"
+            android:visibility="@{!viewModel.isLoad ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="请点击刷新按钮重新加载"
+                android:textColor="@color/rx_999999"
+                android:textSize="@dimen/text_size_18"></TextView>
+
+            <ImageView
+                android:layout_width="@dimen/d30"
+                android:layout_height="@dimen/d30"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@drawable/icon_load_data"
+                app:onClickCommand="@{viewModel.load}"></ImageView>
+
+        </LinearLayout>
 
 
         <RelativeLayout
