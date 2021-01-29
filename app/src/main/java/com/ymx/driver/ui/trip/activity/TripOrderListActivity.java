@@ -243,12 +243,14 @@ public class TripOrderListActivity extends BaseActivity<ActivityTripOrderBinding
                                         intent.putExtra(TravelActivity.CATEGORY_TYPE, categoryType);
                                         intent.putExtra(TravelOrderDetailsActivity.ACTION_TYPE, driverState);
                                         TravelOrderDetailsActivity.start(activity, intent);
-                                    } else if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_PAY) {
-                                        Intent intent = new Intent();
-                                        intent.putExtra(PhoneOrderPayActivity.TYPE, 1);
-                                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
-                                        PhoneOrderPayActivity.start(activity, intent);
                                     }
+
+//                                    else if (driverState == TripOrderListViewModel.DRIVER_STATE_TO_PAY) {
+//                                        Intent intent = new Intent();
+//                                        intent.putExtra(PhoneOrderPayActivity.TYPE, 1);
+//                                        intent.putExtra(TravelActivity.ORDERI_ID, orderId);
+//                                        PhoneOrderPayActivity.start(activity, intent);
+//                                    }
 
                                 } else if (driverState == TripOrderListViewModel.DRIVER_STATE_CONFIRM_COST) {
                                     Intent intent = new Intent();
