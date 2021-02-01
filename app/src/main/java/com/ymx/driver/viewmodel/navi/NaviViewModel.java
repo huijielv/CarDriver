@@ -46,7 +46,7 @@ public class NaviViewModel extends BaseViewModel {
     public ObservableField<Integer> channel = new ObservableField<>();
     public ObservableField<Integer> transferOrderState = new ObservableField<>(0);
     public ObservableField<String> transferOrderTips = new ObservableField<>();
-
+    public ObservableField<Integer> categoryType = new ObservableField<>();
 
     public UIChangeObservable uc = new UIChangeObservable();
 

@@ -380,6 +380,7 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
                         Intent intent = new Intent();
                         intent.putExtra(NaviActivity.NAVILAT, xviewModel.lat.get());
                         intent.putExtra(NaviActivity.NAVILON, xviewModel.lng.get());
+                        intent.putExtra(NaviActivity.CATEGORY_TYPE, xviewModel.categoryType.get());
                         intent.putExtra(TravelActivity.ORDERI_ID, orderNo);
                         NaviActivity.start(activity, intent);
 //                        NavUtil.neizhiGaodeNavi(getApplicationContext(), LocationManager.getInstance(getApplicationContext()).getLatitude(), LocationManager.getInstance(getApplicationContext()).getLongitude(), xviewModel.lat.get(), xviewModel.lng.get(), addressName);
@@ -832,7 +833,10 @@ public class TravelActivity extends BaseMapActivity<ActivityTravelBinding, Trave
             gpsDialog.dismiss();
         }
 
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_TRIP_REFRESH_DATA_CODE));
+        if (!xviewModel.naviBack.get()) {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_TRIP_REFRESH_DATA_CODE));
+        }
+
         EventBus.getDefault().post(new MessageEvent(MessageEvent.MSG_HOME_FRAGMENT_DATA_CODE));
     }
 

@@ -113,6 +113,8 @@ public class TravelViewModel extends BaseViewModel {
     public ObservableField<String> transferOrderTips = new ObservableField<>();
     public ObservableField<Integer> categoryType = new ObservableField<>();
 
+    public ObservableField<Boolean> naviBack = new ObservableField<>(false);
+
 
     public UIChangeObservable uc = new UIChangeObservable();
 
@@ -661,6 +663,13 @@ public class TravelViewModel extends BaseViewModel {
 
                     return;
                 }
+
+                if (updateOrderStatusEntity.getDriverState() == DRIVER_STATE_TO_PAY) {
+                    naviBack.set(true);
+                    uc.ucBack.call();
+                    return;
+                }
+
 
                 if (updateOrderStatusEntity != null) {
                     updateButton(updateOrderStatusEntity, false);

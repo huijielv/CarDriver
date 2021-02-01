@@ -45,6 +45,7 @@ import com.ymx.driver.databinding.ActivityNaviBinding;
 import com.ymx.driver.entity.app.OrderPriceEntity;
 import com.ymx.driver.map.LocationManager;
 import com.ymx.driver.ui.launch.dialog.PermissionDeniedDialog;
+import com.ymx.driver.ui.travel.activity.TravelActivity;
 import com.ymx.driver.ui.travel.activity.TravelOrderDetailsActivity;
 import com.ymx.driver.util.NavUtil;
 import com.ymx.driver.util.SystemUtils;
@@ -60,12 +61,14 @@ import java.util.List;
 import static com.ymx.driver.ui.travel.activity.TravelActivity.ORDERI_ID;
 import static com.ymx.driver.viewmodel.navi.NaviViewModel.DRIVER_STATE_ROADING;
 import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_CONFIRM_COST;
+import static com.ymx.driver.viewmodel.travel.TravelViewModel.DRIVER_STATE_TO_PAY;
 
 public class NaviActivity extends BaseActivity<ActivityNaviBinding, NaviViewModel> implements AMapNaviListener, AMapNaviViewListener {
 
-
+    public static final String CATEGORY_TYPE = "categoryType";
     public static final String NAVILAT = "Lat";
     public static final String NAVILON = "Lon";
+
     private String orderNo;
     private int actionType;
     private DefaultStyleDialog gpsDialog;
@@ -220,16 +223,24 @@ public class NaviActivity extends BaseActivity<ActivityNaviBinding, NaviViewMode
     @Override
     public void initData() {
         Intent intent = getIntent();
+
+
         if (intent.hasExtra(ORDERI_ID)) {
             orderNo = intent.getStringExtra(ORDERI_ID);
             viewModel.orderId.set(orderNo);
+
+
             viewModel.recoverOrderDetails(orderNo);
+
+        }
+        if (intent.hasExtra(CATEGORY_TYPE) && !TextUtils.isEmpty(intent.getStringExtra(CATEGORY_TYPE))) {
+            viewModel.categoryType.set(Integer.parseInt(intent.getStringExtra(CATEGORY_TYPE)));
         }
 
         requestPermission(PermissionConfig.PC_SPLASH, true,
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
                 SystemUtils.checkedAndroid_Q() ? Manifest.permission.ACCESS_BACKGROUND_LOCATION : Manifest.permission.ACCESS_FINE_LOCATION
-                );
+        );
         Double endlat = getIntent().getDoubleExtra(NAVILAT, 0);
         Double endlon = getIntent().getDoubleExtra(NAVILON, 0);
 
@@ -323,6 +334,16 @@ public class NaviActivity extends BaseActivity<ActivityNaviBinding, NaviViewMode
                     TravelOrderDetailsActivity.start(activity, intent);
                     doSthIsExit();
                     VoicePlayMannager.getInstance(getApplication()).play(R.raw.reach_destination);
+                }else if (actionType == DRIVER_STATE_TO_PAY) {
+                    Intent intent = new Intent();
+                    intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderNo);
+                    if (viewModel.categoryType != null && viewModel.categoryType.get() != null) {
+                        intent.putExtra(TravelActivity.CATEGORY_TYPE, String.valueOf(viewModel.categoryType.get()));
+                    }
+                    intent.putExtra(TravelOrderDetailsActivity.ORDERI_ID, orderNo);
+                    intent.putExtra(TravelOrderDetailsActivity.SUCCESS_PAY, 1);
+                    TravelOrderDetailsActivity.start(activity, intent);
+                    doSthIsExit();
                 }
                 binding.scrollSwithViewButton.setText(viewModel.updateOrderContent.get());
             }
