@@ -459,7 +459,6 @@ public class TravelViewModel extends BaseViewModel {
                         // 1111 状态告知司机订单已经被取消
                         if (CANCAL_ORDER_STATUS.equals(message)) {
                             YmxCache.setOrderId("");
-                            UIUtils.showToast("订单已被乘客取消");
                             uc.ucBack.call();
 
                         } else {
